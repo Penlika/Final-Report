@@ -18,3 +18,15 @@ select,
 textarea {
     max-width: 280px;
 }
+.topNav {
+    position: relative;
+    top:-30px;
+    left: 1000px;
+}
+
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 24
+}
+.ui-datepicker {
+    font-size: 14px;
+}
