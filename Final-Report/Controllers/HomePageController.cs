@@ -25,5 +25,9 @@ namespace Final_Report.Controllers
         {
             return View();
         }
+        public ActionResult NavBarDetail()
+        {
+            return PartialView();
+        }
     }
 }
