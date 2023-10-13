@@ -25,5 +25,17 @@ namespace Final_Report.Controllers
         {
             return View();
         }
+        public ActionResult TrendLocaPartial()
+        {
+            return PartialView();
+        }
+        public ActionResult FooterPartial()
+        {
+            return PartialView();
+        }
+        public ActionResult NewLocaPartial()
+        {
+            return PartialView();
+        }
     }
 }
