@@ -196,6 +196,9 @@
     <Content Include="Views\HomePage\SignIn.cshtml" />
     <Content Include="Views\Shared\DetailLayout.cshtml" />
     <Content Include="Views\Shared\NavBarDetail.cshtml" />
+    <Content Include="Views\Shared\TrendLocaPartial.cshtml" />
+    <Content Include="Views\Shared\FooterPartial.cshtml" />
+    <Content Include="Views\Shared\NewLocaPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
