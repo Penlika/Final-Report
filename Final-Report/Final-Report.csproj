@@ -189,14 +189,13 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\HomePage.cshtml" />
     <Content Include="Views\HomePage\Index.cshtml" />
     <Content Include="Views\Shared\NavBar.cshtml" />
     <Content Include="Views\HomePage\Register.cshtml" />
     <Content Include="Views\HomePage\SignIn.cshtml" />
+    <Content Include="Views\Shared\DetailLayout.cshtml" />
+    <Content Include="Views\Shared\NavBarDetail.cshtml" />
     <Content Include="Views\Shared\TrendLocaPartial.cshtml" />
     <Content Include="Views\Shared\FooterPartial.cshtml" />
     <Content Include="Views\Shared\NewLocaPartial.cshtml" />
