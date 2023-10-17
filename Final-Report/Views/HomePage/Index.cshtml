@@ -4,4 +4,15 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+
+<div class="container mb-3 row" style="position:relative">
+    <div class="mb-3">
+        @Html.Action("NewLocaPartial", "HomePage")
+    </div>
+</div>
+
+<div class="container mb-3 row" style="position:relative">
+    <div class="mb-3">
+        @Html.Action("TrendLocaPartial", "HomePage")
+    </div>
+</div>
