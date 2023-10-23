@@ -49,5 +49,21 @@ namespace Final_Report.Controllers
         {
             return PartialView();
         }
+        public ActionResult ItemPage()
+        {
+            return View();
+        }
+        public ActionResult NavBarItem()
+        {
+            return PartialView();
+        }
+        public ActionResult ListItem()
+        {
+            return PartialView();
+        }
+        public ActionResult SortItem()
+        {
+            return PartialView();
+        }
     }
 }

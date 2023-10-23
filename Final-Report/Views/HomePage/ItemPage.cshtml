@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewBag.Title = "ItemPage";
+    Layout = "~/Views/Shared/ItemLayout.cshtml";
+}
+<div class="col-12 container">
+    <div class="row">
+        <div class="col-4">
+            @Html.Action("SortItem", "HomePage")
+        </div>
+        <div class="col-8" style="margin-left: -110px">
+            @Html.Action("ListItem", "HomePage")
+        </div>
+    </div>
+</div>

@@ -188,18 +188,22 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Shared\HomePage.cshtml" />
     <Content Include="Views\HomePage\Index.cshtml" />
     <Content Include="Views\Shared\NavBar.cshtml" />
     <Content Include="Views\HomePage\Register.cshtml" />
     <Content Include="Views\HomePage\SignIn.cshtml" />
-    <Content Include="Views\Shared\DetailLayout.cshtml" />
+    <Content Include="Views\Shared\SignLogLayout.cshtml" />
     <Content Include="Views\Shared\NavBarDetail.cshtml" />
     <Content Include="Views\Shared\TrendLocaPartial.cshtml" />
     <Content Include="Views\Shared\FooterPartial.cshtml" />
     <Content Include="Views\Shared\NewLocaPartial.cshtml" />
     <Content Include="Views\Shared\TophotelPartial.cshtml" />
     <Content Include="Views\Shared\InforhotelPartial.cshtml" />
+    <Content Include="Views\Shared\ItemLayout.cshtml" />
+    <Content Include="Views\Shared\NavBarItem.cshtml" />
+    <Content Include="Views\HomePage\ItemPage.cshtml" />
+    <Content Include="Views\Shared\ListItem.cshtml" />
+    <Content Include="Views\Shared\SortItem.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
