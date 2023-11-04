@@ -11,20 +11,21 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 <body>
-    <div  class="row">
+    <div class="row">
         <div style="background-color:darkblue">
             <div class="container">
                 @Html.Action("NavBar", "HomePage")
             </div>
         </div>
     </div>
-    <div class="row">
+    <div>
         <div class="container mb-3" style="position:relative; top:70px">
             <div class="mb-3">
                 @RenderBody()
             </div>
         </div>
     </div>
+    <br />
     <div class="row">
         <div style="background-color:darkblue">
             @Html.Action("FooterPartial", "HomePage")

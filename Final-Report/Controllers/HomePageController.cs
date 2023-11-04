@@ -17,14 +17,6 @@ namespace Final_Report.Controllers
         { 
             return PartialView(); 
         }
-        public ActionResult Register()
-        {
-            return View();
-        }
-        public ActionResult SignIn()
-        {
-            return View();
-        }
         public ActionResult NavBarDetail()
         {
             return PartialView();
