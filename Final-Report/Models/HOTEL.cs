@@ -25,6 +25,8 @@ namespace Final_Report.Models
         [StringLength(100)]
         public string ADDRESS { get; set; }
 
+        public string PICTURES { get; set; }
+
         [Required]
         [StringLength(250)]
         public string INFORMATION { get; set; }

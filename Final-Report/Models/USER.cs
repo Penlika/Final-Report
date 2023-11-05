@@ -20,14 +20,16 @@ namespace Final_Report.Models
 
         public int ID { get; set; }
 
+        public string PICTURES { get; set; }
+
         [Required(ErrorMessage = "Username must not be empty")]
         [StringLength(20)]
         public string USERNAME { get; set; }
 
         [Required(ErrorMessage = "Password must not be empty")]
         [RegularExpression("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$",
-     ErrorMessage = "Password must have a capital letter, a number and a special character")]
-        [StringLength(30, ErrorMessage = "Password must be from 8 to 30 characters", MinimumLength = 8)]
+        ErrorMessage = "Password must have a capital letter, a number and a special character")]
+        [StringLength(30, ErrorMessage = "Password length must be from 8 to 30", MinimumLength = 8)]
         public string PASSWORD { get; set; }
 
         [NotMapped]

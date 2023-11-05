@@ -22,9 +22,14 @@ namespace Final_Report.Models
         [StringLength(50)]
         public string PACKAGENAME { get; set; }
 
+        public string PICTURES { get; set; }
+
         public int? IDFLIGHT { get; set; }
 
         public int? IDHOTEL { get; set; }
+
+        [StringLength(200)]
+        public string DESTINATION { get; set; }
 
         [Required]
         [StringLength(250)]
