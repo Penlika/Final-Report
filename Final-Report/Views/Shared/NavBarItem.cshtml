@@ -7,9 +7,23 @@
                     <h3 style="color:azure;font-weight:700">NT-Travel and Tourism</h3>
                 </a>
             </div>
-            <div class="topNav col-6">
-                <a class="btn" style="background-color:azure;color:darkblue;font-weight:500" href=@Url.Action("Register", "HomePage")>Register</a>
-                <a class="btn" style="background-color:azure;color:darkblue;font-weight:500" href=@Url.Action("SignIn", "HomePage")>Sign in</a>
+            <div>
+                @if (Session["USERNAME"] != null)
+                {
+                    <div style="float: right">
+                        <a href="@Url.Action("Index", "Cart")"
+                           class="btn" style="background-color: azure; color: darkblue; font-weight: 500">Empty</a>
+                        <a href="@Url.Action("Profile", "User")"
+                           class="btn" style="background-color: azure; color: darkblue; font-weight: 500">Account</a>
+                    </div>
+                }
+                else
+                {
+                    <div style="float:right">
+                        <a class="btn" style="background-color:azure;color:darkblue;font-weight:500" href=@Url.Action("Register", "User")>Register</a>
+                        <a class="btn" style="background-color:azure;color:darkblue;font-weight:500" href=@Url.Action("Login", "User")>Sign in</a>
+                    </div>
+                }
             </div>
         </div>
     </div>
@@ -33,16 +47,6 @@
             <li class="nav-item">
                 <a class="btn" style="font-weight: 300; border-radius: 20px; color: azure; background-color: darkblue">
                     <i class="material-symbols-outlined" style="vertical-align:middle;font-size:30px">airport_shuttle</i>   Car rentals
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="btn" style="font-weight: 300; border-radius: 20px; color: azure; background-color: darkblue">
-                    <i class="material-symbols-outlined" style="vertical-align:middle;font-size:30px">attractions</i>Attraction
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="btn" style="font-weight: 300; border-radius: 20px; color: azure; background-color: darkblue">
-                    <i class="material-symbols-outlined" style="vertical-align:middle;font-size:30px">local_taxi</i>   Airport taxis
                 </a>
             </li>
         </ul>

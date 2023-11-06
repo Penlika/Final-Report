@@ -1,17 +1,24 @@
-﻿using System;
+﻿using Final_Report.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
+using PagedList;
 
 namespace Final_Report.Controllers
 {
     public class HomePageController : Controller
     {
+        Final db=new Final();
         // GET: HomePage
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            return View();
+            var lstPACKAGE = db.PACKAGES.OrderBy(s => s.DESTINATION);
+            int pageNumber = (page) ?? 1;
+            int pageSize = 10;
+            return View(lstPACKAGE.ToPagedList(pageNumber, pageSize));
         }
         public ActionResult NavBar()
         { 

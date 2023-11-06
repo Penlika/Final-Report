@@ -1,4 +1,5 @@
-﻿@{
+﻿@using PagedList.Mvc
+@{
     ViewBag.Title = "ItemPage";
     Layout = "~/Views/Shared/ItemLayout.cshtml";
 }
@@ -20,7 +21,6 @@
 
     .container {
         position: relative;
-
     }
 
     #content {
@@ -196,7 +196,7 @@
     <div id="content">
         <div class="d-sm-flex">
             <div class="me-sm-2">
-                <div id="filter" class="p-2 bg-light ms-md-4 ms-sm-2 border">
+                <div id="filter" class="p-2 bg-white ms-md-4 ms-sm-2 border rounded">
                     <div class="border-bottom h5 text-uppercase">Filter By</div>
                     <div class="box border-bottom">
                         <div class="box-label text-uppercase d-flex align-items-center">Price <button class="btn ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#inner-box" aria-expanded="false" aria-controls="inner-box"> <span class="fas fa-plus"></span> </button> </div>
@@ -246,8 +246,8 @@
                     </div>
                 </div>
             </div>
-            <div class="bg-white p-2 border" id="hotels">
-                <div class="hotel py-2 px-2 pb-4 border-bottom">
+            <div class="bg-white p-2" id="hotels">
+                <div class="hotel py-2 px-2 pb-4 border rounded">
                     <div class="row">
                         <div class="col-lg-3"> <img src="https://images.unsplash.com/photo-1580835845971-a393b73bf370?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=967&q=80" alt="" class="hotel-img"> </div>
                         <div class="col-lg-9">
@@ -267,11 +267,66 @@
                     </div>
                     <div class="d-flex justify-content-end mt-1">
                         <div class="btn enquiry text-uppercase mx-2">Enquiry</div>
-                        <div class="btn btn-primary text-uppercase">Book Now</div>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            Book
+                        </button>
                     </div>
                 </div>
+                <div style="padding:8px"></div>
+
+                <div class="hotel py-2 px-2 pb-4 border rounded">
+                    <div class="row">
+                        <div class="col-lg-3"> <img src="https://images.unsplash.com/photo-1580835845971-a393b73bf370?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=967&q=80" alt="" class="hotel-img"> </div>
+                        <div class="col-lg-9">
+                            <div class="d-md-flex align-items-md-center">
+                                <div class="name">Mayflower Hibiscus Inn <span class="city">Bandra, Mumbai</span> </div>
+                                <div class="ms-auto code text-uppercase">ABD09eh8</div>
+                            </div>
+                            <div class="rating">
+                                <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="far fa-star"></span> <!-- Book now Enquiry -->
+                            </div>
+                            <div class="d-flex flex-column tags pt-1">
+                                <div><span class="fas fa-comment-dollar"></span> Fee Canellation</div>
+                                <div><span class="fas fa-receipt"></span> Express check-in</div>
+                                <div><span class="fas fa-concierge-bell"></span> Concierge</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-end mt-1">
+                        <div class="btn enquiry text-uppercase mx-2">Enquiry</div>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            Book
+                        </button>
+                    </div>
+                </div>
+                <nav aria-label="Page navigation example" class="text-center">
+                    @Html.PagedListPager(
+                        (PagedList.IPagedList)Model, page => Url.Action("Index", new { page = page })
+                    )
+                </nav>
             </div>
         </div>
     </div>
 </div>
-
+<!--modal-->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <!-- Add the 'modal-lg' class to make it larger -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Your larger content here -->
+                <!-- You can add more content or adjust the size as needed -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
