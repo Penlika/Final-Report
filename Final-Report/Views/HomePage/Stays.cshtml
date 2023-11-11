@@ -1,0 +1,269 @@
+﻿@using PagedList.Mvc
+@{
+    ViewBag.Title = "Stays";
+    Layout = "~/Views/Shared/ItemLayout.cshtml";
+}
+<div class="container my-sm-5 p-0 bg-sec-light">
+    <div id="content">
+        <div class="d-sm-flex">
+            <div class="me-sm-2">
+                <div id="filter" class="p-2 bg-white ms-md-4 ms-sm-2 border rounded">
+                    <div class="border-bottom h5 text-uppercase">Filter By</div>
+                    <div class="box border-bottom">
+                        <div class="box-label text-uppercase d-flex align-items-center">Price <button class="btn ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#inner-box" aria-expanded="false" aria-controls="inner-box"> <span class="fas fa-plus"></span> </button> </div>
+                        <div id="inner-box" class="collapse show">
+                            <div class="my-1"> <label class="tick">Less than 2000 <input type="checkbox"> <span class="check"></span> </label> </div>
+                            <div class="my-1"> <label class="tick">2000 - 3000 <input type="checkbox"> <span class="check"></span> </label> </div>
+                            <div class="my-1"> <label class="tick">3000 - 4500 <input type="checkbox"> <span class="check"></span> </label> </div>
+                            <div class="my-1"> <label class="tick">4500 - 6000 <input type="checkbox"> <span class="check"></span> </label> </div>
+                            <div class="my-1"> <label class="tick">6000 - 8000 <input type="checkbox"> <span class="check"></span> </label> </div>
+                            <div class="my-1"> <label class="tick">8000 -10,000 <input type="checkbox"> <span class="check"></span> </label> </div>
+                            <div class="my-1"> <label class="tick">10,000 and Above <input type="checkbox"> <span class="check"></span> </label> </div>
+                        </div>
+                    </div>
+                    <div class="box border-bottom">
+                        <div class="box-label text-uppercase d-flex align-items-center">Property Type <button class="btn ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#property" aria-expanded="false" aria-controls="property"> <span class="fas fa-plus"></span> </button> </div>
+                        <div id="property" class="collapse show">
+                            <div class="my-1"> <label class="tick">Hotels <input type="checkbox"> <span class="check"></span> </label> </div>
+                            <div class="my-1"> <label class="tick">Apartments <input type="checkbox"> <span class="check"></span> </label> </div>
+                            <div class="my-1"> <label class="tick">Guest houses <input type="checkbox"> <span class="check"></span> </label> </div>
+                            <div class="my-1"> <label class="tick">Resorts <input type="checkbox"> <span class="check"></span> </label> </div>
+                            <div class="my-1"> <label class="tick">Villas <input type="checkbox"> <span class="check"></span> </label> </div>
+                            <div class="my-1"> <label class="tick">Lodges <input type="checkbox"> <span class="check"></span> </label> </div>
+                            <div class="my-1"> <label class="tick">Holiday Homes <input type="checkbox"> <span class="check"></span> </label> </div>
+                        </div>
+                    </div>
+                    <div class="box border-bottom">
+                        <div class="box-label text-uppercase d-flex align-items-center">Amenities <button class="btn ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#amenities" aria-expanded="false" aria-controls="amenities"> <span class="fas fa-plus"></span> </button> </div>
+                        <div id="amenities" class="collapse show">
+                            <div class="my-1"> <label class="tick">Parking <input type="checkbox"> <span class="check"></span> </label> </div>
+                            <div class="my-1"> <label class="tick">Pets Allowed <input type="checkbox"> <span class="check"></span> </label> </div>
+                            <div class="my-1"> <label class="tick">Room Service <input type="checkbox"> <span class="check"></span> </label> </div>
+                            <div class="my-1"> <label class="tick">Family Rooms <input type="checkbox"> <span class="check"></span> </label> </div>
+                            <div class="my-1"> <label class="tick">Free Wifi <input type="checkbox"> <span class="check"></span> </label> </div>
+                            <div class="my-1"> <label class="tick">Non-smoking Rooms <input type="checkbox"> <span class="check"></span> </label> </div>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <div class="box-label text-uppercase d-flex align-items-center">Room Facilities <button class="btn ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#room-facilities" aria-expanded="false" aria-controls="room-facilities"> <span class="fas fa-plus"></span> </button> </div>
+                        <div id="room-facilities" class="collapse show">
+                            <div class="my-1"> <label class="tick">Air Condentioning <input type="checkbox"> <span class="check"></span> </label> </div>
+                            <div class="my-1"> <label class="tick">Desk <input type="checkbox"> <span class="check"></span> </label> </div>
+                            <div class="my-1"> <label class="tick">Balcony <input type="checkbox"> <span class="check"></span> </label> </div>
+                            <div class="my-1"> <label class="tick">Flat Screen TV <input type="checkbox"> <span class="check"></span> </label> </div>
+                            <div class="my-1"> <label class="tick">Coffe/Tea Maker <input type="checkbox"> <span class="check"></span> </label> </div>
+                            <div class="my-1"> <label class="tick">Washing Machine <input type="checkbox"> <span class="check"></span> </label> </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white p-2" id="hotels">
+                <div class="hotel py-2 px-2 pb-4 border rounded">
+                    <div class="row">
+                        <div class="col-lg-3"> <img src="https://images.unsplash.com/photo-1580835845971-a393b73bf370?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=967&q=80" alt="" class="hotel-img"> </div>
+                        <div class="col-lg-9">
+                            <div class="d-md-flex align-items-md-center">
+                                <div class="name">Mayflower Hibiscus Inn <span class="city">Bandra, Mumbai</span> </div>
+                                <div class="ms-auto code text-uppercase">ABD09eh8</div>
+                            </div>
+                            <div class="rating">
+                                <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="far fa-star"></span> <!-- Book now Enquiry -->
+                            </div>
+                            <div class="d-flex flex-column tags pt-1">
+                                <div><span class="fas fa-comment-dollar"></span> Fee Canellation</div>
+                                <div><span class="fas fa-receipt"></span> Express check-in</div>
+                                <div><span class="fas fa-concierge-bell"></span> Concierge</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-end mt-1">
+                        <div class="btn enquiry text-uppercase mx-2">Enquiry</div>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            Book
+                        </button>
+                    </div>
+                </div>
+                <div style="padding:8px"></div>
+
+                <div class="hotel py-2 px-2 pb-4 border rounded">
+                    <div class="row">
+                        <div class="col-lg-3"> <img src="https://images.unsplash.com/photo-1580835845971-a393b73bf370?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=967&q=80" alt="" class="hotel-img"> </div>
+                        <div class="col-lg-9">
+                            <div class="d-md-flex align-items-md-center">
+                                <div class="name">Mayflower Hibiscus Inn <span class="city">Bandra, Mumbai</span> </div>
+                                <div class="ms-auto code text-uppercase">ABD09eh8</div>
+                            </div>
+                            <div class="rating">
+                                <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="far fa-star"></span> <!-- Book now Enquiry -->
+                            </div>
+                            <div class="d-flex flex-column tags pt-1">
+                                <div><span class="fas fa-comment-dollar"></span> Fee Canellation</div>
+                                <div><span class="fas fa-receipt"></span> Express check-in</div>
+                                <div><span class="fas fa-concierge-bell"></span> Concierge</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-end mt-1">
+                        <div class="btn enquiry text-uppercase mx-2">Enquiry</div>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            Book
+                        </button>
+                    </div>
+                </div>
+                <nav aria-label="Page navigation example" class="text-center">
+                    @Html.PagedListPager(
+                        (PagedList.IPagedList)Model, page => Url.Action("Index", new { page = page })
+                    )
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!--modal-->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <!-- Add the 'modal-lg' class to make it larger -->
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:darkblue">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">More Details</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Your larger content here -->
+                <!-- You can add more content or adjust the size as needed -->
+                <div class="row">
+                    <div class="col-sm-4 text-center abc">
+
+                        <form action="#!" style="background-color:orange">
+
+                            <p class="h4 mb-4 text-left">Search</p>
+
+                            <p class="text-left">Destination/property name:</p>
+
+                            <label for="DateIn" class="in">Check-in date</label>
+                            <input type="date" class="form-control mb-4" placeholder="Enter ">
+
+                            <label for="DateOut" class="in">Check-out date</label>
+                            <input type="date" class="form-control mb-4" placeholder="Enter Password">
+
+                            <label for="DateOut" class="in">Check-out date</label>
+                            <div class="d-flex justify-content-left">
+                                <div>
+                                    <label for="DateOut" class="in">#-night stay</label>
+                                    <div class="custom-control custom-checkbox text-left">
+                                        <input type="checkbox" class="custom-control-input">
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn btn-info btn-block my" type="submit">Search</button>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+                                Launch demo modal
+                            </button>
+                            <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div>
+                                                @foreach (var customer in Model)
+                                                {
+                                                    Html.Partial("Maps");
+                                                }
+                                            </div>
+
+                                            <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+                                            <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </form>
+
+                    </div>
+                    <div>
+                        <link rel='stylesheet' href='https://sachinchoolur.github.io/lightslider/dist/css/lightslider.css'>
+                        <div class="container-fluid mt-2 mb-3">
+                            <div class="row no-gutters">
+                                <div class="col-md-5 pr-2">
+                                    <div class="card">
+                                        <div class="demo">
+                                            <ul id="lightSlider">
+                                                <li data-thumb="https://i.imgur.com/KZpuufK.jpg"> <img src="https://i.imgur.com/KZpuufK.jpg" /> </li>
+                                                <li data-thumb="https://i.imgur.com/GwiUmQA.jpg"> <img src="https://i.imgur.com/GwiUmQA.jpg" /> </li>
+                                                <li data-thumb="https://i.imgur.com/DhKkTrG.jpg"> <img src="https://i.imgur.com/DhKkTrG.jpg" /> </li>
+                                                <li data-thumb="https://i.imgur.com/kYWqL7k.jpg"> <img src="https://i.imgur.com/kYWqL7k.jpg" /> </li>
+                                                <li data-thumb="https://i.imgur.com/c9uUysL.jpg"> <img src="https://i.imgur.com/c9uUysL.jpg" /> </li>
+                                                <li data-thumb="https://i.imgur.com/KZpuufK.jpg"> <img src="https://i.imgur.com/KZpuufK.jpg" /> </li>
+                                                <li data-thumb="https://i.imgur.com/GwiUmQA.jpg"> <img src="https://i.imgur.com/GwiUmQA.jpg" /> </li>
+                                                <li data-thumb="https://i.imgur.com/DhKkTrG.jpg"> <img src="https://i.imgur.com/DhKkTrG.jpg" /> </li>
+                                                <li data-thumb="https://i.imgur.com/kYWqL7k.jpg"> <img src="https://i.imgur.com/kYWqL7k.jpg" /> </li>
+                                                <li data-thumb="https://i.imgur.com/c9uUysL.jpg"> <img src="https://i.imgur.com/c9uUysL.jpg" /> </li>
+                                                <li data-thumb="https://i.imgur.com/KZpuufK.jpg"> <img src="https://i.imgur.com/KZpuufK.jpg" /> </li>
+                                                <li data-thumb="https://i.imgur.com/GwiUmQA.jpg"> <img src="https://i.imgur.com/GwiUmQA.jpg" /> </li>
+                                                <li data-thumb="https://i.imgur.com/DhKkTrG.jpg"> <img src="https://i.imgur.com/DhKkTrG.jpg" /> </li>
+                                                <li data-thumb="https://i.imgur.com/kYWqL7k.jpg"> <img src="https://i.imgur.com/kYWqL7k.jpg" /> </li>
+                                                <li data-thumb="https://i.imgur.com/c9uUysL.jpg"> <img src="https://i.imgur.com/c9uUysL.jpg" /> </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="card mt-2">
+                                        <h6>Reviews</h6>
+                                        <div class="d-flex flex-row">
+                                            <div class="stars"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> </div>
+                                            <span class="ml-1 font-weight-bold">4.6</span>
+                                        </div>
+                                        <hr>
+                                        <div class="badges"> <span class="badge bg-dark ">All (230)</span> <span class="badge bg-dark "> <i class="fa fa-image"></i> 23 </span> <span class="badge bg-dark "> <i class="fa fa-comments-o"></i> 23 </span> <span class="badge bg-warning"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <span class="ml-1">2,123</span> </span> </div>
+                                        <hr>
+                                        <div class="comment-section">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div class="d-flex flex-row align-items-center">
+                                                    <img src="https://i.imgur.com/o5uMfKo.jpg" class="rounded-circle profile-image">
+                                                    <div class="d-flex flex-column ml-1 comment-profile">
+                                                        <div class="comment-ratings"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> </div>
+                                                        <span class="username">Lori Benneth</span>
+                                                    </div>
+                                                </div>
+                                                <div class="date"> <span class="text-muted">2 May</span> </div>
+                                            </div>
+                                            <hr>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div class="d-flex flex-row align-items-center">
+                                                    <img src="https://i.imgur.com/tmdHXOY.jpg" class="rounded-circle profile-image">
+                                                    <div class="d-flex flex-column ml-1 comment-profile">
+                                                        <div class="comment-ratings"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> </div>
+                                                        <span class="username">Timona Simaung</span>
+                                                    </div>
+                                                </div>
+                                                <div class="date"> <span class="text-muted">12 May</span> </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js'></script>
+                        <script src='https://sachinchoolur.github.io/lightslider/dist/js/lightslider.js'></script>
+                        <script>$('#lightSlider').lightSlider({ gallery: true, item: 1, loop: true, slideMargin: 0, thumbItem: 9 });</script>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>

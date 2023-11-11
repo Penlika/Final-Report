@@ -14,7 +14,7 @@ namespace Final_Report.Models
         {
             PACKAGES = new HashSet<PACKAGE>();
         }
-
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
 
         [Required]

@@ -3,7 +3,7 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class sdad : DbMigration
+    public partial class sdadadas : DbMigration
     {
         public override void Up()
         {
@@ -11,11 +11,12 @@
                 "dbo.ADMIN",
                 c => new
                     {
-                        ID = c.Int(nullable: false),
                         USERNAME = c.String(nullable: false, maxLength: 20),
+                        ID = c.Int(nullable: false),
+                        EMAIL = c.String(maxLength: 50),
                     })
-                .PrimaryKey(t => new { t.ID, t.USERNAME })
-                .ForeignKey("dbo.USERS", t => t.ID)
+                .PrimaryKey(t => t.USERNAME)
+                .ForeignKey("dbo.USERS", t => t.ID, cascadeDelete: true)
                 .Index(t => t.ID);
             
             CreateTable(
@@ -23,6 +24,7 @@
                 c => new
                     {
                         ID = c.Int(nullable: false, identity: true),
+                        PICTURES = c.String(),
                         USERNAME = c.String(nullable: false, maxLength: 20),
                         PASSWORD = c.String(nullable: false, maxLength: 30),
                         EMAIL = c.String(nullable: false, maxLength: 50),
@@ -34,7 +36,7 @@
                 c => new
                     {
                         IDPACKAGE = c.Int(nullable: false),
-                        IDCUSTOMER = c.Int(nullable: false),
+                        IDCUSTOMER = c.Int(),
                         BOOKING_DETAIL = c.String(nullable: false),
                         TOTALPRICE = c.Double(nullable: false),
                         NUMOFPERSON = c.Int(nullable: false),
@@ -48,12 +50,12 @@
                 "dbo.COMMENTANDRATING",
                 c => new
                     {
-                        IDCUSTOMER = c.Int(nullable: false),
-                        IDPACKAGES = c.Int(nullable: false),
                         COMMENT = c.String(nullable: false, maxLength: 400),
                         RATING = c.Int(nullable: false),
+                        IDCUSTOMER = c.Int(),
+                        IDPACKAGES = c.Int(),
                     })
-                .PrimaryKey(t => new { t.IDCUSTOMER, t.IDPACKAGES, t.COMMENT, t.RATING })
+                .PrimaryKey(t => new { t.COMMENT, t.RATING })
                 .ForeignKey("dbo.PACKAGES", t => t.IDPACKAGES)
                 .ForeignKey("dbo.USERS", t => t.IDCUSTOMER)
                 .Index(t => t.IDCUSTOMER)
@@ -65,8 +67,10 @@
                     {
                         ID = c.Int(nullable: false, identity: true),
                         PACKAGENAME = c.String(nullable: false, maxLength: 50),
-                        IDFLIGHT = c.Int(nullable: false),
-                        IDHOTEL = c.Int(nullable: false),
+                        PICTURES = c.String(),
+                        IDFLIGHT = c.Int(),
+                        IDHOTEL = c.Int(),
+                        DESTINATION = c.String(maxLength: 200),
                         INFORMATION = c.String(nullable: false, maxLength: 250),
                         PACKAGEPRICE_PER_PERSON = c.Double(nullable: false),
                     })
@@ -82,12 +86,12 @@
                     {
                         ID = c.Int(nullable: false),
                         USERNAME = c.String(nullable: false, maxLength: 20),
-                        EMAIL = c.String(nullable: false, maxLength: 50),
                         PHONENUMBER = c.Int(nullable: false),
                         ADDRESS = c.String(nullable: false, maxLength: 100),
-                        BOOKINGLISTS = c.Int(nullable: false),
+                        EMAIL = c.String(maxLength: 50),
+                        BOOKINGLISTS = c.Int(),
                     })
-                .PrimaryKey(t => new { t.ID, t.USERNAME, t.EMAIL, t.PHONENUMBER, t.ADDRESS, t.BOOKINGLISTS })
+                .PrimaryKey(t => new { t.ID, t.USERNAME, t.PHONENUMBER, t.ADDRESS })
                 .ForeignKey("dbo.PACKAGES", t => t.BOOKINGLISTS)
                 .ForeignKey("dbo.USERS", t => t.ID)
                 .Index(t => t.ID)
@@ -114,6 +118,7 @@
                         ID = c.Int(nullable: false, identity: true),
                         NAME = c.String(nullable: false, maxLength: 50),
                         ADDRESS = c.String(nullable: false, maxLength: 100),
+                        PICTURES = c.String(),
                         INFORMATION = c.String(nullable: false, maxLength: 250),
                         PRICE_PER_PERSON = c.Double(nullable: false),
                         ROOM_AVAILABLE = c.Int(),

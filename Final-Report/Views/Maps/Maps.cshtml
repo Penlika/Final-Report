@@ -1,0 +1,20 @@
+﻿@model Final_Report.Models.CUSTOMER
+
+<div>
+    <h2>ID: @Model.ID</h2>
+    <p>Username: @Model.USERNAME</p>
+    <p>Address: @Model.ADDRESS</p>
+
+    <div id="map-@Model.ID" style="height: 200px; margin-bottom: 20px;"></div>
+
+    <script>
+        var map@Model.ID = L.map('map-@Model.ID').setView([0, 0], 13);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map@Model.ID);
+
+        // Geocode the customer's address and set the map center
+        L.Control.geocoder().addTo(map@Model.ID);
+    </script>
+</div>

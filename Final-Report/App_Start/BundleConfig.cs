@@ -25,6 +25,14 @@ namespace Final_Report
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+            bundles.Add(new StyleBundle("~/Content/Item/css").Include(
+                      "~/Content/Item/ItemPage.css")); 
+            bundles.Add(new ScriptBundle("~/bundles/Flight").Include(
+                      "~/Scripts/Item/Flight.js"));
+            bundles.Add(new StyleBundle("~/Content/Item/Packages.css").Include(
+                      "~/Content/Item/Packages.css"));
+            bundles.Add(new StyleBundle("~/Content/Item/Modal.css").Include(
+                      "~/Content/Item/Modal.css"));
         }
     }
 }

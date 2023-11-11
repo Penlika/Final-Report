@@ -30,23 +30,18 @@
     <div class="container row">
         <ul class="nav nav-pills">
             <li class="nav-item">
-                <a class="btn" style="font-weight: 300; border-radius: 20px; color: azure; background-color: darkblue">
+                <a class="btn" style="font-weight: 300; border-radius: 20px; color: azure; background-color: darkblue" href="@Url.Action("Stays","HomePage")">
                     <i class="material-symbols-outlined" style="vertical-align:middle;font-size:30px">bed</i>   Stays
                 </a>
             </li>
             <li class="nav-item">
-                <a class="btn" style="font-weight: 300;border-radius:20px; color: azure; background-color: darkblue" href="https://flights-vn.gotogate.com/rf/start">
+                <a class="btn" style="font-weight: 300;border-radius:20px; color: azure; background-color: darkblue" href="@Url.Action("Flights","HomePage")">
                     <i class="material-symbols-outlined" style="vertical-align:middle;font-size:30px">flight</i>   Flights
                 </a>
             </li>
             <li class="nav-item">
-                <a class="btn" style="font-weight: 300; border-radius: 20px; color: azure; background-color: darkblue">
-                    <i class="material-symbols-outlined" style="vertical-align:middle;font-size:30px">travel_explore</i>   Flights+Hotels
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="btn" style="font-weight: 300; border-radius: 20px; color: azure; background-color: darkblue">
-                    <i class="material-symbols-outlined" style="vertical-align:middle;font-size:30px">airport_shuttle</i>   Car rentals
+                <a class="btn" style="font-weight: 300; border-radius: 20px; color: azure; background-color: darkblue" href="@Url.Action("Packages","HomePage")">
+                    <i class="material-symbols-outlined" style="vertical-align:middle;font-size:30px">travel_explore</i>   Packages
                 </a>
             </li>
         </ul>

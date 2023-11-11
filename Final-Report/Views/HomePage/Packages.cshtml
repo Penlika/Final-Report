@@ -1,0 +1,106 @@
+﻿@using PagedList.Mvc
+@{
+    ViewBag.Title = "ItemPage";
+    Layout = "~/Views/Shared/ItemLayout.cshtml";
+}
+<div class="container-fluid px-0">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-fixed">
+        <div class="container-fluid d-flex">
+            <a class="navbar-brand" href="#">Available Packages</a>
+        </div>
+    </nav>
+</div>
+<div class="container-fluid mt-2 mb-5">
+    <div class="products">
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <div class="card">
+                            <img src="https://www.nikoseasideresort.com/wp-content/uploads/sites/13/2022/04/main_pool_gallery_07.jpg" class="card-img-top">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between"> <span class="font-weight-bold">Luxury seaside resort</span> <span class="font-weight-bold">3.000.000 VNĐ</span> </div>
+                                <p class="card-text mb-1 mt-1">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                <div class="d-flex align-items-center flex-row"><span class="guarantee">2 Nights</span> </div>
+                            </div>
+                            <hr>
+                            <div class="card-body">
+                                <div class="text-right buttons"><button class="btn btn-dark">BOOK</button> </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/466614263.jpg?k=b87c6c1e18a0876cb3eff86369e6c55a179ee529cb97b76fdcaf35c4e3c2b977&o=&hp=1" class="card-img-top">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between"> <span class="font-weight-bold">3-stars hotel</span> <span class="font-weight-bold">10.000.000 VNĐ</span> </div>
+                                <p class="card-text mb-1 mt-1">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                <div class="d-flex align-items-center flex-row"><span class="guarantee">3 Nights</span> </div>
+                            </div>
+                            <hr>
+                            <div class="card-body">
+                                <div class="text-right buttons"><button class="btn btn-dark">BOOK</button> </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <img src="https://cdn.webhotelier.net/photos/w=1920/goldenstar/L469142.jpg" class="card-img-top">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between"> <span class="font-weight-bold">Evagale Resort</span> <span class="font-weight-bold">20.000.000 VNĐ</span> </div>
+                                <p class="card-text mb-1 mt-1">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                <div class="d-flex align-items-center flex-row"><span class="guarantee">1 Nights</span> </div>
+                            </div>
+                            <hr>
+                            <div class="card-body">
+                                <div class="text-right buttons"><button class="btn btn-dark">BOOK</button> </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <img src="https://www.senseanaresort.com/wp-content/uploads/2023/03/main-pool-lounge-1.jpg" class="card-img-top">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between"> <span class="font-weight-bold">4-stars resort</span> <span class="font-weight-bold">23.000.000 VNĐ</span> </div>
+                                <p class="card-text mb-1 mt-1">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                <div class="d-flex align-items-center flex-row"><span class="guarantee">4 Nights</span> </div>
+                            </div>
+                            <hr>
+                            <div class="card-body">
+                                <div class="text-right buttons"><button class="btn btn-dark">BOOK</button> </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/205483105.jpg?k=ef8aaf687d6ea87688017ae0f688ade3864a84001200dabdd1c45c27da69a757&o=&hp=1" class="card-img-top">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between"> <span class="font-weight-bold">Luxurious beach front mansion</span> <span class="font-weight-bold">100.000.000 VNĐ</span> </div>
+                                <p class="card-text mb-1 mt-1">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                <div class="d-flex align-items-center flex-row"><span class="guarantee">2 Nights</span> </div>
+                            </div>
+                            <hr>
+                            <div class="card-body">
+                                <div class="text-right buttons"><button class="btn btn-dark">BOOK</button> </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <img src="https://afar.brightspotcdn.com/dims4/default/c2bebeb/2147483647/strip/false/crop/3508x2339+0+0/resize/1486x991!/quality/90/?url=https%3A%2F%2Fafar-media-production-web.s3.us-west-2.amazonaws.com%2Fbrightspot%2Ff5%2Fd5%2Fdc24d06b4c0e9b3d6b8769316b47%2Fwater-villa-7428-a4.jpg" class="card-img-top">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between"> <span class="font-weight-bold">Paradise hotel</span> <span class="font-weight-bold">35.000.000 VNĐ</span> </div>
+                                <p class="card-text mb-1 mt-1">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                <div class="d-flex align-items-center flex-row"><span class="guarantee">5 Nights</span> </div>
+                            </div>
+                            <hr>
+                            <div class="card-body">
+                                <div class="text-right buttons"><button class="btn btn-dark">BOOK</button> </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

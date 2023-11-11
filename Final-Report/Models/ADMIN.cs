@@ -9,7 +9,7 @@ namespace Final_Report.Models
     [Table("ADMIN")]
     public partial class ADMIN
     {
-        public int? ID { get; set; }
+        public int ID { get; set; }
 
         [Key]
         [StringLength(20)]

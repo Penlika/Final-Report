@@ -15,7 +15,7 @@ namespace Final_Report.Models
             COMMENTANDRATINGs = new HashSet<COMMENTANDRATING>();
             CUSTOMERs = new HashSet<CUSTOMER>();
         }
-
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
 
         [Required]

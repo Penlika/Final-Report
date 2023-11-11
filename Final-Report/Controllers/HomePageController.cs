@@ -13,12 +13,9 @@ namespace Final_Report.Controllers
     {
         Final db=new Final();
         // GET: HomePage
-        public ActionResult Index(int? page)
+        public ActionResult Index()
         {
-            var lstPACKAGE = db.PACKAGES.OrderBy(s => s.DESTINATION);
-            int pageNumber = (page) ?? 1;
-            int pageSize = 10;
-            return View(lstPACKAGE.ToPagedList(pageNumber, pageSize));
+            return View();
         }
         public ActionResult NavBar()
         { 
@@ -48,9 +45,12 @@ namespace Final_Report.Controllers
         {
             return PartialView();
         }
-        public ActionResult ItemPage()
+        public ActionResult Stays(int? page)
         {
-            return View();
+            var lstPACKAGE = db.PACKAGES.OrderBy(s => s.DESTINATION);
+            int pageNumber = (page) ?? 1;
+            int pageSize = 10;
+            return View(lstPACKAGE.ToPagedList(pageNumber, pageSize));
         }
         public ActionResult NavBarItem()
         {
@@ -63,6 +63,17 @@ namespace Final_Report.Controllers
         public ActionResult SortItem()
         {
             return PartialView();
+        }
+        public ActionResult Flights(int? page)
+        {
+            var lstPACKAGE = db.PACKAGES.OrderBy(s => s.DESTINATION);
+            int pageNumber = (page) ?? 1;
+            int pageSize = 10;
+            return View(lstPACKAGE.ToPagedList(pageNumber, pageSize));
+        }
+        public ActionResult Packages()
+        {
+            return View();
         }
     }
 }
