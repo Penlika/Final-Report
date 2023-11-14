@@ -188,9 +188,11 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\Item\fillForm.css" />
     <Content Include="Content\Item\ItemPage.css" />
     <Content Include="Content\Item\Modal.css" />
     <Content Include="Content\Item\Packages.css" />
+    <Content Include="Content\Item\profile.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -243,6 +245,8 @@
     <Content Include="Views\HomePage\Packages.cshtml" />
     <Content Include="Views\Maps\Maps.cshtml" />
     <Content Include="Views\HomePage\test.cshtml" />
+    <Content Include="Views\HomePage\fillForm.cshtml" />
+    <Content Include="Views\HomePage\TrendingLocation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

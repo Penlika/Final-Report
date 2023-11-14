@@ -33,6 +33,10 @@ namespace Final_Report
                       "~/Content/Item/Packages.css"));
             bundles.Add(new StyleBundle("~/Content/Item/Modal.css").Include(
                       "~/Content/Item/Modal.css"));
+            bundles.Add(new StyleBundle("~/Content/Item/profile").Include(
+                      "~/Content/Item/profile.css"));
+            bundles.Add(new StyleBundle("~/Content/Item/fillForm").Include(
+                      "~/Content/Item/fillForm.css"));
         }
     }
 }

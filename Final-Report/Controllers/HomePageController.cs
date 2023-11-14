@@ -79,5 +79,13 @@ namespace Final_Report.Controllers
         {
             return View();
         }
+        public ActionResult fillForm()
+        {
+            return View();
+        }
+        public ActionResult TrendingLocation()
+        {
+            return PartialView();
+        }
     }
 }
