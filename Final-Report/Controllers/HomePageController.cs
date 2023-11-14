@@ -75,5 +75,9 @@ namespace Final_Report.Controllers
         {
             return View();
         }
+        public ActionResult test()
+        {
+            return View();
+        }
     }
 }

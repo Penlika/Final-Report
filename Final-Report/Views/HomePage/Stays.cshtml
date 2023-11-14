@@ -1,4 +1,5 @@
 ﻿@using PagedList.Mvc
+@Styles.Render("~/Content/Item/Modal.css")
 @{
     ViewBag.Title = "Stays";
     Layout = "~/Views/Shared/ItemLayout.cshtml";
@@ -133,136 +134,50 @@
             <div class="modal-body">
                 <!-- Your larger content here -->
                 <!-- You can add more content or adjust the size as needed -->
-                <div class="row">
-                    <div class="col-sm-4 text-center abc">
-
-                        <form action="#!" style="background-color:orange">
-
-                            <p class="h4 mb-4 text-left">Search</p>
-
-                            <p class="text-left">Destination/property name:</p>
-
-                            <label for="DateIn" class="in">Check-in date</label>
-                            <input type="date" class="form-control mb-4" placeholder="Enter ">
-
-                            <label for="DateOut" class="in">Check-out date</label>
-                            <input type="date" class="form-control mb-4" placeholder="Enter Password">
-
-                            <label for="DateOut" class="in">Check-out date</label>
-                            <div class="d-flex justify-content-left">
-                                <div>
-                                    <label for="DateOut" class="in">#-night stay</label>
-                                    <div class="custom-control custom-checkbox text-left">
-                                        <input type="checkbox" class="custom-control-input">
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="btn btn-info btn-block my" type="submit">Search</button>
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1">
-                                Launch demo modal
-                            </button>
-                            <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div>
-                                                @foreach (var customer in Model)
-                                                {
-                                                    Html.Partial("Maps");
-                                                }
-                                            </div>
-
-                                            <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-                                            <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button type="button" class="btn btn-primary">Save changes</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                        </form>
-
-                    </div>
-                    <div>
-                        <link rel='stylesheet' href='https://sachinchoolur.github.io/lightslider/dist/css/lightslider.css'>
-                        <div class="container-fluid mt-2 mb-3">
-                            <div class="row no-gutters">
-                                <div class="col-md-5 pr-2">
-                                    <div class="card">
-                                        <div class="demo">
-                                            <ul id="lightSlider">
-                                                <li data-thumb="https://i.imgur.com/KZpuufK.jpg"> <img src="https://i.imgur.com/KZpuufK.jpg" /> </li>
-                                                <li data-thumb="https://i.imgur.com/GwiUmQA.jpg"> <img src="https://i.imgur.com/GwiUmQA.jpg" /> </li>
-                                                <li data-thumb="https://i.imgur.com/DhKkTrG.jpg"> <img src="https://i.imgur.com/DhKkTrG.jpg" /> </li>
-                                                <li data-thumb="https://i.imgur.com/kYWqL7k.jpg"> <img src="https://i.imgur.com/kYWqL7k.jpg" /> </li>
-                                                <li data-thumb="https://i.imgur.com/c9uUysL.jpg"> <img src="https://i.imgur.com/c9uUysL.jpg" /> </li>
-                                                <li data-thumb="https://i.imgur.com/KZpuufK.jpg"> <img src="https://i.imgur.com/KZpuufK.jpg" /> </li>
-                                                <li data-thumb="https://i.imgur.com/GwiUmQA.jpg"> <img src="https://i.imgur.com/GwiUmQA.jpg" /> </li>
-                                                <li data-thumb="https://i.imgur.com/DhKkTrG.jpg"> <img src="https://i.imgur.com/DhKkTrG.jpg" /> </li>
-                                                <li data-thumb="https://i.imgur.com/kYWqL7k.jpg"> <img src="https://i.imgur.com/kYWqL7k.jpg" /> </li>
-                                                <li data-thumb="https://i.imgur.com/c9uUysL.jpg"> <img src="https://i.imgur.com/c9uUysL.jpg" /> </li>
-                                                <li data-thumb="https://i.imgur.com/KZpuufK.jpg"> <img src="https://i.imgur.com/KZpuufK.jpg" /> </li>
-                                                <li data-thumb="https://i.imgur.com/GwiUmQA.jpg"> <img src="https://i.imgur.com/GwiUmQA.jpg" /> </li>
-                                                <li data-thumb="https://i.imgur.com/DhKkTrG.jpg"> <img src="https://i.imgur.com/DhKkTrG.jpg" /> </li>
-                                                <li data-thumb="https://i.imgur.com/kYWqL7k.jpg"> <img src="https://i.imgur.com/kYWqL7k.jpg" /> </li>
-                                                <li data-thumb="https://i.imgur.com/c9uUysL.jpg"> <img src="https://i.imgur.com/c9uUysL.jpg" /> </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="card mt-2">
-                                        <h6>Reviews</h6>
-                                        <div class="d-flex flex-row">
-                                            <div class="stars"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> </div>
-                                            <span class="ml-1 font-weight-bold">4.6</span>
-                                        </div>
-                                        <hr>
-                                        <div class="badges"> <span class="badge bg-dark ">All (230)</span> <span class="badge bg-dark "> <i class="fa fa-image"></i> 23 </span> <span class="badge bg-dark "> <i class="fa fa-comments-o"></i> 23 </span> <span class="badge bg-warning"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <span class="ml-1">2,123</span> </span> </div>
-                                        <hr>
-                                        <div class="comment-section">
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <div class="d-flex flex-row align-items-center">
-                                                    <img src="https://i.imgur.com/o5uMfKo.jpg" class="rounded-circle profile-image">
-                                                    <div class="d-flex flex-column ml-1 comment-profile">
-                                                        <div class="comment-ratings"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> </div>
-                                                        <span class="username">Lori Benneth</span>
-                                                    </div>
-                                                </div>
-                                                <div class="date"> <span class="text-muted">2 May</span> </div>
-                                            </div>
-                                            <hr>
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <div class="d-flex flex-row align-items-center">
-                                                    <img src="https://i.imgur.com/tmdHXOY.jpg" class="rounded-circle profile-image">
-                                                    <div class="d-flex flex-column ml-1 comment-profile">
-                                                        <div class="comment-ratings"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> </div>
-                                                        <span class="username">Timona Simaung</span>
-                                                    </div>
-                                                </div>
-                                                <div class="date"> <span class="text-muted">12 May</span> </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                            </div>
-                        </div>
-                        <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js'></script>
-                        <script src='https://sachinchoolur.github.io/lightslider/dist/js/lightslider.js'></script>
-                        <script>$('#lightSlider').lightSlider({ gallery: true, item: 1, loop: true, slideMargin: 0, thumbItem: 9 });</script>
+                <div class="carousel-container">
+                    <div class="carousel">
+                        <img src="https://via.placeholder.com/800x400" alt="Image 1">
+                        <img src="https://via.placeholder.com/800x400" alt="Image 2">
+                        <img src="https://via.placeholder.com/800x400" alt="Image 3">
+                        <!-- Add more images as needed -->
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+
+                <div class="preview-container">
+                    <div class="preview" onclick="showImage(0)"><img src="https://via.placeholder.com/150x75" alt="Preview 1"></div>
+                    <div class="preview" onclick="showImage(1)"><img src="https://via.placeholder.com/150x75" alt="Preview 2"></div>
+                    <div class="preview" onclick="showImage(2)"><img src="https://via.placeholder.com/150x75" alt="Preview 3"></div>
+                    <!-- Add more previews as needed -->
+                </div>
+
+                <script>
+                    let currentIndex = 0;
+                    const carousel = document.querySelector('.carousel');
+                    const previews = document.querySelectorAll('.preview');
+
+                    function showImage(index) {
+                        currentIndex = index;
+                        updateCarousel();
+                    }
+
+                    function updateCarousel() {
+                        const translateValue = -currentIndex * 100 + '%';
+                        carousel.style.transform = `translateX(${translateValue})`;
+
+                        // Highlight the selected preview
+                        previews.forEach((preview, index) => {
+                            if (index === currentIndex) {
+                                preview.style.border = '2px solid #333';
+                            } else {
+                                preview.style.border = '2px solid #ccc';
+                            }
+                        });
+                    }
+                </script>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
             </div>
         </div>
     </div>

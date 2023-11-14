@@ -242,6 +242,7 @@
     <Content Include="Views\HomePage\Flights.cshtml" />
     <Content Include="Views\HomePage\Packages.cshtml" />
     <Content Include="Views\Maps\Maps.cshtml" />
+    <Content Include="Views\HomePage\test.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
