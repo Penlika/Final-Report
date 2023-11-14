@@ -30,12 +30,12 @@ namespace Final_Report.Controllers
                 var tk = db.USERS.FirstOrDefault(k => k.USERNAME == Model.USERNAME);
                 if (tk != null)
                 {
-                    ModelState.AddModelError("USERNAME", "This account is not exist");
+                    ModelState.AddModelError("USERNAME", "This account is already exist");
                     return View(Model);
                 }
                 db.USERS.Add(Model);
                 db.SaveChanges();
-                return View();
+                return RedirectToAction("Login", "User");
             }
             return View(Model);
         }
@@ -61,7 +61,16 @@ namespace Final_Report.Controllers
             }
             return RedirectToAction("index", "HomePage");
         }
-        public ActionResult Profile(string username, string password)
+        public ActionResult Logout()
+        {
+            Session["USERNAME"] = null;
+            return Redirect("~/");
+        }
+        public ActionResult Profile()
+        {
+            return View();
+        }
+        public ActionResult BookingHistory()
         {
             return View();
         }

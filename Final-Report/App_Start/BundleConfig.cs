@@ -37,6 +37,10 @@ namespace Final_Report
                       "~/Content/Item/profile.css"));
             bundles.Add(new StyleBundle("~/Content/Item/fillForm").Include(
                       "~/Content/Item/fillForm.css"));
+            bundles.Add(new Bundle("~/bundles/Stepper").Include(
+                    "~/Scripts/Item/Stepper.js"));
+            bundles.Add(new StyleBundle("~/Content/Item/Stepper.css").Include(
+                    "~/Content/Item/Stepper.css"));
         }
     }
 }

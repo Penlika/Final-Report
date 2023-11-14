@@ -81,7 +81,7 @@ namespace Final_Report.Controllers
         }
         public ActionResult fillForm()
         {
-            return View();
+            return PartialView();
         }
         public ActionResult TrendingLocation()
         {
