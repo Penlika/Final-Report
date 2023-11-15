@@ -13,8 +13,13 @@
                     <div style="float: right">
                         <a href="@Url.Action("Index", "Cart")"
                            class="btn" style="background-color: azure; color: darkblue; font-weight: 500">Empty</a>
-                        <a href="@Url.Action("Profile", "User")"
-                           class="btn" style="background-color: azure; color: darkblue; font-weight: 500">Account</a>
+                        <a class="dropdown-toggle btn" data-bs-toggle="dropdown" aria-expanded="false"
+                           style="background-color: azure; color: darkblue; font-weight: 500">Account</a>
+                        <ul class="dropdown-menu text-light">
+                            <li><a class="dropdown-item" href="@Url.Action("Profile","User")">Profile</a></li>
+                            <li><a class="dropdown-item" href="@Url.Action("History","Booking")">Booking history</a></li>
+                            <li><a class="dropdown-item" href="@Url.Action("Logout","User")">Log out</a></li>
+                        </ul>
                     </div>
                 }
                 else
