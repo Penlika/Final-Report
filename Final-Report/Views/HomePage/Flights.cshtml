@@ -248,9 +248,9 @@
                 <div style="padding:8px"></div>
 
                 <nav aria-label="Page navigation example" class="text-center">
-                    @Html.PagedListPager(
+                    @*@Html.PagedListPager(
                         (PagedList.IPagedList)Model, page => Url.Action("Index", new { page = page })
-                    )
+                    )*@
                 </nav>
             </div>
         </div>
@@ -305,10 +305,10 @@
                                         </div>
                                         <div class="modal-body">
                                             <div>
-                                                @foreach (var customer in Model)
+                                                @*@foreach (var customer in Model)
                                                 {
                                                     Html.Partial("Maps");
-                                                }
+                                                }*@
                                             </div>
 
                                             <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>

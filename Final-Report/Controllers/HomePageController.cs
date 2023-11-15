@@ -45,12 +45,13 @@ namespace Final_Report.Controllers
         {
             return PartialView();
         }
-        public ActionResult Stays(int? page)
+        public ActionResult Stays(/*int? page*/)
         {
-            var lstPACKAGE = db.PACKAGES.OrderBy(s => s.DESTINATION);
-            int pageNumber = (page) ?? 1;
-            int pageSize = 10;
-            return View(lstPACKAGE.ToPagedList(pageNumber, pageSize));
+            //var lstPACKAGE = db.PACKAGES.OrderBy(s => s.DESTINATION);
+            //int pageNumber = (page) ?? 1;
+            //int pageSize = 10;
+            //return View(lstPACKAGE.ToPagedList(pageNumber, pageSize));
+            return View();
         }
         public ActionResult NavBarItem()
         {
@@ -64,12 +65,13 @@ namespace Final_Report.Controllers
         {
             return PartialView();
         }
-        public ActionResult Flights(int? page)
+        public ActionResult Flights(/*int? page*/)
         {
-            var lstPACKAGE = db.PACKAGES.OrderBy(s => s.DESTINATION);
-            int pageNumber = (page) ?? 1;
-            int pageSize = 10;
-            return View(lstPACKAGE.ToPagedList(pageNumber, pageSize));
+            //var lstPACKAGE = db.PACKAGES.OrderBy(s => s.DESTINATION);
+            //int pageNumber = (page) ?? 1;
+            //int pageSize = 10;
+            //return View(lstPACKAGE.ToPagedList(pageNumber, pageSize));
+            return View();
         }
         public ActionResult Packages()
         {
