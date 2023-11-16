@@ -1,4 +1,4 @@
-namespace Final_Report.Models
+namespace FundamentalProject.Models
 {
     using System;
     using System.Collections.Generic;
@@ -6,16 +6,16 @@ namespace Final_Report.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("PACKAGES")]
+    [Table("PACKAGE")]
     public partial class PACKAGE
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public PACKAGE()
         {
+            BOOKINGPACKAGEs = new HashSet<BOOKINGPACKAGE>();
             COMMENTANDRATINGs = new HashSet<COMMENTANDRATING>();
-            CUSTOMERs = new HashSet<CUSTOMER>();
         }
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+
         public int ID { get; set; }
 
         [Required]
@@ -28,12 +28,17 @@ namespace Final_Report.Models
 
         public int? IDHOTEL { get; set; }
 
+        [Required]
         [StringLength(200)]
         public string DESTINATION { get; set; }
 
         [Required]
         [StringLength(250)]
         public string INFORMATION { get; set; }
+
+        [Required]
+        [StringLength(50)]
+        public string PROLONG { get; set; }
 
         public double PACKAGEPRICE_PER_PERSON { get; set; }
 
@@ -42,9 +47,9 @@ namespace Final_Report.Models
         public virtual HOTEL HOTEL { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<COMMENTANDRATING> COMMENTANDRATINGs { get; set; }
+        public virtual ICollection<BOOKINGPACKAGE> BOOKINGPACKAGEs { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CUSTOMER> CUSTOMERs { get; set; }
+        public virtual ICollection<COMMENTANDRATING> COMMENTANDRATINGs { get; set; }
     }
 }

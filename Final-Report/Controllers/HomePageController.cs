@@ -1,22 +1,48 @@
-﻿using Final_Report.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI;
 using PagedList;
+using PagedList.Mvc;
+using FundamentalProject.Models;
 
 namespace Final_Report.Controllers
 {
     public class HomePageController : Controller
     {
-        Final db=new Final();
+        Model1 db=new Model1();
         // GET: HomePage
+        // ----------------- View -----------------
         public ActionResult Index()
         {
             return View();
         }
+        public ActionResult Stays(int? page)
+        {
+            var lstHotel = db.HOTELs.OrderBy(s => s.ID);
+            int pageNumber = (page) ?? 1;
+            int pageSize = 5;
+            return View(lstHotel.ToPagedList(pageNumber, pageSize));
+        }
+        public ActionResult Packages(int? page)
+        {
+            var lstPackage = db.PACKAGEs.OrderBy(s => s.ID);
+            int pageNumber = (page) ?? 1;
+            int pageSize = 6;
+            return View(lstPackage.ToPagedList(pageNumber, pageSize));
+        }
+        public ActionResult Flights(int? page)
+        {
+            var lstPACKAGE = db.FLIGHTs.OrderBy(s => s.ID);
+            int pageNumber = (page) ?? 1;
+            int pageSize = 5;
+            return View(lstPACKAGE.ToPagedList(pageNumber, pageSize));
+        }
+        // ----------------- Partial View -----------------
+
+        // ----------------- NavBar -----------------
         public ActionResult NavBar()
         { 
             return PartialView(); 
@@ -25,6 +51,11 @@ namespace Final_Report.Controllers
         {
             return PartialView();
         }
+        public ActionResult NavBarItem()
+        {
+            return PartialView();
+        }
+        // ----------------- -----------------
         public ActionResult TrendLocaPartial()
         {
             return PartialView();
@@ -45,18 +76,6 @@ namespace Final_Report.Controllers
         {
             return PartialView();
         }
-        public ActionResult Stays(/*int? page*/)
-        {
-            //var lstPACKAGE = db.PACKAGES.OrderBy(s => s.DESTINATION);
-            //int pageNumber = (page) ?? 1;
-            //int pageSize = 10;
-            //return View(lstPACKAGE.ToPagedList(pageNumber, pageSize));
-            return View();
-        }
-        public ActionResult NavBarItem()
-        {
-            return PartialView();
-        }
         public ActionResult ListItem()
         {
             return PartialView();
@@ -65,18 +84,8 @@ namespace Final_Report.Controllers
         {
             return PartialView();
         }
-        public ActionResult Flights(/*int? page*/)
-        {
-            //var lstPACKAGE = db.PACKAGES.OrderBy(s => s.DESTINATION);
-            //int pageNumber = (page) ?? 1;
-            //int pageSize = 10;
-            //return View(lstPACKAGE.ToPagedList(pageNumber, pageSize));
-            return View();
-        }
-        public ActionResult Packages()
-        {
-            return View();
-        }
+        
+        
         public ActionResult test()
         {
             return View();

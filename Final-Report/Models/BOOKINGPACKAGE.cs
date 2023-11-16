@@ -6,21 +6,28 @@ namespace FundamentalProject.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("COMMENTANDRATING")]
-    public partial class COMMENTANDRATING
+    [Table("BOOKINGPACKAGE")]
+    public partial class BOOKINGPACKAGE
     {
+        public int? IDPACKAGE { get; set; }
+
         public int? IDCUSTOMER { get; set; }
 
-        public int? IDPACKAGES { get; set; }
+        public string BOOKING_DETAIL { get; set; }
 
         [Key]
         [Column(Order = 0)]
-        [StringLength(400)]
-        public string COMMENT { get; set; }
+        public double TOTALPRICE { get; set; }
 
         [Key]
         [Column(Order = 1)]
-        public double RATING { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int NUMOFPERSON { get; set; }
+
+        [Key]
+        [Column(Order = 2)]
+        [StringLength(20)]
+        public string STATUS { get; set; }
 
         public virtual CUSTOMER CUSTOMER { get; set; }
 

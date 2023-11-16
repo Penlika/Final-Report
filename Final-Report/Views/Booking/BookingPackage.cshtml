@@ -1,9 +1,9 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "BookingPackage";
     Layout = "~/Views/Shared/SignLogLayout.cshtml";
-    FundamentalProject.Models.CUSTOMER cus = (FundamentalProject.Models.CUSTOMER)Session["USERNAME"];
 }
+
 @Styles.Render("~/Content/Item/Stepper.css")
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
 <div class="container" style="padding-bottom:50px">
@@ -41,20 +41,10 @@
 
         <div class="card">
             <div id="headingOne">
-            </div>
-
-            <div id="collapseOne" class="collapse" aria-labelledby="headingOne"
-                 data-bs-parent="#accordionExample">
-                <div class="card-body">
-                    your content goes here...
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <div id="headingTwo">
 
             </div>
-            <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+
+            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                 <div class="card-body">
                     <div class="container rounded bg-white mt-5 mb-5">
                         <div class="row">
@@ -76,12 +66,22 @@
                                         <div class="col-md-12"><label class="labels">Email</label><input type="text" class="form-control" placeholder="enter email" value=""></div>
                                     </div>
                                     <div class="mt-5 text-center">
-                                        <a class="btn btn-primary" >Confirm</a>
+                                        <a class="btn btn-primary">Confirm</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div id="headingTwo">
+
+            </div>
+            <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                <div class="card-body">
+                    ...........
                 </div>
             </div>
         </div>

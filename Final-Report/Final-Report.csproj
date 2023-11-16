@@ -154,20 +154,21 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202311101518458_sdadadas.cs" />
-    <Compile Include="Migrations\202311101518458_sdadadas.designer.cs">
-      <DependentUpon>202311101518458_sdadadas.cs</DependentUpon>
+    <Compile Include="Migrations\202311160645088_jdshbkjnf.cs" />
+    <Compile Include="Migrations\202311160645088_jdshbkjnf.designer.cs">
+      <DependentUpon>202311160645088_jdshbkjnf.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ADMIN.cs" />
-    <Compile Include="Models\BOOKING_FORM.cs" />
+    <Compile Include="Models\BOOKINGFLIGHT.cs" />
+    <Compile Include="Models\BOOKINGHOTEL.cs" />
+    <Compile Include="Models\BOOKINGPACKAGE.cs" />
     <Compile Include="Models\COMMENTANDRATING.cs" />
     <Compile Include="Models\CUSTOMER.cs" />
-    <Compile Include="Models\Final.cs" />
     <Compile Include="Models\FLIGHT.cs" />
     <Compile Include="Models\HOTEL.cs" />
+    <Compile Include="Models\Model1.cs" />
     <Compile Include="Models\PACKAGE.cs" />
-    <Compile Include="Models\USER.cs" />
     <Compile Include="Models\UserLogin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -249,6 +250,9 @@
     <Content Include="Views\HomePage\TrendingLocation.cshtml" />
     <Content Include="Views\Booking\Index.cshtml" />
     <Content Include="Views\Booking\History.cshtml" />
+    <Content Include="Views\Booking\BookingPackage.cshtml" />
+    <Content Include="Views\Booking\BookingFlight.cshtml" />
+    <Content Include="Views\Booking\BookingHotel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -281,8 +285,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202311101518458_sdadadas.resx">
-      <DependentUpon>202311101518458_sdadadas.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202311160645088_jdshbkjnf.resx">
+      <DependentUpon>202311160645088_jdshbkjnf.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

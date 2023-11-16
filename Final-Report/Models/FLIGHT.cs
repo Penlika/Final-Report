@@ -1,4 +1,4 @@
-namespace Final_Report.Models
+namespace FundamentalProject.Models
 {
     using System;
     using System.Collections.Generic;
@@ -6,15 +6,16 @@ namespace Final_Report.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("FLIGHTS")]
+    [Table("FLIGHT")]
     public partial class FLIGHT
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public FLIGHT()
         {
-            PACKAGES = new HashSet<PACKAGE>();
+            BOOKINGFLIGHTs = new HashSet<BOOKINGFLIGHT>();
+            PACKAGEs = new HashSet<PACKAGE>();
         }
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+
         public int ID { get; set; }
 
         [Required]
@@ -33,9 +34,12 @@ namespace Final_Report.Models
         [StringLength(100)]
         public string TO { get; set; }
 
-        public decimal PRICE_PER_PERSON { get; set; }
+        public double PRICE_PER_PERSON { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PACKAGE> PACKAGES { get; set; }
+        public virtual ICollection<BOOKINGFLIGHT> BOOKINGFLIGHTs { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PACKAGE> PACKAGEs { get; set; }
     }
 }

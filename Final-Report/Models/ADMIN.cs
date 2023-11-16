@@ -1,4 +1,4 @@
-namespace Final_Report.Models
+namespace FundamentalProject.Models
 {
     using System;
     using System.Collections.Generic;
@@ -11,13 +11,12 @@ namespace Final_Report.Models
     {
         public int ID { get; set; }
 
-        [Key]
+        [Required]
         [StringLength(20)]
         public string USERNAME { get; set; }
 
-        [StringLength(50)]
-        public string EMAIL { get; set; }
-
-        public virtual USER USER { get; set; }
+        [Required]
+        [StringLength(20)]
+        public string PASSWORD { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Final_Report.Models;
+﻿using FundamentalProject.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +11,7 @@ namespace Final_Report.Controllers
 {
     public class UserController : Controller
     {
-        Final db = new Final();
+        Model1 db = new Model1();
         // GET: User
         public ActionResult Index()
         {
@@ -23,17 +23,17 @@ namespace Final_Report.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Register(USER Model)
+        public ActionResult Register(CUSTOMER Model)
         {
             if (ModelState.IsValid)
             {
-                var tk = db.USERS.FirstOrDefault(k => k.USERNAME == Model.USERNAME);
-                if (tk != null)
+                var cus = db.CUSTOMERs.FirstOrDefault(k => k.USERNAME == Model.USERNAME);
+                if (cus != null)
                 {
-                    ModelState.AddModelError("USERNAME", "This account is already exist");
+                    ModelState.AddModelError("USERNAME", "Username already existed !");
                     return View(Model);
                 }
-                db.USERS.Add(Model);
+                db.CUSTOMERs.Add(Model);
                 db.SaveChanges();
                 return RedirectToAction("Login", "User");
             }
@@ -49,17 +49,16 @@ namespace Final_Report.Controllers
         {
             if (ModelState.IsValid)
             {
-                var u = db.USERS.FirstOrDefault(k => k.USERNAME == user.UserName && k.PASSWORD == user.Password);
-                if (u != null)
+                var c = db.CUSTOMERs.FirstOrDefault(k => k.USERNAME == user.UserName && k.PASSWORD == user.Password);
+                if (c != null)
                 {
-                    Session["USERNAME"] = u;
+                    Session["USERNAME"] = c;
+                    return RedirectToAction("Index", "HomePage");
                 }
                 else
-                {
-                    ModelState.AddModelError("PASSWORD", "This account is not exist");
-                }
+                    ModelState.AddModelError("Password", "Password incorrect !");
             }
-            return RedirectToAction("index", "HomePage");
+            return RedirectToAction("Index", "HomePage");
         }
         public ActionResult Logout()
         {
