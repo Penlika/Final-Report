@@ -77,18 +77,18 @@
                                     <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="far fa-star"></span> <!-- Book now Enquiry -->
                                 </div>
                                 <div class="d-flex flex-column tags pt-1">
-                                    <div><span class="fas fa-comment-dollar"></span> Price: @item.PRICE_PER_PERSON</div>
-                                    <div><span class="fas fa-receipt"></span> Infor: @item.INFORMATION</div>
-                                    <div><span class="fas fa-concierge-bell"></span> Available Room: @item.ROOM_AVAILABLE</div>
+                                    <div><span class="fas fa-comment-dollar"></span>    Price: @item.PRICE_PER_PERSON</div>
+                                    <div><span class="fas fa-receipt"></span>   Infor: @item.INFORMATION</div>
+                                    <div><span class="fas fa-concierge-bell"></span>    Available Room: @item.ROOM_AVAILABLE</div>
                                 </div>
                             </div>
                         </div>
                         <div class="d-flex justify-content-end mt-1">
-                            <div class="btn enquiry text-uppercase mx-2">Enquiry</div>
+                            
                             <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" href="@Url.Action("BookingHotel", "Booking", new {ID = item.ID})">
+                            <a type="button" class="btn btn-primary" href="@Url.Action("BookingHotel","Booking", new {IDHotel = item.ID})">
                                 Book
-                            </button>
+                            </a>
                         </div>
                     </div>
                 }

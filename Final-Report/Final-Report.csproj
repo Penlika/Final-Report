@@ -167,6 +167,7 @@
     <Compile Include="Models\CUSTOMER.cs" />
     <Compile Include="Models\FLIGHT.cs" />
     <Compile Include="Models\HOTEL.cs" />
+    <Compile Include="Models\MailInfor.cs" />
     <Compile Include="Models\Model1.cs" />
     <Compile Include="Models\PACKAGE.cs" />
     <Compile Include="Models\UserLogin.cs" />
