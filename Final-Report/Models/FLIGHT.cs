@@ -1,4 +1,4 @@
-namespace FundamentalProject.Models
+namespace Final_Report.Models
 {
     using System;
     using System.Collections.Generic;
@@ -13,7 +13,7 @@ namespace FundamentalProject.Models
         public FLIGHT()
         {
             BOOKINGFLIGHTs = new HashSet<BOOKINGFLIGHT>();
-            PACKAGEs = new HashSet<PACKAGE>();
+            BOOKINGPACKAGEs = new HashSet<BOOKINGPACKAGE>();
         }
 
         public int ID { get; set; }
@@ -40,6 +40,6 @@ namespace FundamentalProject.Models
         public virtual ICollection<BOOKINGFLIGHT> BOOKINGFLIGHTs { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PACKAGE> PACKAGEs { get; set; }
+        public virtual ICollection<BOOKINGPACKAGE> BOOKINGPACKAGEs { get; set; }
     }
 }

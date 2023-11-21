@@ -60,28 +60,50 @@ namespace Final_Report.Controllers
                 mail.Send(m);
             }
 
-            return RedirectToAction("Index", "HomePage");
+            return RedirectToAction("Stays", "HomePage");
         }
-        //public ActionResult SendEmail()
-        //{
-        //    var mail = new SmtpClient("smtp.gmail.com", 25)
-        //    {
-        //        Credentials = new NetworkCredential("hoainam3183@gmail.com", "scuc bpjv iqdk kesi"),
-        //        EnableSsl = true
-        //    };
-
-        //    var m = new MailMessage();
-        //    m.From = new MailAddress("hoainam3183@gmail.com");
-        //    m.ReplyToList.Add("hoainam3183@gmail.com");
-        //    m.To.Add(new MailAddress(f["To"]));
-        //    m.Subject = "Your booking has been completed !";
-        //    m.Body = "Dear Mr/Mrs " + f["LastName"] + ",\nThis is your detail information of your booking ! \n ";
-
-        //    mail.Send(m);
-        //    return RedirectToAction("Stays", "HomePage");
-        //}
         public ActionResult BookingPackage()
         {
+            return RedirectToAction("Index", "HomePage");
+        }
+        public ActionResult CompleteBookPackage(int IDPackage, FormCollection f)
+        {
+            var userLogin = (CUSTOMER)Session["USERNAME"];
+            if (userLogin == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
+            else
+            {
+                var hotel = db.HOTELs.Where(h => h.ID == IDPackage).FirstOrDefault();
+                var book = new BOOKINGHOTEL
+                {
+                    IDHOTEL = hotel.ID,
+                    IDCUSTOMER = userLogin.ID,
+                    TOTALPRICE = hotel.PRICE_PER_PERSON,
+                    BOOKING_DETAIL = "None",
+                    NUMOFPERSON = 1,
+                    STATUS = "Paid"
+                };
+                db.BOOKINGHOTELs.Add(book);
+                db.SaveChanges();
+
+                var mail = new SmtpClient("smtp.gmail.com", 25)
+                {
+                    Credentials = new NetworkCredential("hoainam3183@gmail.com", "scuc bpjv iqdk kesi"),
+                    EnableSsl = true
+                };
+
+                var m = new MailMessage();
+                m.From = new MailAddress("hoainam3183@gmail.com");
+                m.ReplyToList.Add("hoainam3183@gmail.com");
+                m.To.Add(new MailAddress(f["To"]));
+                m.Subject = "Your booking has been completed !";
+                m.Body = "Dear Mr/Mrs " + f["LastName"] + ",\nThis is your detail information of your booking ! \n ";
+
+                mail.Send(m);
+            }
+
             return RedirectToAction("Index", "HomePage");
         }
         public ActionResult BookingFlight()

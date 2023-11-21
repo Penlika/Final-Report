@@ -169,7 +169,7 @@
     <Compile Include="Models\HOTEL.cs" />
     <Compile Include="Models\MailInfor.cs" />
     <Compile Include="Models\Model1.cs" />
-    <Compile Include="Models\PACKAGE.cs" />
+    <Compile Include="Models\USER.cs" />
     <Compile Include="Models\UserLogin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -248,7 +248,6 @@
     <Content Include="Views\HomePage\Packages.cshtml" />
     <Content Include="Views\Maps\Maps.cshtml" />
     <Content Include="Views\HomePage\test.cshtml" />
-    <Content Include="Views\HomePage\TrendingLocation.cshtml" />
     <Content Include="Views\Booking\Index.cshtml" />
     <Content Include="Views\Booking\History.cshtml" />
     <Content Include="Views\Booking\BookingPackage.cshtml" />

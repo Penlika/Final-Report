@@ -1,4 +1,4 @@
-namespace FundamentalProject.Models
+namespace Final_Report.Models
 {
     using System;
     using System.Collections.Generic;
@@ -9,27 +9,26 @@ namespace FundamentalProject.Models
     [Table("BOOKINGFLIGHT")]
     public partial class BOOKINGFLIGHT
     {
+        [Key]
+        public int IDRECEIPT { get; set; }
+
         public int? IDFLIGHT { get; set; }
 
         public int? IDCUSTOMER { get; set; }
 
         public string BOOKING_DETAIL { get; set; }
 
-        [Key]
-        [Column(Order = 0)]
+        public DateTime? BOOKINGDATE { get; set; }
+
         public double TOTALPRICE { get; set; }
 
-        [Key]
-        [Column(Order = 1)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int NUMOFPERSON { get; set; }
 
-        [Key]
-        [Column(Order = 2)]
+        [Required]
         [StringLength(20)]
         public string STATUS { get; set; }
 
-        public virtual CUSTOMER CUSTOMER { get; set; }
+        public virtual USER USER { get; set; }
 
         public virtual FLIGHT FLIGHT { get; set; }
     }

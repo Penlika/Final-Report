@@ -1,4 +1,4 @@
-namespace FundamentalProject.Models
+namespace Final_Report.Models
 {
     using System;
     using System.Collections.Generic;
@@ -9,14 +9,17 @@ namespace FundamentalProject.Models
     [Table("ADMIN")]
     public partial class ADMIN
     {
+        [Key]
+        [Column(Order = 0)]
         public int ID { get; set; }
 
-        [Required]
+        public string PICTURES { get; set; }
+
+        [Key]
+        [Column(Order = 1)]
         [StringLength(20)]
         public string USERNAME { get; set; }
 
-        [Required]
-        [StringLength(20)]
-        public string PASSWORD { get; set; }
+        public virtual USER USER { get; set; }
     }
 }

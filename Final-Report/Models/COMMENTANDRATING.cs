@@ -1,4 +1,4 @@
-namespace FundamentalProject.Models
+namespace Final_Report.Models
 {
     using System;
     using System.Collections.Generic;
@@ -11,7 +11,7 @@ namespace FundamentalProject.Models
     {
         public int? IDCUSTOMER { get; set; }
 
-        public int? IDPACKAGES { get; set; }
+        public int? IDHOTEL { get; set; }
 
         [Key]
         [Column(Order = 0)]
@@ -22,8 +22,8 @@ namespace FundamentalProject.Models
         [Column(Order = 1)]
         public double RATING { get; set; }
 
-        public virtual CUSTOMER CUSTOMER { get; set; }
+        public virtual HOTEL HOTEL { get; set; }
 
-        public virtual PACKAGE PACKAGE { get; set; }
+        public virtual USER USER { get; set; }
     }
 }

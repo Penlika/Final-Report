@@ -6,35 +6,35 @@ namespace Final_Report.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("HOTEL")]
-    public partial class HOTEL
+    [Table("USERS")]
+    public partial class USER
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public HOTEL()
+        public USER()
         {
+            BOOKINGFLIGHTs = new HashSet<BOOKINGFLIGHT>();
             BOOKINGHOTELs = new HashSet<BOOKINGHOTEL>();
             BOOKINGPACKAGEs = new HashSet<BOOKINGPACKAGE>();
+            ADMINs = new HashSet<ADMIN>();
             COMMENTANDRATINGs = new HashSet<COMMENTANDRATING>();
+            CUSTOMERs = new HashSet<CUSTOMER>();
         }
 
         public int ID { get; set; }
 
         [Required]
-        [StringLength(50)]
-        public string NAME { get; set; }
+        public string EMAIL { get; set; }
 
         [Required]
-        [StringLength(100)]
-        public string ADDRESS { get; set; }
+        [StringLength(30)]
+        public string PASSWORD { get; set; }
 
-        public string PICTURES { get; set; }
+        [Required]
+        [StringLength(50)]
+        public string ROLE { get; set; }
 
-        [StringLength(250)]
-        public string INFORMATION { get; set; }
-
-        public double PRICE_PER_PERSON { get; set; }
-
-        public int? ROOM_AVAILABLE { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BOOKINGFLIGHT> BOOKINGFLIGHTs { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BOOKINGHOTEL> BOOKINGHOTELs { get; set; }
@@ -43,6 +43,12 @@ namespace Final_Report.Models
         public virtual ICollection<BOOKINGPACKAGE> BOOKINGPACKAGEs { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ADMIN> ADMINs { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<COMMENTANDRATING> COMMENTANDRATINGs { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CUSTOMER> CUSTOMERs { get; set; }
     }
 }

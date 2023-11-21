@@ -1,4 +1,5 @@
-﻿using FundamentalProject.Models;
+﻿using Final_Report.Models;
+using FundamentalProject.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,7 +50,11 @@ namespace Final_Report.Controllers
         {
             if (ModelState.IsValid)
             {
-                var c = db.CUSTOMERs.FirstOrDefault(k => k.USERNAME == user.UserName && k.PASSWORD == user.Password);
+                var account = (from u in db.USERS
+                               join cus in db.CUSTOMERs
+                               on u.ID equals cus.ID
+                               select new { USERNAME = cus.USERNAME, PASSWORD = u.PASSWORD });
+                var c = account.FirstOrDefault(k => k.USERNAME == user.UserName && k.PASSWORD == user.Password);
                 if (c != null)
                 {
                     Session["USERNAME"] = c;
