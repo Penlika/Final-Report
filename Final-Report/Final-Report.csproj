@@ -150,9 +150,8 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
-    <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
-    <Compile Include="Areas\Admin\Controllers\NhanVienController.cs" />
-    <Compile Include="Areas\Admin\Controllers\SachController.cs" />
+    <Compile Include="Areas\Admin\Controllers\FlightController.cs" />
+    <Compile Include="Areas\Admin\Controllers\HotelController.cs" />
     <Compile Include="Areas\Navigation\NavigationModels.cs" />
     <Compile Include="Controllers\BookingController.cs" />
     <Compile Include="Controllers\HomePageController.cs" />
@@ -180,6 +179,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\bgvid.mp4" />
+    <Content Include="Content\Admin\dashboard.css" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-grid.rtl.css" />
@@ -214,10 +214,12 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Admin\Views\Shared\_LayoutAdmin.cshtml" />
-    <Content Include="Areas\Admin\Views\Admin\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\MenuPartial.cshtml" />
-    <Content Include="Areas\Admin\Views\Admin\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Flight\Create.cshtml" />
     <Content Include="Areas\Navigation\Navigation.json" />
+    <Content Include="Areas\Admin\Views\Admin\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Flight\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Hotel\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\Item\Stepper.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -269,7 +271,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Content\Admin\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />

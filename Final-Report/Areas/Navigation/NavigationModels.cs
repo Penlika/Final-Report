@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace SachOnline.Areas.Navigation
+namespace Final_Report.Areas.Navigation
 {
     public class NavigationMenu
     {

@@ -86,7 +86,7 @@ namespace Final_Report.Controllers
 
         public ActionResult Logout()
         {
-            Session["USERNAME"] = null;
+            Session["EMAIL"] = null;
             return Redirect("~/");
         }
         public ActionResult Profile()

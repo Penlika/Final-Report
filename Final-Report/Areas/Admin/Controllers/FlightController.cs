@@ -4,11 +4,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace SachOnline.Areas.Admin.Controllers
+namespace Final_Report.Areas.Admin.Controllers
 {
-    public class NhanVienController : Controller
+    public class FlightController : Controller
     {
-        // GET: Admin/NhanVien
+        // GET: Admin/Flight
         public ActionResult Index()
         {
             return View();

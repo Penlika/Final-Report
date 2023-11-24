@@ -1,14 +1,11 @@
-﻿@*@using SachOnline.Models
-@model SachOnline.Areas.Navigation.NavigationMenu
-@{ 
-    var user = (USER)Session["Admin"];
-}
+﻿@using Final_Report.Models
+@model Final_Report.Areas.Navigation.NavigationMenu
+
 <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
     <a class="d-flex row" style="text-align: center; justify-content:center ; align-items:center">
-        <img src="@user.Avatar" class="row" style="width:50%;height:50%;align-items: center; justify-content: center; margin: 0px; display: flex;" />
+        <img src="@((ADMIN)Session["Admin"]).PICTURES" class="row" style="width:50%;height:50%;align-items: center; justify-content: center; margin: 0px; display: flex;" />
         <div class="row" style="text-align: center;">
-            <span class="fs-6">@user.UserName</span>
-            <span class="fs-6">@user.Email</span>
+            <span class="fs-6">@((ADMIN)Session["Admin"]).USERNAME</span>
         </div>
     </a>
 
@@ -16,16 +13,13 @@
         <ul class="nav flex-column">
             @foreach (var item in Model.MenuItems)
             {
-                if (item.UserRoles.Contains(user.Role))
-                {
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="@item.Link">
-                            <i class="bi @item.Icon"></i>
-                            @item.DisplayName
-                        </a>
-                    </li>
-                }
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="@item.Link">
+                        <i class="bi @item.Icon"></i>
+                        @item.DisplayName
+                    </a>
+                </li>
             }
         </ul>
     </div>
-</nav>*@
+</nav>

@@ -1,0 +1,64 @@
+﻿@model IEnumerable<Final_Report.Models.FLIGHT>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.COMPANY)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DEPARTURE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ARRIVAL)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FROM)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TO)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PRICE_PER_PERSON)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.COMPANY)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DEPARTURE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ARRIVAL)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FROM)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TO)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PRICE_PER_PERSON)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>

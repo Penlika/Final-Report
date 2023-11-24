@@ -1,0 +1,102 @@
+﻿@*@model IEnumerable<Final_Report.Models.HOTEL>*@
+@using PagedList.Mvc;
+@helper Truncate(string s, int length)
+{
+    if (s.Length < length)
+    {
+        @s
+    }
+    else
+    {
+        @s.Substring(0, length)<text>...</text>
+    }
+}
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            ID
+        </th>
+        <th>
+            Name
+        </th>
+        <th>
+            Address
+        </th>
+        <th>
+            Photos
+        </th>
+        <th>
+            Information
+        </th>
+        <th>
+            Price/Person
+        </th>
+        <th>
+            Available
+        </th>
+        <th style="width:250px"></th>
+    </tr>
+
+    @foreach (Final_Report.Models.HOTEL item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ID)
+            </td>
+            <td>
+                @Truncate(item.NAME, 50)
+                @Html.DisplayFor(modelItem => item.NAME)
+            </td>
+            <td>
+                @Html.Raw(Truncate(item.ADDRESS, 70))
+            </td>
+            <td>
+                @if (!string.IsNullOrEmpty(item.PICTURES))
+                {
+                    <img src="@item.PICTURES" style="width:50px" />
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.INFORMATION)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PRICE_PER_PERSON)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ROOM_AVAILABLE)
+            </td>
+            <td>
+                <a href="@Url.Action("Edit", new {id=item.ID})" class="btn btn-primary">Edit</a>
+                <a href="@Url.Action("Detail", new {id=item.ID})" class="btn btn-light">Detail</a>
+                <a href="@Url.Action("Delete", new {id=item.ID})" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+    }
+
+</table>
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+    </script>
+
+}
+<nav aria-label="Page navigation example" class="text-center">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    @Html.PagedListPager(
+        (PagedList.IPagedList)Model, page => Url.Action("Index", new { page = page })
+    )
+</nav>
