@@ -1,7 +1,7 @@
 ﻿using Final_Report.Models;
-using FundamentalProject.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Reflection;
 using System.Web;
@@ -24,22 +24,26 @@ namespace Final_Report.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Register(CUSTOMER Model)
+        public ActionResult Register(ACCOUNT Model)
         {
             if (ModelState.IsValid)
             {
-                var cus = db.CUSTOMERs.FirstOrDefault(k => k.USERNAME == Model.USERNAME);
-                if (cus != null)
+                var existingUser = db.ACCOUNT.FirstOrDefault(k => k.EMAIL == Model.EMAIL);
+
+                if (existingUser != null)
                 {
-                    ModelState.AddModelError("USERNAME", "Username already existed !");
+                    ModelState.AddModelError("EMAIL", "Email already exists!");
                     return View(Model);
                 }
-                db.CUSTOMERs.Add(Model);
+                db.ACCOUNT.Add(Model);
                 db.SaveChanges();
+
                 return RedirectToAction("Login", "User");
             }
+
             return View(Model);
         }
+
         [HttpGet]
         public ActionResult Login()
         {
@@ -50,21 +54,36 @@ namespace Final_Report.Controllers
         {
             if (ModelState.IsValid)
             {
-                var account = (from u in db.USERS
-                               join cus in db.CUSTOMERs
-                               on u.ID equals cus.ID
-                               select new { USERNAME = cus.USERNAME, PASSWORD = u.PASSWORD });
-                var c = account.FirstOrDefault(k => k.USERNAME == user.UserName && k.PASSWORD == user.Password);
-                if (c != null)
+                var u = db.ACCOUNT.FirstOrDefault(k => k.EMAIL == user.Email && k.PASSWORD == user.Password);
+
+                if (u != null)
                 {
-                    Session["USERNAME"] = c;
-                    return RedirectToAction("Index", "HomePage");
+                    Session["EMAIL"] = u;
+
+                    // Determine user role
+                    string userRole = u.ROLE;
+
+                    if (userRole.Equals("admin", StringComparison.OrdinalIgnoreCase))
+                    {
+                        // Redirect to admin views
+                        return RedirectToAction("Index", "Admin", new { Area = "Admin" });
+                    }
+                    else if (userRole.Equals("customer", StringComparison.OrdinalIgnoreCase))
+                    {
+                        // Redirect to customer views
+                        return RedirectToAction("Index", "HomePage");
+                    }
                 }
                 else
-                    ModelState.AddModelError("Password", "Password incorrect !");
+                {
+                    ModelState.AddModelError("Password", "The account does not exist or the password is incorrect.");
+                }
             }
-            return RedirectToAction("Index", "HomePage");
+
+            return View(user);
         }
+
+
         public ActionResult Logout()
         {
             Session["USERNAME"] = null;

@@ -21,7 +21,7 @@ namespace Final_Report.Controllers
         }
         public ActionResult Stays(int? page)
         {
-            var lstHotel = db.HOTELs.OrderBy(s => s.ID);
+            var lstHotel = db.HOTEL.OrderBy(s => s.ID);
             int pageNumber = (page) ?? 1;
             int pageSize = 5;
             return View(lstHotel.ToPagedList(pageNumber, pageSize));
@@ -39,7 +39,7 @@ namespace Final_Report.Controllers
         //}
         public ActionResult Flights(int? page)
         {
-            var lstPACKAGE = db.FLIGHTs.OrderBy(s => s.ID);
+            var lstPACKAGE = db.FLIGHT.OrderBy(s => s.ID);
             int pageNumber = (page) ?? 1;
             int pageSize = 5;
             return View(lstPACKAGE.ToPagedList(pageNumber, pageSize));

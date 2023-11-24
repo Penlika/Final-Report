@@ -9,6 +9,13 @@ namespace Final_Report.Models
     [Table("BOOKINGFLIGHT")]
     public partial class BOOKINGFLIGHT
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public BOOKINGFLIGHT()
+        {
+            APPROVE = new HashSet<APPROVE>();
+            PAYING = new HashSet<PAYING>();
+        }
+
         [Key]
         public int IDRECEIPT { get; set; }
 
@@ -28,8 +35,14 @@ namespace Final_Report.Models
         [StringLength(20)]
         public string STATUS { get; set; }
 
-        public virtual USER USER { get; set; }
+        public virtual ACCOUNT ACCOUNT { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<APPROVE> APPROVE { get; set; }
 
         public virtual FLIGHT FLIGHT { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PAYING> PAYING { get; set; }
     }
 }

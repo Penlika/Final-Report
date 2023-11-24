@@ -12,9 +12,10 @@ namespace Final_Report.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public HOTEL()
         {
-            BOOKINGHOTELs = new HashSet<BOOKINGHOTEL>();
-            BOOKINGPACKAGEs = new HashSet<BOOKINGPACKAGE>();
-            COMMENTANDRATINGs = new HashSet<COMMENTANDRATING>();
+            BOOKINGHOTEL = new HashSet<BOOKINGHOTEL>();
+            BOOKINGPACKAGE = new HashSet<BOOKINGPACKAGE>();
+            COMMENTANDRATING = new HashSet<COMMENTANDRATING>();
+            MANAGING = new HashSet<MANAGING>();
         }
 
         public int ID { get; set; }
@@ -37,12 +38,15 @@ namespace Final_Report.Models
         public int? ROOM_AVAILABLE { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BOOKINGHOTEL> BOOKINGHOTELs { get; set; }
+        public virtual ICollection<BOOKINGHOTEL> BOOKINGHOTEL { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BOOKINGPACKAGE> BOOKINGPACKAGEs { get; set; }
+        public virtual ICollection<BOOKINGPACKAGE> BOOKINGPACKAGE { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<COMMENTANDRATING> COMMENTANDRATINGs { get; set; }
+        public virtual ICollection<COMMENTANDRATING> COMMENTANDRATING { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MANAGING> MANAGING { get; set; }
     }
 }

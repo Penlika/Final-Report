@@ -1,0 +1,31 @@
+﻿@*@using SachOnline.Models
+@model SachOnline.Areas.Navigation.NavigationMenu
+@{ 
+    var user = (USER)Session["Admin"];
+}
+<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+    <a class="d-flex row" style="text-align: center; justify-content:center ; align-items:center">
+        <img src="@user.Avatar" class="row" style="width:50%;height:50%;align-items: center; justify-content: center; margin: 0px; display: flex;" />
+        <div class="row" style="text-align: center;">
+            <span class="fs-6">@user.UserName</span>
+            <span class="fs-6">@user.Email</span>
+        </div>
+    </a>
+
+    <div class="position-sticky pt-3 sidebar-sticky">
+        <ul class="nav flex-column">
+            @foreach (var item in Model.MenuItems)
+            {
+                if (item.UserRoles.Contains(user.Role))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="@item.Link">
+                            <i class="bi @item.Icon"></i>
+                            @item.DisplayName
+                        </a>
+                    </li>
+                }
+            }
+        </ul>
+    </div>
+</nav>*@

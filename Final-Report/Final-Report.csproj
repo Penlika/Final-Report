@@ -148,18 +148,22 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
+    <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\NhanVienController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SachController.cs" />
+    <Compile Include="Areas\Navigation\NavigationModels.cs" />
     <Compile Include="Controllers\BookingController.cs" />
     <Compile Include="Controllers\HomePageController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202311160645088_jdshbkjnf.cs" />
-    <Compile Include="Migrations\202311160645088_jdshbkjnf.designer.cs">
-      <DependentUpon>202311160645088_jdshbkjnf.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\ACCOUNT.cs" />
     <Compile Include="Models\ADMIN.cs" />
+    <Compile Include="Models\APPROVE.cs" />
     <Compile Include="Models\BOOKINGFLIGHT.cs" />
     <Compile Include="Models\BOOKINGHOTEL.cs" />
     <Compile Include="Models\BOOKINGPACKAGE.cs" />
@@ -167,9 +171,10 @@
     <Compile Include="Models\CUSTOMER.cs" />
     <Compile Include="Models\FLIGHT.cs" />
     <Compile Include="Models\HOTEL.cs" />
-    <Compile Include="Models\MailInfor.cs" />
+    <Compile Include="Models\MANAGING.cs" />
     <Compile Include="Models\Model1.cs" />
-    <Compile Include="Models\USER.cs" />
+    <Compile Include="Models\PAYING.cs" />
+    <Compile Include="Models\MailInfor.cs" />
     <Compile Include="Models\UserLogin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -192,6 +197,7 @@
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\Item\ItemPage.css" />
+    <Content Include="Content\Item\Login.css" />
     <Content Include="Content\Item\Modal.css" />
     <Content Include="Content\Item\Packages.css" />
     <Content Include="Content\Item\profile.css" />
@@ -206,6 +212,12 @@
     <Content Include="Scripts\bootstrap.esm.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Areas\Admin\Views\web.config" />
+    <Content Include="Areas\Admin\Views\Shared\_LayoutAdmin.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\MenuPartial.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\Create.cshtml" />
+    <Content Include="Areas\Navigation\Navigation.json" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\Item\Stepper.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -256,6 +268,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Content\Admin\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
@@ -283,11 +297,6 @@
     <Content Include="Scripts\bootstrap.bundle.js.map" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202311160645088_jdshbkjnf.resx">
-      <DependentUpon>202311160645088_jdshbkjnf.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

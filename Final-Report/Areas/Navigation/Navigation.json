@@ -1,0 +1,68 @@
+{
+  "MenuItems": [
+    {
+      "DisplayName": "Dashboard",
+      "Icon": "bi-columns",
+      "Link": "/Admin/Home/Index",
+      "IsNested": false,
+      "Sequence": 1,
+      "UserRoles": [ "admin", "cashier" ],
+      "NestedItems": []
+    },
+    {
+      "DisplayName": "Quản Lý Chủ Đề",
+      "Icon": "bi-list",
+      "Link": "/Admin/ChuDe/Index",
+      "IsNested": false,
+      "Sequence": 3,
+      "UserRoles": [ "admin" ],
+      "NestedItems": []
+    },
+    {
+      "DisplayName": "Quản Lý NXB",
+      "Icon": "bi-caret-right-fill",
+      "Link": "/Admin/NhaXuatBan/Index",
+      "IsNested": false,
+      "Sequence": 4,
+      "UserRoles": [ "admin" ],
+      "NestedItems": []
+    },
+    {
+      "DisplayName": "Quản Lý Sách",
+      "Icon": "bi-book",
+      "Link": "/Admin/Sach/Index",
+      "IsNested": false,
+      "Sequence": 2,
+      "UserRoles": [ "admin" ],
+      "NestedItems": []
+    },
+    {
+      "DisplayName": "Quản Lý Khách Hàng",
+      "Icon": "bi-people",
+      "Link": "/Admin/KhachHang/Index",
+      "IsNested": false,
+      "Sequence": 5,
+      "UserRoles": [ "cashier", "admin" ],
+      "NestedItems": []
+    },
+    {
+      "DisplayName": "Quản Lý Đơn Hàng",
+      "Icon": "bi-coin",
+      "Link": "/Admin/DonHang/Index",
+      "IsNested": false,
+      "Sequence": 6,
+      "UserRoles": [ "cashier", "admin" ],
+      "NestedItems": []
+    },
+    {
+      "DisplayName": "Logout",
+      "Icon": "bi-coin",
+      "Link": "/Admin/Home/Logout",
+      "IsNested": false,
+      "Sequence": 7,
+      "UserRoles": [ "cashier", "admin" ],
+      "NestedItems": []
+    }
+
+  ]
+}

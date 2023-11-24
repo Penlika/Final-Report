@@ -1,4 +1,4 @@
-﻿using FundamentalProject.Models;
+﻿using Final_Report.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Migrations;
@@ -13,7 +13,7 @@ namespace Final_Report.Controllers
     public class BookingController : Controller
     {
         // GET: Booking
-        Model1 db=new Model1();
+        Model1 db = new Model1();
         public ActionResult Index()
         {
             return View();
@@ -31,7 +31,7 @@ namespace Final_Report.Controllers
             }
             else
             {
-                var hotel = db.HOTELs.Where(h => h.ID == IDHotel).FirstOrDefault();
+                var hotel = db.HOTEL.Where(h => h.ID == IDHotel).FirstOrDefault();
                 var book = new BOOKINGHOTEL
                 {
                     IDHOTEL = hotel.ID,
@@ -41,7 +41,7 @@ namespace Final_Report.Controllers
                     NUMOFPERSON = 1,
                     STATUS = "Paid"
                 };
-                db.BOOKINGHOTELs.Add(book);
+                db.BOOKINGHOTEL.Add(book);
                 db.SaveChanges();
 
                 var mail = new SmtpClient("smtp.gmail.com", 25)
@@ -75,7 +75,7 @@ namespace Final_Report.Controllers
             }
             else
             {
-                var hotel = db.HOTELs.Where(h => h.ID == IDPackage).FirstOrDefault();
+                var hotel = db.HOTEL.Where(h => h.ID == IDPackage).FirstOrDefault();
                 var book = new BOOKINGHOTEL
                 {
                     IDHOTEL = hotel.ID,
@@ -85,7 +85,7 @@ namespace Final_Report.Controllers
                     NUMOFPERSON = 1,
                     STATUS = "Paid"
                 };
-                db.BOOKINGHOTELs.Add(book);
+                db.BOOKINGHOTEL.Add(book);
                 db.SaveChanges();
 
                 var mail = new SmtpClient("smtp.gmail.com", 25)
@@ -121,9 +121,9 @@ namespace Final_Report.Controllers
             }
             else
             {
-                var lstBHotel = db.BOOKINGHOTELs.Where(d => d.IDCUSTOMER == userLogin.ID).ToList();
-                var lstBFlight = db.BOOKINGFLIGHTs.Where(d => d.IDCUSTOMER == userLogin.ID).ToList();
-                var lstBPackage = db.BOOKINGPACKAGEs.Where(d => d.IDCUSTOMER == userLogin.ID).ToList();
+                var lstBHotel = db.BOOKINGHOTEL.Where(d => d.IDCUSTOMER == userLogin.ID).ToList();
+                var lstBFlight = db.BOOKINGFLIGHT.Where(d => d.IDCUSTOMER == userLogin.ID).ToList();
+                var lstBPackage = db.BOOKINGPACKAGE.Where(d => d.IDCUSTOMER == userLogin.ID).ToList();
 
                 model.Add(lstBHotel);
                 model.Add(lstBFlight);

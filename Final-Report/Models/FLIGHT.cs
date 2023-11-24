@@ -12,8 +12,9 @@ namespace Final_Report.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public FLIGHT()
         {
-            BOOKINGFLIGHTs = new HashSet<BOOKINGFLIGHT>();
-            BOOKINGPACKAGEs = new HashSet<BOOKINGPACKAGE>();
+            BOOKINGFLIGHT = new HashSet<BOOKINGFLIGHT>();
+            BOOKINGPACKAGE = new HashSet<BOOKINGPACKAGE>();
+            MANAGING = new HashSet<MANAGING>();
         }
 
         public int ID { get; set; }
@@ -37,9 +38,12 @@ namespace Final_Report.Models
         public double PRICE_PER_PERSON { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BOOKINGFLIGHT> BOOKINGFLIGHTs { get; set; }
+        public virtual ICollection<BOOKINGFLIGHT> BOOKINGFLIGHT { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BOOKINGPACKAGE> BOOKINGPACKAGEs { get; set; }
+        public virtual ICollection<BOOKINGPACKAGE> BOOKINGPACKAGE { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MANAGING> MANAGING { get; set; }
     }
 }

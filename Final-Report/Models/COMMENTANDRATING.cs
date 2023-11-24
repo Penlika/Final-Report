@@ -22,8 +22,8 @@ namespace Final_Report.Models
         [Column(Order = 1)]
         public double RATING { get; set; }
 
-        public virtual HOTEL HOTEL { get; set; }
+        public virtual ACCOUNT ACCOUNT { get; set; }
 
-        public virtual USER USER { get; set; }
+        public virtual HOTEL HOTEL { get; set; }
     }
 }
