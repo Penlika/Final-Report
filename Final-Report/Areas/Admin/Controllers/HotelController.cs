@@ -1,17 +1,16 @@
-﻿using PagedList;
-using Final_Report.Models;
+﻿using Final_Report.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using PagedList;
 using System.Web.Mvc;
-using System.Web.UI;
 
 namespace Final_Report.Areas.Admin.Controllers
 {
     public class HotelController : Controller
     {
-        // GET: Admin/Sach
+        // GET: Admin/Hotel
         Model1 db = new Model1();
         public ActionResult Index(int? page)
         {
@@ -37,14 +36,14 @@ namespace Final_Report.Areas.Admin.Controllers
             }
             return View();
         }
-        //public ActionResult Detail(int id)
-        //{
-
-        //}
-        //public ActionResult Edit(int id)
-        //{
-
-        //}
+        public ActionResult Detail(int id)
+        {
+            return View();
+        }
+        public ActionResult Edit(int id)
+        {
+            return View();
+        }
         public ActionResult Delete(int id)
         {
             var hotel = db.HOTEL.FirstOrDefault(s => s.ID == id);

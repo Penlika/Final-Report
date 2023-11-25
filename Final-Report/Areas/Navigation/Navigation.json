@@ -6,7 +6,6 @@
       "Link": "/Admin/Admin/Index",
       "IsNested": false,
       "Sequence": 1,
-      "UserRoles": [ "admin" ],
       "NestedItems": []
     },
     {
@@ -15,7 +14,6 @@
       "Link": "/Admin/Hotel/Index",
       "IsNested": false,
       "Sequence": 3,
-      "UserRoles": [ "admin" ],
       "NestedItems": []
     },
     {
@@ -24,7 +22,6 @@
       "Link": "/Admin/Flight/Index",
       "IsNested": false,
       "Sequence": 4,
-      "UserRoles": [ "admin" ],
       "NestedItems": []
     },
     {
@@ -33,7 +30,6 @@
       "Link": "/Admin/Sach/Index",
       "IsNested": false,
       "Sequence": 2,
-      "UserRoles": [ "admin" ],
       "NestedItems": []
     },
     {
@@ -42,7 +38,6 @@
       "Link": "/Admin/KhachHang/Index",
       "IsNested": false,
       "Sequence": 5,
-      "UserRoles": [ "admin" ],
       "NestedItems": []
     },
     {
@@ -51,16 +46,14 @@
       "Link": "/Admin/DonHang/Index",
       "IsNested": false,
       "Sequence": 6,
-      "UserRoles": [ "admin" ],
       "NestedItems": []
     },
     {
       "DisplayName": "Logout",
       "Icon": "bi-coin",
-      "Link": "/Admin/Admin/Logout",
+      "Link": "/Admin/Home/Logout",
       "IsNested": false,
       "Sequence": 7,
-      "UserRoles": [ "admin" ],
       "NestedItems": []
     }
 

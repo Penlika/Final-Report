@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace Final_Report.Areas.Navigation
+namespace Final_Report.Areas.Admin
 {
     public class AdminAreaRegistration : AreaRegistration 
     {

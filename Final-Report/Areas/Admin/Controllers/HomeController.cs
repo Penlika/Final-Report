@@ -1,16 +1,16 @@
-﻿using Newtonsoft.Json;
-using Final_Report.Areas.Navigation;
+﻿using Final_Report.Areas.Navigation;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace Final_Report.Areas.Navigation.Controllers
+namespace Final_Report.Areas.Admin.Controllers
 {
-    public class AdminController : Controller
+    public class HomeController : Controller
     {
-        // GET: Admin/Admin
+        // GET: Admin/Home
         public ActionResult Index()
         {
             return View();
@@ -24,7 +24,7 @@ namespace Final_Report.Areas.Navigation.Controllers
         }
         public ActionResult Logout()
         {
-            return RedirectToAction("Index","HomePage");
+            return RedirectToAction("Index", "HomePage");
         }
     }
 }

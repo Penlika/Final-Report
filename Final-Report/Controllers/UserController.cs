@@ -66,7 +66,7 @@ namespace Final_Report.Controllers
                     if (userRole.Equals("admin", StringComparison.OrdinalIgnoreCase))
                     {
                         // Redirect to admin views
-                        return RedirectToAction("Index", "Admin", new { Area = "Admin" });
+                        return RedirectToAction("Index", "Home", new { Area = "Admin" });
                     }
                     else if (userRole.Equals("customer", StringComparison.OrdinalIgnoreCase))
                     {
