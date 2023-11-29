@@ -1,40 +1,19 @@
-﻿<header class="header" data-header>
-    <div class="container">
-        <nav class="navbar">
-            <a href="#">
-                <h1 class="logo">Tourest</h1>
-            </a>
-
-            <ul class="navbar-list">
-
-                <li>
-                    <a href="@Url.Action("Index","HomePage")" class="navbar-link">Home</a>
-                </li>
-
-                <li>
-                    <a href="@Url.Action("Stays","HomePage")" class="navbar-link">Stays</a>
-                </li>
-
-                <li>
-                    <a href="@Url.Action("Packages","HomePage")" class="navbar-link">Tours</a>
-                </li>
-
-                <li>
-                    <a href="@Url.Action("Flights","HomePage")" class="navbar-link">Flights</a>
-                </li>
-
-                <li>
-                    <a href="#" class="navbar-link">Contact Us</a>
-                </li>
-
-            </ul>
+﻿@Styles.Render("~/Content/css")
+<div>
+    <div class="container row ">
+        <div class="col-12">
+            <div class="col-6" style="position:relative;top:20px">
+                <a href="~/HomePage/Index" class="text-decoration-none">
+                    <h3 style="color:azure;font-weight:700">NT-Travel and Tourism</h3>
+                </a>
+            </div>
             <div>
                 @if (Session["EMAIL"] != null)
                 {
-                    <div class="dropdown" style="float: right">
-                        <button class="dropdown-toggle dropbtn btn" data-bs-toggle="dropdown" aria-expanded="false"
-                           style="background-color: azure; color: darkblue; font-weight: 500">Account</button>
-                        <ul class="dropdown-menu text-light dropdown-content">
+                    <div style="float: right">
+                        <a class="dropdown-toggle btn" data-bs-toggle="dropdown" aria-expanded="false"
+                           style="background-color: azure; color: darkblue; font-weight: 500">Account</a>
+                        <ul class="dropdown-menu text-light">
                             <li><a class="dropdown-item" href="@Url.Action("Profile","User")">Profile</a></li>
                             <li><a class="dropdown-item" href="@Url.Action("History","Booking")">Booking history</a></li>
                             <li><a class="dropdown-item" href="@Url.Action("Logout","User")">Log out</a></li>
@@ -49,13 +28,8 @@
                     </div>
                 }
             </div>
-
-        </nav>
-
+        </div>
     </div>
-<<<<<<< HEAD
-</header>
-=======
     <div class="container row">
         <ul class="nav nav-pills">
             <li class="nav-item">
@@ -103,4 +77,3 @@
         </div>
     </div>
 </div>
->>>>>>> ca0c0fdeca1f498a907521cc37e25082ce051061

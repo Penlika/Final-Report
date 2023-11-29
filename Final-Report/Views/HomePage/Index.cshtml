@@ -3,16 +3,6 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="shortcut icon" href="~/Assets/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="~/Assets/css/style.css">
-<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Comforter+Brush&family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
-<main>
-    <article>
-        <section class="section hero"
-                 style="background-image: url('~/Assets/Images/hero-bg-bottom.png') url('~/Assets/Images/hero-bg-top.png')">
-            <div class="container">
 
 <div class="row">
     <div class="container mb-3" style="position:relative">
@@ -29,35 +19,14 @@
     </div>
 </div>
 
-                        </li>
-
-                        <li class="about-item">
-
-                            <div class="about-item-icon">
-                                <ion-icon name="umbrella"></ion-icon>
-                            </div>
-
-                            <div class="about-item-content">
-                                <h3 class="h3 about-item-title">Reliable tour</h3>
-
-                                <p class="about-item-text">
-                                    Lorem Ipsum available, but the majority have suffered alteration in some.
-                                </p>
-                            </div>
-
-                        </li>
-
-                    </ul>
-
-                    <a href="#" class="btn btn-primary">Booking Now</a>
-
-                </div>
-
-                <figure class="about-banner">
-                    <img src="~/Assets/Images/about-banner.png" width="756" height="842" loading="lazy" alt="" class="w-100">
-                </figure>
-
-            </div>
-        </section>
-    </article>
-</main>
+<div class="row">
+    <div class="container row col-12 mb-3" style="position:relative">
+        <div class="col-6 mb-3">
+            @Html.Action("TophotelPartial", "HomePage")
+        </div>
+        <div class="col-6 mb-3">
+            @Html.Action("InforhotelPartial", "HomePage")
+        </div>
+    </div>
+</div>
+<br />
