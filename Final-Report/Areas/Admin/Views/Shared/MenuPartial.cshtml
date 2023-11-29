@@ -1,11 +1,14 @@
 ﻿@using Final_Report.Models
 @model Final_Report.Areas.Navigation.NavigationMenu
-
+@{
+    var user = (ADMIN)Session["Admin"];
+}
 <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-    <a class="d-flex row" style="text-align: center; justify-content:center ; align-items:center">
-        <img src="@((ADMIN)Session["Admin"]).PICTURES" class="row" style="width:50%;height:50%;align-items: center; justify-content: center; margin: 0px; display: flex;" />
+    <a class="d-flex row" style="text-align: center; justify-content:center ; align-items:center;text-decoration:none">
+        <img src="@user.PICTURES" class="row" style=" width: 140px;height: 100px;border-radius: 50%;object-fit: cover; align-items: center; justify-content: center; margin: 0px; display: flex;" />
         <div class="row" style="text-align: center;">
-            <span class="fs-6">@((ADMIN)Session["Admin"]).USERNAME</span>
+            <span class="fs-6">@user.USERNAME</span>
+            <span class="fs-6">@user.EMAIL</span>
         </div>
     </a>
 

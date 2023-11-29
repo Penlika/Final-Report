@@ -31,6 +31,15 @@ namespace Final_Report.Models
         [StringLength(100)]
         public string ADDRESS { get; set; }
 
+        [StringLength(50)]
+        public string CARDNAME { get; set; }
+
+        public int? CARDNUM { get; set; }
+
+        public DateTime? EXPDATE { get; set; }
+
+        public int? SECURNUM { get; set; }
+
         public virtual ACCOUNT ACCOUNT { get; set; }
     }
 }

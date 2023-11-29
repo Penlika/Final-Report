@@ -19,8 +19,6 @@ namespace Final_Report.Models
             BOOKINGPACKAGE = new HashSet<BOOKINGPACKAGE>();
             COMMENTANDRATING = new HashSet<COMMENTANDRATING>();
             CUSTOMER = new HashSet<CUSTOMER>();
-            MANAGING = new HashSet<MANAGING>();
-            PAYING = new HashSet<PAYING>();
         }
 
         public int ID { get; set; }
@@ -35,13 +33,10 @@ namespace Final_Report.Models
         [Required]
         [StringLength(30)]
         public string PASSWORD { get; set; }
-        [NotMapped]
-        [Compare("PASSWORD", ErrorMessage = "Confirm password must not be empty")]
-        public string CONFIRMPASSWORD { get; set; }
 
         [Required]
         [StringLength(50)]
-        public string ROLE { get; set; } = "customer";
+        public string ROLE { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ADMIN> ADMIN { get; set; }
@@ -63,11 +58,5 @@ namespace Final_Report.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CUSTOMER> CUSTOMER { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MANAGING> MANAGING { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PAYING> PAYING { get; set; }
     }
 }

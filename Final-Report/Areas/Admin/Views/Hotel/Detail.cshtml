@@ -1,0 +1,67 @@
+﻿@model Final_Report.Models.HOTEL
+
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<style type="text/css">
+    img {
+        width: 200px;
+        margin-bottom: 20px;
+    }
+</style>
+<h2 style="text-align:center">HOTEL DETAIL</h2>
+
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Name:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NAME)
+        </dd>
+        <dt>
+            Address:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ADDRESS)
+        </dd>
+        <dt>
+            Information:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.INFORMATION)
+        </dd>
+        <dt>
+            Image:
+        </dt>
+        <dd>
+            <img src="@Model.PICTURES" alt=" @Model.NAME">
+        </dd>
+        <dt>
+            Modify date:
+        </dt>
+        <dd>
+            @Html.FormatValue(@Model.MODIFIEDDAY, "{0:dd/MM/yyyy}")
+        </dd>
+        <dt>
+            Number of room:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ROOM_AVAILABLE)
+        </dd>
+        <dt>
+            Price/Person:
+        </dt>
+        <dd>
+            @string.Format("{0:#,##0}", Model.PRICE_PER_PERSON) VNĐ
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back", "Index")
+</p>
+

@@ -3,7 +3,7 @@
     {
       "DisplayName": "Dashboard",
       "Icon": "bi-columns",
-      "Link": "/Admin/Admin/Index",
+      "Link": "/Admin/Home/Index",
       "IsNested": false,
       "Sequence": 1,
       "NestedItems": []
@@ -22,30 +22,6 @@
       "Link": "/Admin/Flight/Index",
       "IsNested": false,
       "Sequence": 4,
-      "NestedItems": []
-    },
-    {
-      "DisplayName": "Quản Lý Sách",
-      "Icon": "bi-book",
-      "Link": "/Admin/Sach/Index",
-      "IsNested": false,
-      "Sequence": 2,
-      "NestedItems": []
-    },
-    {
-      "DisplayName": "Quản Lý Khách Hàng",
-      "Icon": "bi-people",
-      "Link": "/Admin/KhachHang/Index",
-      "IsNested": false,
-      "Sequence": 5,
-      "NestedItems": []
-    },
-    {
-      "DisplayName": "Quản Lý Đơn Hàng",
-      "Icon": "bi-coin",
-      "Link": "/Admin/DonHang/Index",
-      "IsNested": false,
-      "Sequence": 6,
       "NestedItems": []
     },
     {

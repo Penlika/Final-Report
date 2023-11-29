@@ -14,7 +14,6 @@ namespace Final_Report.Models
         {
             BOOKINGFLIGHT = new HashSet<BOOKINGFLIGHT>();
             BOOKINGPACKAGE = new HashSet<BOOKINGPACKAGE>();
-            MANAGING = new HashSet<MANAGING>();
         }
 
         public int ID { get; set; }
@@ -22,6 +21,9 @@ namespace Final_Report.Models
         [Required]
         [StringLength(30)]
         public string COMPANY { get; set; }
+
+        [Required]
+        public string PICTURES { get; set; }
 
         public DateTime DEPARTURE { get; set; }
 
@@ -37,13 +39,12 @@ namespace Final_Report.Models
 
         public double PRICE_PER_PERSON { get; set; }
 
+        public DateTime? MODIFIEDDAY { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BOOKINGFLIGHT> BOOKINGFLIGHT { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BOOKINGPACKAGE> BOOKINGPACKAGE { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MANAGING> MANAGING { get; set; }
     }
 }

@@ -1,0 +1,77 @@
+﻿@model Final_Report.Models.HOTEL
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<script src="~/ckeditor/ckeditor.js"></script>
+<h2>EDIT HOTEL</h2>
+@using (Html.BeginForm("Edit", "Hotel", FormMethod.Post, new{@enctype ="multipart/form-data"}))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <label class="control-label col-md-2">ID:</label>
+            <div class="col-md-10">
+                <input type="text" size="70" name="sID" value="@Model.ID" readonly />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">Name:</label>
+            <div class="col-md-10">
+                <input type="text" size="70" name="sNAME" value="@Model.NAME" required />
+            </div>
+        </div>
+                <div class="form-group">
+            <label class="control-label col-md-2">Address:</label>
+            <div class="col-md-10">
+                <input type="text" size="70" name="sADDRESS" value="@Model.ADDRESS" required />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">Information:</label>
+            <div class="col-md-10">
+                <textarea name="sINFORMATION" id="info">@Model.INFORMATION</textarea>
+                <script>CKEDITOR.replace('info');</script>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">Image:</label>
+            <div class="col-md-10">
+                <input type="file" name="fFileUpload" />
+                <img src="@Model.PICTURES" width="120">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">Modify date:</label>
+            <div class="col-md-10">
+                <input type="datetime" name="dMODIFIEDDAY" required
+                       value="@Convert.ToDateTime(Model.MODIFIEDDAY)"readonly />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">Number of room:</label>
+            <div class="col-md-10">
+                <input type="number" min="1" required name="sROOM"
+                       value="@Model.ROOM_AVAILABLE" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">Price:</label>
+            <div class="col-md-10">
+                <input type="number" min="1" required name="sPRICE" value="@Model.PRICE_PER_PERSON" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+<div>
+    @Html.ActionLink("Back", "Index")
+</div>

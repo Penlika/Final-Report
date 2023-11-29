@@ -17,6 +17,9 @@ namespace Final_Report.Models
         [StringLength(20)]
         public string USERNAME { get; set; }
 
+        [StringLength(40)]
+        public string EMAIL { get; set; }
+
         public virtual ACCOUNT ACCOUNT { get; set; }
     }
 }

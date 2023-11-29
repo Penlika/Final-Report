@@ -1,5 +1,16 @@
-﻿@model IEnumerable<Final_Report.Models.FLIGHT>
-
+﻿@*@model IEnumerable<Final_Report.Models.HOTEL>*@
+@using PagedList.Mvc;
+@helper Truncate(string s, int length)
+{
+    if (s.Length < length)
+    {
+        @s
+    }
+    else
+    {
+        @s.Substring(0, length)<text>...</text>
+    }
+}
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
@@ -13,52 +24,85 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.COMPANY)
+            ID
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DEPARTURE)
+            Brand
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ARRIVAL)
+            Company
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.FROM)
+            Departure
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.TO)
+            Arrival
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.PRICE_PER_PERSON)
+            From
         </th>
-        <th></th>
+        <th>
+            To
+        </th>
+        <th>
+            Price/Person
+        </th>
+        <th style="width:250px"></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.COMPANY)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DEPARTURE)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ARRIVAL)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FROM)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TO)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PRICE_PER_PERSON)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
+    @foreach (Final_Report.Models.FLIGHT item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ID)
+            </td>
+            <td>
+                @if (!string.IsNullOrEmpty(item.PICTURES))
+                {
+                    <img src="@item.PICTURES" style="width:50px" />
+                }
+            </td>
+            <td>
+                @Truncate(item.COMPANY, 50)
+                @Html.DisplayFor(modelItem => item.COMPANY)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DEPARTURE)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ARRIVAL)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FROM)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TO)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PRICE_PER_PERSON)
+            </td>
+            <td>
+                <a href="@Url.Action("Edit", new {id=item.ID})" class="btn btn-primary">Edit</a>
+                <a href="@Url.Action("Detail", new {id=item.ID})" class="btn btn-light">Detail</a>
+                <a href="@Url.Action("Delete", new {id=item.ID})" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+    }
 
 </table>
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+    </script>
+
+}
+<nav aria-label="Page navigation example" class="text-center">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    @Html.PagedListPager(
+        (PagedList.IPagedList)Model, page => Url.Action("Index", new { page = page })
+    )
+</nav>

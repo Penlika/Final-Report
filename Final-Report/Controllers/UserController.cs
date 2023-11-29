@@ -65,6 +65,9 @@ namespace Final_Report.Controllers
 
                     if (userRole.Equals("admin", StringComparison.OrdinalIgnoreCase))
                     {
+                        // Store admin information in session
+                        Session["Admin"] = db.ADMIN.FirstOrDefault(admin => admin.EMAIL == u.EMAIL);
+
                         // Redirect to admin views
                         return RedirectToAction("Index", "Home", new { Area = "Admin" });
                     }
@@ -82,6 +85,7 @@ namespace Final_Report.Controllers
 
             return View(user);
         }
+
 
 
         public ActionResult Logout()

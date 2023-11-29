@@ -1,0 +1,72 @@
+﻿@model Final_Report.Models.FLIGHT
+
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<style type="text/css">
+    img {
+        width: 200px;
+        margin-bottom: 20px;
+    }
+</style>
+<h2 style="text-align:center">FLIGHT DETAIL</h2>
+
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Brand:
+        </dt>
+        <dd>
+            <img src="@Model.PICTURES" alt=" @Model.PICTURES">
+        </dd>
+        <dt>
+            Company:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.COMPANY)
+        </dd>
+        <dt>
+            Departure:
+        </dt>
+        <dd>
+            @Html.FormatValue(@Model.DEPARTURE, "{0:dd/MM/yyyy}")
+        </dd>
+        <dt>
+            Arrival:
+        </dt>
+        <dd>
+            @Html.FormatValue(@Model.ARRIVAL, "{0:dd/MM/yyyy}")
+        </dd>
+        <dt>
+            From:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FROM)
+        </dd>
+        <dt>
+            To:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TO)
+        </dd>
+        <dt>
+            Price/Person:
+        </dt>
+        <dd>
+            @string.Format("{0:#,##0}", Model.PRICE_PER_PERSON) VNĐ
+        </dd>
+        <dt>
+            Modify date:
+        </dt>
+        <dd>
+            @Html.FormatValue(@Model.MODIFIEDDAY, "{0:dd/MM/yyyy}")
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back", "Index")
+</p>

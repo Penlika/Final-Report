@@ -13,7 +13,6 @@ namespace Final_Report.Models
         public BOOKINGHOTEL()
         {
             APPROVE = new HashSet<APPROVE>();
-            PAYING = new HashSet<PAYING>();
         }
 
         [Key]
@@ -41,8 +40,5 @@ namespace Final_Report.Models
         public virtual ICollection<APPROVE> APPROVE { get; set; }
 
         public virtual HOTEL HOTEL { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PAYING> PAYING { get; set; }
     }
 }
