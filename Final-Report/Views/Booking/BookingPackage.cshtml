@@ -11,12 +11,12 @@
 <form style="border: solid; border-width: 3px; border-radius: 10px; padding: 20px; margin-bottom:150px" action="@Url.Action("CompleteBookPackage", "Booking")" method="post">
     @Html.Action("PartialHotel", "Booking", new { id = Model.IDHOTEL })
     @Html.Action("PartialFlight", "Booking", new { id = Model.IDFLIGHT })
-    <input type="number" class="form-control" style="width:150px" min="1" name="ID" value="@Model.ID" style="visibility:hidden" />
-    <p style="font-size: 2em"> This trip will last for <b>@Model.PROLONG</b> days.</p>
+    <input type="number" class="form-control" style="width: 150px; visibility: hidden" min="1" name="ID" value="@Model.ID"/>
+    <p style="font-size: 2em"> This trip will last for <b style="font-size: 1em">@Model.PROLONG</b> days.</p>
     <label class="form-label"><b>Guests</b></label>
     <input type="number" class="form-control" style="width:150px" min="1" name="guest" required />
     <hr />
-    <div class="name" style="font-size: 2em;"><b>Total Price:   </b> <span id="total-price"></span> VND</div>
+    <div class="name" style="font-size: 2em;"><b style="font-size: 1em">Total Price:   </b> <span style="font-size: 1em" id="total-price"></span> VND</div>
     <hr />
     <br />
     <div class="d-flex justify-content-between">
