@@ -38,7 +38,7 @@ namespace Final_Report.Models
 
         [Required]
         [StringLength(50)]
-        public string ROLE { get; set; }
+        public string ROLE { get; set; } = "customer";
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ADMIN> ADMIN { get; set; }

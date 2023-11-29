@@ -178,7 +178,20 @@
     <Compile Include="Utility.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\bgvid.mp4" />
+    <Content Include="Assets\css\style.css" />
+    <Content Include="Assets\favicon.svg" />
+    <Content Include="Assets\Images\about-banner.png" />
+    <Content Include="Assets\Images\author-avatar.png" />
+    <Content Include="Assets\Images\blog-2.jpg" />
+    <Content Include="Assets\Images\blog-3.jpg" />
+    <Content Include="Assets\Images\footer-bg.png" />
+    <Content Include="Assets\Images\hero-banner.png" />
+    <Content Include="Assets\Images\hero-bg-bottom.png" />
+    <Content Include="Assets\Images\hero-bg-top.png" />
+    <Content Include="Assets\Images\shape-1.png" />
+    <Content Include="Assets\Images\shape-2.png" />
+    <Content Include="Assets\Images\shape-3.png" />
+    <Content Include="Assets\js\script.js" />
     <Content Include="Content\Admin\dashboard.css" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
@@ -215,7 +228,6 @@
     <Content Include="Areas\Navigation\Navigation.json" />
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Admin\Views\Shared\_LayoutAdmin.cshtml" />
-    <Content Include="Areas\Admin\Views\Hotel\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\MenuPartial.cshtml" />
     <Content Include="Areas\Admin\Views\Flight\Index.cshtml" />
@@ -225,6 +237,7 @@
     <Content Include="Areas\Admin\Views\Flight\Detail.cshtml" />
     <Content Include="Areas\Admin\Views\Flight\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Hotel\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Hotel\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\Item\Stepper.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />

@@ -33,7 +33,7 @@ namespace Final_Report.Models
         public string INFORMATION { get; set; }
 
         public double PRICE_PER_PERSON { get; set; }
-
+        public DateTime MODIFIEDDAY { get; set; }
         public int ROOM_AVAILABLE { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -67,7 +67,7 @@
                 }
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.INFORMATION)
+                @Html.Raw(HttpUtility.HtmlDecode(Truncate((item.INFORMATION) ?? "", 70).ToString()))
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.PRICE_PER_PERSON)
