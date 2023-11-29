@@ -14,84 +14,21 @@
                  style="background-image: url('~/Assets/Images/hero-bg-bottom.png') url('~/Assets/Images/hero-bg-top.png')">
             <div class="container">
 
-                <img src="~/Assets/Images/shape-1.png" width="61" height="61" alt="Vector Shape" class="shape shape-1">
 
-                <img src="~/Assets/Images/shape-2.png" width="56" height="74" alt="Vector Shape" class="shape shape-2">
-
-                <img src="~/Assets/Images/shape-3.png" width="57" height="72" alt="Vector Shape" class="shape shape-3">
-
-                <div class="hero-content">
-
-                    <p class="section-subtitle">Explore Your Travel</p>
-
-                    <h2 class="hero-title">Trusted Travel Agency</h2>
-
-                    <p class="hero-text">
-                        I travel not to go anywhere, but to go. I travel for travel's sake the great affair is to move.
-                    </p>
-
-                    <div class="btn-group">
-                        <a href="#" class="btn btn-primary">Contact Us</a>
-
-                        <a href="#" class="btn btn-outline">Learn More</a>
-                    </div>
-
-                </div>
-
-                <figure class="hero-banner">
-                    <img src="~/Assets/Images/hero-banner.png" width="686" height="812" loading="lazy" alt="hero banner"
-                         class="w-100">
-                </figure>
-
-            </div>
-        </section>
-
-        <section class="section about">
-            <div class="container">
-
-                <div class="about-content">
-
-                    <p class="section-subtitle">About Us</p>
-
-                    <h2 class="h2 section-title">Explore all tour of the world with us.</h2>
-
-                    <p class="about-text">
-                        Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or
-                        randomised words
-                        which don't look even slightly believable.
-                    </p>
-
-                    <ul class="about-list">
-
-                        <li class="about-item">
-
-                            <div class="about-item-icon">
-                                <ion-icon name="compass"></ion-icon>
-                            </div>
-
-                            <div class="about-item-content">
-                                <h3 class="h3 about-item-title">Tour guide</h3>
-
-                                <p class="about-item-text">
-                                    Lorem Ipsum available, but the majority have suffered alteration in some.
-                                </p>
-                            </div>
-
-                        </li>
-
-                        <li class="about-item">
-
-                            <div class="about-item-icon">
-                                <ion-icon name="briefcase"></ion-icon>
-                            </div>
-
-                            <div class="about-item-content">
-                                <h3 class="h3 about-item-title">Friendly price</h3>
-
-                                <p class="about-item-text">
-                                    Lorem Ipsum available, but the majority have suffered alteration in some.
-                                </p>
-                            </div>
+<div class="row">
+    <div class="container mb-3" style="position:relative">
+        <div class="mb-3">
+            @Html.Action("NewLocaPartial", "HomePage")
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="container mb-3" style="position:relative">
+        <div class="mb-3">
+            @Html.Action("TrendLocaPartial", "HomePage")
+        </div>
+    </div>
+</div>
 
                         </li>
 

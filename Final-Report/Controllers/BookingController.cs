@@ -3,9 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
-using System.Net.Mail;
 using System.Net;
-using System.Web;
+using System.Net.Mail;
 using System.Web.Mvc;
 
 namespace Final_Report.Controllers
@@ -18,20 +17,23 @@ namespace Final_Report.Controllers
         {
             return View();
         }
+
+        public ActionResult BookingComplete()
+        {
+            return View();
+        }
         public ActionResult BookingHotel(int IDHotel)
         {
-            //var userLogin = (CUSTOMER)Session["USERNAME"];
-            //if (userLogin == null)
-            //{
-            //    return RedirectToAction("Login", "User");
-            //}
-            //else
-            //{
-            //    var hotel = db.HOTELs.Where(h => h.ID == IDHotel).FirstOrDefault();
-            //    return View(hotel);
-            //}
-            var hotel = db.HOTEL.Where(h => h.ID == IDHotel).FirstOrDefault();
-            return View(hotel);
+            var userLogin = (ACCOUNT)Session["EMAIL"];
+            if (userLogin == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
+            else
+            {
+                var hotel = db.HOTEL.Where(h => h.ID == IDHotel).FirstOrDefault();
+                return View(hotel);
+            }
         }
 
         public double calTotalPriceHotel(double price, int room, DateTime checkIn, DateTime checkOut)
@@ -44,13 +46,14 @@ namespace Final_Report.Controllers
 
         public ActionResult CompleteBookHotel(FormCollection f)
         {
+            ACCOUNT user = (ACCOUNT)Session["EMAIL"];
             var IDHotel = Int32.Parse(f["ID"]);
             var hotel = db.HOTEL.Where(h => h.ID == IDHotel).FirstOrDefault();
             double totalPrice = calTotalPriceHotel(hotel.PRICE_PER_PERSON, Int32.Parse(f["room"]), DateTime.Parse(f["checkIn"]), DateTime.Parse(f["checkOut"]));
             var book = new BOOKINGHOTEL
             {
                 IDHOTEL = hotel.ID,
-                IDCUSTOMER = 6,
+                IDCUSTOMER = user.ID,
                 CHECKINDATE = DateTime.Parse(f["checkIn"]),
                 CHECKOUTDATE = DateTime.Parse(f["checkOut"]),
                 NUMOFPERSON = Int32.Parse(f["guest"]),
@@ -58,32 +61,36 @@ namespace Final_Report.Controllers
                 TOTALPRICE = totalPrice
             };
             db.BOOKINGHOTEL.Add(book);
+
+            var updateHotel = db.HOTEL.Where(h => h.ID == hotel.ID).FirstOrDefault();
+            int temp = updateHotel.ROOM_AVAILABLE;
+            updateHotel.ROOM_AVAILABLE = temp - Int32.Parse(f["room"]);
+            db.HOTEL.AddOrUpdate(updateHotel);
             db.SaveChanges();
 
-            //var mail = new SmtpClient("smtp.gmail.com", 25)
-            //{
-            //    Credentials = new NetworkCredential("hoainam3183@gmail.com", "scuc bpjv iqdk kesi"),
-            //    EnableSsl = true
-            //};
+            var mail = new SmtpClient("smtp.gmail.com", 25)
+            {
+                Credentials = new NetworkCredential("hoainam3183@gmail.com", "scuc bpjv iqdk kesi"),
+                EnableSsl = true
+            };
 
-            //USER user = (USER)Session["USERNAME"];
-            //var username = db.CUSTOMERs.Where(u => u.ID == user.ID).FirstOrDefault();
-            //var m = new MailMessage();
-            //m.From = new MailAddress("hoainam3183@gmail.com");
-            //m.ReplyToList.Add("hoainam3183@gmail.com");
-            //m.To.Add(new MailAddress(user.EMAIL));
-            //m.Subject = "Your booking has been completed !";
-            //m.Body = "   Dear Mr/Mrs " + username.NAME + ",\n   This is your detail information of your booking: \n "
-            //    + "Hotel: " + hotel.NAME + "\n"
-            //    + "Check-in Date: " + f["checkIn"] + "\n"
-            //    + "Check-out Date: " + f["checkOut"] + "\n"
-            //    + "Room: " + f["room"] + "\n"
-            //    + "Total Price: " + totalPrice + "\n"
-            //    + "   Please be present at the hotel check-in time for check-in instructions ! \n   Best regards !";
+            var username = db.CUSTOMER.Where(u => u.ID == user.ID).FirstOrDefault();
+            var m = new MailMessage();
+            m.From = new MailAddress("hoainam3183@gmail.com");
+            m.ReplyToList.Add("hoainam3183@gmail.com");
+            m.To.Add(new MailAddress(user.EMAIL));
+            m.Subject = "Your booking has been completed !";
+            m.Body = "Dear Mr/Mrs " + username.NAME + ",\nThis is your detail information of your booking:\n"
+                + "Hotel: " + hotel.NAME + "\n"
+                + "Check-in Date: " + f["checkIn"] + "\n"
+                + "Check-out Date: " + f["checkOut"] + "\n"
+                + "Room: " + f["room"] + "\n"
+                + "Total Price: " + totalPrice + "\n"
+                + "Please be present at the hotel check-in time for check-in instructions !\nBest regards !";
 
-            //mail.Send(m);
+            mail.Send(m);
 
-            return RedirectToAction("Stays", "HomePage");
+            return View("BookingComplete");
         }
         //public ActionResult BookingPackage()
         //{
@@ -129,29 +136,28 @@ namespace Final_Report.Controllers
         //}
         public ActionResult BookingFlight(int IDFlight)
         {
-            //var userLogin = (CUSTOMER)Session["USERNAME"];
-            //if (userLogin == null)
-            //{
-            //    return RedirectToAction("Login", "User");
-            //}
-            //else
-            //{
-            //    var hotel = db.HOTELs.Where(h => h.ID == IDHotel).FirstOrDefault();
-            //    return View(hotel);
-            //}
-            var flight = db.FLIGHT.Where(f => f.ID == IDFlight).FirstOrDefault();
-            return View(flight);
+            var userLogin = (ACCOUNT)Session["EMAIL"];
+            if (userLogin == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
+            else
+            {
+                var flight = db.FLIGHT.Where(f => f.ID == IDFlight).FirstOrDefault();
+                return View(flight);
+            }
         }
 
         public ActionResult CompleteBookFlight(FormCollection f)
         {
+            var user = (ACCOUNT)Session["EMAIL"];
             var IDFlight = Int32.Parse(f["ID"]);
             var flight = db.FLIGHT.Where(h => h.ID == IDFlight).FirstOrDefault();
             double totalPrice = flight.PRICE_PER_PERSON * Int32.Parse(f["passenger"]);
             var book = new BOOKINGFLIGHT
             {
                 IDFLIGHT = flight.ID,
-                IDCUSTOMER = 6,
+                IDCUSTOMER = user.ID,
                 BOOKINGDATE = DateTime.Now.Date,
                 NUMOFPERSON = Int32.Parse(f["passenger"]),
                 TOTALPRICE = totalPrice
@@ -159,65 +165,99 @@ namespace Final_Report.Controllers
             db.BOOKINGFLIGHT.Add(book);
             db.SaveChanges();
 
-            //var mail = new SmtpClient("smtp.gmail.com", 25)
-            //{
-            //    Credentials = new NetworkCredential("hoainam3183@gmail.com", "scuc bpjv iqdk kesi"),
-            //    EnableSsl = true
-            //};
+            var mail = new SmtpClient("smtp.gmail.com", 25)
+            {
+                Credentials = new NetworkCredential("hoainam3183@gmail.com", "scuc bpjv iqdk kesi"),
+                EnableSsl = true
+            };
 
-            //USER user = (USER)Session["USERNAME"];
-            //var username = db.CUSTOMERs.Where(u => u.ID == user.ID).FirstOrDefault();
-            //var m = new MailMessage();
-            //m.From = new MailAddress("hoainam3183@gmail.com");
-            //m.ReplyToList.Add("hoainam3183@gmail.com");
-            //m.To.Add(new MailAddress(user.EMAIL));
-            //m.Subject = "Your booking has been completed !";
-            //m.Body = "   Dear Mr/Mrs " + username.NAME + ",\n   This is your detail information of your booking: \n "
-            //    + "Hotel: " + hotel.NAME + "\n"
-            //    + "Check-in Date: " + f["checkIn"] + "\n"
-            //    + "Check-out Date: " + f["checkOut"] + "\n"
-            //    + "Room: " + f["room"] + "\n"
-            //    + "Total Price: " + totalPrice + "\n"
-            //    + "   Please be present at the hotel check-in time for check-in instructions ! \n   Best regards !";
+            var username = db.CUSTOMER.Where(u => u.ID == user.ID).FirstOrDefault();
+            var m = new MailMessage();
+            m.From = new MailAddress("hoainam3183@gmail.com");
+            m.ReplyToList.Add("hoainam3183@gmail.com");
+            m.To.Add(new MailAddress(user.EMAIL));
+            m.Subject = "Your booking has been completed !";
+            m.Body = "Dear Mr/Mrs " + username.NAME + ",\nThis is your detail information of your booking: \n "
+                + "Airline: " + flight.COMPANY + "\n"
+                + "Departure: " + flight.DEPARTURE + "\n"
+                + "Arrival: " + flight.ARRIVAL + "\n"
+                + "From: " + flight.FROM + "\n"
+                + "To: " + flight.TO + "\n"
+                + "Passensers: " + f["passenger"] + "\n"
+                + "Total Price: " + totalPrice + "\n"
+                + "Please be on time at the airport to check in for your flight !\nBest regards !";
 
-            //mail.Send(m);
+            mail.Send(m);
 
-            return RedirectToAction("Flights", "HomePage");
+            return View("BookingComplete");
         }
 
         public ActionResult BookingPackage(int idPackage)
         {
-            //var userLogin = (CUSTOMER)Session["USERNAME"];
-            //if (userLogin == null)
-            //{
-            //    return RedirectToAction("Login", "User");
-            //}
-            //else
-            //{
-            //    var package = db.PACKAGEs.Where(h => h.ID == idPackage).FirstOrDefault();
-            //    return View(package);
-            //}
-            var package = db.PACKAGE.Where(h => h.ID == idPackage).FirstOrDefault();
-            return View(package);
+            var userLogin = (ACCOUNT)Session["EMAIL"];
+            if (userLogin == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
+            else
+            {
+                var package = db.PACKAGE.Where(h => h.ID == idPackage).FirstOrDefault();
+                return View(package);
+            }
         }
 
         public ActionResult CompleteBookPackage(FormCollection f)
         {
+            var user = (ACCOUNT)Session["EMAIL"];
             var IDPackage = Int32.Parse(f["ID"]);
             var package = db.PACKAGE.Where(h => h.ID == IDPackage).FirstOrDefault();
+            var hotel = db.HOTEL.Where(h => h.ID == package.IDHOTEL).FirstOrDefault();
+            var flight = db.FLIGHT.Where(fl => fl.ID == package.IDFLIGHT).FirstOrDefault();
             double totalPrice = package.PRICE_PER_PERSON * Int32.Parse(f["guest"]);
             var book = new BOOKINGPACKAGE
             {
-                IDCUSTOMER = 6,
+                IDCUSTOMER = user.ID,
                 IDPACKAGE = IDPackage,
                 BOOKINGDATE = DateTime.Now.Date,
                 NUMOFPERSON = Int32.Parse(f["guest"]),
                 TOTALPRICE = totalPrice
             };
             db.BOOKINGPACKAGE.Add(book);
+            var updateHotel = db.HOTEL.Where(h => h.ID == hotel.ID).FirstOrDefault();
+            int temp = updateHotel.ROOM_AVAILABLE;
+            updateHotel.ROOM_AVAILABLE = temp - Int32.Parse(f["guest"]);
+            db.HOTEL.AddOrUpdate(updateHotel);
             db.SaveChanges();
 
-            return RedirectToAction("Packages", "HomePage");
+            var mail = new SmtpClient("smtp.gmail.com", 25)
+            {
+                Credentials = new NetworkCredential("hoainam3183@gmail.com", "scuc bpjv iqdk kesi"),
+                EnableSsl = true
+            };
+
+            var username = db.CUSTOMER.Where(u => u.ID == user.ID).FirstOrDefault();
+            var m = new MailMessage();
+            m.From = new MailAddress("hoainam3183@gmail.com");
+            m.ReplyToList.Add("hoainam3183@gmail.com");
+            m.To.Add(new MailAddress(user.EMAIL));
+            m.Subject = "Your booking has been completed !";
+            m.Body = "Dear Mr/Mrs " + username.NAME + ",\nThis is your detail information of your booking:\n "
+                + "#About your Hotel: \n"
+                + "Hotel: " + hotel.NAME + "\n"
+                + "Address: " + hotel.ADDRESS + "\n"
+                + "#About your Flight: \n"
+                + "Airline: " + flight.COMPANY + "\n"
+                + "Departure: " + flight.DEPARTURE + "\n"
+                + "Arrival: " + flight.ARRIVAL + "\n"
+                + "From: " + flight.FROM + "\n"
+                + "To: " + flight.TO + "\n"
+                + "Guests: " + f["guest"] + "\n"
+                + "Total Price: " + totalPrice + "\n"
+                + "Please be on time at the airport to check in for your flight !\nBest regards !";
+
+            mail.Send(m);
+
+            return View("BookingComplete");
         }
 
         public ActionResult PartialHotel(int id)

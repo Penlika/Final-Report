@@ -43,13 +43,17 @@
                     </div>
                 </div>
             </div>
+            @{
+                double price = 0;
+            }
             <div class="bg-white p-2" id="hotels">
                 @foreach (var item in Model)
                 {
-                    <div class="hotel py-2 px-2 pb-4 border rounded">
+                    price = item.PRICE_PER_PERSON;
+                    <div class="hotel py-2 px-2 pb-4 border rounded" style="margin-bottom:15px">
                         <!-- Initial flight -->
                         <div class="row col-12">
-                            <div class="col-lg-2"> @item.COMPANY @*<img src="https://www.bcdtravel.com/move-global/wp-content/uploads/sites/142/Move_Global_Spotlight_UnitedAirlines_logo_April2018.png" class="hotel-img">*@ </div>
+                            <div class="col-lg-2"> @item.COMPANY </div>
                             <div class="col-lg-9">
                                 <div class="d-flex">
                                     <div class="col-3" style="margin-right: 20px;">
@@ -61,7 +65,7 @@
                                         <span class="material-symbols-outlined" style="position: absolute; left: 0; top: 50%; transform: translateY(-50%);">
                                             flight_takeoff
                                         </span>
-                                        <p style="margin-bottom: 10px;">28h 26min</p>
+                                        <p style="margin-bottom: 10px;">1-way</p>
                                         <div style="margin: 10px 0; width: 130px; height: 25px; overflow: hidden; position: relative; margin: 0 auto;">
                                             <div style="width: 400px; height: 2px; background: black; position: relative; top: 5px;">
                                                 <div style="float: left; width: 10px; height: 10px; background: white; border: solid; border-radius: 50%; position: relative; top: -4px; margin-right: 50px;"></div>
@@ -91,115 +95,20 @@
                         <hr />
                         <div class="d-flex justify-content-end mt-1 text-center">
                             <!-- Button trigger modal -->
-                            <p style="padding-right: 10px; font-size: 20px; margin-top:4px">32.871.867 đ/Person</p>
+                            <p style="padding-right: 10px; font-size: 20px; margin-top:4px"> @price.ToString("N0") VND/Person</p>
                             <div>
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="border-radius: 10px;">
+                                <a href="@Url.Action("BookingFlight", "Booking", new { IDFlight = item.ID})" class="btn btn-primary" style="border-radius: 10px;">
                                     Choose
-                                </button>
+                                </a>
                             </div>
                         </div>
 
                     </div>
                 }
 
-                <div style="padding:8px"></div>
-
-
-
-                <div style="padding:8px"></div>
-
                 <nav aria-label="Page navigation example" class="text-center">
                     @Html.PagedListPager((PagedList.IPagedList)Model, page => Url.Action("Flights", new { page = page }))
                 </nav>
-            </div>
-        </div>
-    </div>
-</div>
-<!--modal-->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-        <!-- Add the 'modal-lg' class to make it larger -->
-        <div class="modal-content">
-            <div class="modal-header" style="background-color:darkblue">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">More Details</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <!-- Your larger content here -->
-                <!-- You can add more content or adjust the size as needed -->
-                <div class="row">
-                    <div class="col-sm-4 text-center abc">
-
-                        <form action="#!" style="background-color:orange">
-
-                            <p class="h4 mb-4 text-left">Search</p>
-
-                            <p class="text-left">Destination/property name:</p>
-
-                            <label for="DateIn" class="in">Check-in date</label>
-                            <input type="date" class="form-control mb-4" placeholder="Enter ">
-
-                            <label for="DateOut" class="in">Check-out date</label>
-                            <input type="date" class="form-control mb-4" placeholder="Enter Password">
-
-                            <label for="DateOut" class="in">Check-out date</label>
-                            <div class="d-flex justify-content-left">
-                                <div>
-                                    <label for="DateOut" class="in">#-night stay</label>
-                                    <div class="custom-control custom-checkbox text-left">
-                                        <input type="checkbox" class="custom-control-input">
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="btn btn-info btn-block my" type="submit">Search</button>
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1">
-                                Launch demo modal
-                            </button>
-                            <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div>
-                                                @*@foreach (var customer in Model)
-                                                {
-                                                    Html.Partial("Maps");
-                                                }*@
-                                            </div>
-
-                                            <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-                                            <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button type="button" class="btn btn-primary">Save changes</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                        </form>
-
-                    </div>
-
-
-                    <div class="col-sm-8 xyz text-center" style="background-image: url(https://i.imgur.com/6YuRxJA.png)">
-
-                        <i class="fa fa-user-circle fa-5x" aria-hidden="true"></i>
-                        <h2 class="account-text">Create Your Account</h2>
-                        <h4 class="account-description">Signup to create, discover and connect with the global community</h4>
-                        <button class="btn btn-info btn-block sign" type="submit">SIGN UP</button>
-
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
             </div>
         </div>
     </div>
