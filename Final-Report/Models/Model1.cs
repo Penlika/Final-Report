@@ -13,12 +13,12 @@ namespace Final_Report.Models
         }
 
         public virtual DbSet<ACCOUNT> ACCOUNT { get; set; }
-        public virtual DbSet<APPROVE> APPROVE { get; set; }
         public virtual DbSet<BOOKINGFLIGHT> BOOKINGFLIGHT { get; set; }
         public virtual DbSet<BOOKINGHOTEL> BOOKINGHOTEL { get; set; }
         public virtual DbSet<BOOKINGPACKAGE> BOOKINGPACKAGE { get; set; }
         public virtual DbSet<FLIGHT> FLIGHT { get; set; }
         public virtual DbSet<HOTEL> HOTEL { get; set; }
+        public virtual DbSet<PACKAGE> PACKAGE { get; set; }
         public virtual DbSet<ADMIN> ADMIN { get; set; }
         public virtual DbSet<COMMENTANDRATING> COMMENTANDRATING { get; set; }
         public virtual DbSet<CUSTOMER> CUSTOMER { get; set; }
@@ -26,11 +26,6 @@ namespace Final_Report.Models
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ACCOUNT>()
-                .HasMany(e => e.APPROVE)
-                .WithOptional(e => e.ACCOUNT)
-                .HasForeignKey(e => e.IDADMIN);
-
-            modelBuilder.Entity<ACCOUNT>()
                 .HasMany(e => e.BOOKINGFLIGHT)
                 .WithOptional(e => e.ACCOUNT)
                 .HasForeignKey(e => e.IDCUSTOMER);
@@ -50,28 +45,13 @@ namespace Final_Report.Models
                 .WithOptional(e => e.ACCOUNT)
                 .HasForeignKey(e => e.IDCUSTOMER);
 
-            modelBuilder.Entity<BOOKINGFLIGHT>()
-                .HasMany(e => e.APPROVE)
-                .WithOptional(e => e.BOOKINGFLIGHT)
-                .HasForeignKey(e => e.IDFLIGHTBOOK);
-
-            modelBuilder.Entity<BOOKINGHOTEL>()
-                .HasMany(e => e.APPROVE)
-                .WithOptional(e => e.BOOKINGHOTEL)
-                .HasForeignKey(e => e.IDHOTELBOOK);
-
-            modelBuilder.Entity<BOOKINGPACKAGE>()
-                .HasMany(e => e.APPROVE)
-                .WithOptional(e => e.BOOKINGPACKAGE)
-                .HasForeignKey(e => e.IDPACKAGEBOOK);
-
             modelBuilder.Entity<FLIGHT>()
                 .HasMany(e => e.BOOKINGFLIGHT)
                 .WithOptional(e => e.FLIGHT)
                 .HasForeignKey(e => e.IDFLIGHT);
 
             modelBuilder.Entity<FLIGHT>()
-                .HasMany(e => e.BOOKINGPACKAGE)
+                .HasMany(e => e.PACKAGE)
                 .WithOptional(e => e.FLIGHT)
                 .HasForeignKey(e => e.IDFLIGHT);
 
@@ -81,14 +61,19 @@ namespace Final_Report.Models
                 .HasForeignKey(e => e.IDHOTEL);
 
             modelBuilder.Entity<HOTEL>()
-                .HasMany(e => e.BOOKINGPACKAGE)
+                .HasMany(e => e.COMMENTANDRATING)
                 .WithOptional(e => e.HOTEL)
                 .HasForeignKey(e => e.IDHOTEL);
 
             modelBuilder.Entity<HOTEL>()
-                .HasMany(e => e.COMMENTANDRATING)
+                .HasMany(e => e.PACKAGE)
                 .WithOptional(e => e.HOTEL)
                 .HasForeignKey(e => e.IDHOTEL);
+
+            modelBuilder.Entity<PACKAGE>()
+                .HasMany(e => e.BOOKINGPACKAGE)
+                .WithOptional(e => e.PACKAGE)
+                .HasForeignKey(e => e.IDPACKAGE);
 
             modelBuilder.Entity<CUSTOMER>()
                 .Property(e => e.PHONENUMBER)

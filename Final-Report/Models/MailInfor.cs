@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Web_test2.Models
+namespace Final_Report.Models
 {
     public class MailInfor
     {

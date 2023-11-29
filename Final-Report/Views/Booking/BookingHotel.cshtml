@@ -4,92 +4,75 @@
     Layout = "~/Views/Shared/SignLogLayout.cshtml";
 }
 
-@Styles.Render("~/Content/Item/Stepper.css")
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
-<div class="container" style="padding-bottom:50px">
-    <div class="accordion" id="accordionExample">
-        <div class="steps">
-            <progress id="progress" value="30" max="100"></progress>
-            <div class="step-item">
-                <button class="step-button text-center" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                    1
-                </button>
-                <div class="step-title">
-                    First Step
-                </div>
-            </div>
-            
-            <div class="step-item">
-                <button class="step-button text-center collapsed" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                    2
-                </button>
-                <div class="step-title">
-                    Second Step
-                </div>
-            </div>
-        </div>
+@{ double price = Model.PRICE_PER_PERSON; }
 
-        <div class="card">
-            <div id="headingOne">
-            </div>
-
-            <div id="collapseOne" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                <div class="card-body">
-                    <div class="container rounded bg-white mt-5 mb-5">
-                        <div class="row">
-                            <div class="col-md-3 border-right">
-                                <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span class="font-weight-bold">Edogaru</span><span class="text-black-50">edogaru@mail.com.my</span><span> </span></div>
-                            </div>
-                            <div class="col-md-5 border-right">
-                                <div class="p-3 py-5">
-                                    <div class="d-flex justify-content-between align-items-center mb-3">
-                                        <h4 class="text-right">Booking Setup</h4>
-                                    </div>
-                                    <form action="@Url.Action("CompleteBookHotel", "Booking", new { IDHotel = Model})" method="post">
-                                        <div class="mb-3">
-                                            <label class="form-label">First Name</label>
-                                            <input type="text" class="form-control" name="FirstName">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Last Name</label>
-                                            <input type="text" class="form-control" name="LastName">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Email address</label>
-                                            <input type="email" class="form-control" aria-describedby="emailHelp" name="To">
-                                            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-                                        </div>
-                                        <button type="submit" class="btn btn-primary">Confirm</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<form style="border: solid; border-width: 3px; border-radius: 10px; padding: 20px; margin-bottom:150px" action="@Url.Action("CompleteBookHotel", "Booking")" method="post">
+    <div class="row">
+        <div class="col-4">
+            <img src="@Model.PICTURES" alt="..." class="hotel-img" style="width:300px">
         </div>
-        <div class="card">
-            <div id="headingTwo"></div>
-            <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                <div class="card-body">
-                    Congratulations, Your booking is completed!
-                    We will send you the Confirm Email, just a second ... 
-                    <a type="button" class="btn btn-primary" href="@Url.Action("Stays","Booking")" style="position:center">
-                        Go back
-                    </a>
+        <div class="col-8">
+            <div class="name" style="font-size: 2em;"><b>@Model.NAME</b> - <span class="city">@Model.ADDRESS</span> </div>
+            <br />
+            <div><span class="fas fa-comment-dollar"></span>    Price: <b>@price.ToString("N0")</b>/Room/Night</div>
+            <div><span class="fas fa-concierge-bell"></span>    Available Room: @Model.ROOM_AVAILABLE</div>
+            <input type="number" class="form-control" name="ID" value="@Model.ID" style="visibility:hidden" />
+            <hr />
+            <br />
+            <div class="row">
+                <div class="col-5">
+                    <label class="form-label"><b>Check-in</b></label>
+                    <input type="date" class="form-control" name="checkIn" required />
+                </div>
+                <div class="col-2">
+                    <i class="bi bi-arrow-right form-label" style="font-size: 3rem;"></i>
+                </div>
+                <div class="col-5">
+                    <label class="form-label"><b>Check-out</b></label>
+                    <input type="date" class="form-control" name="checkOut" required />
                 </div>
             </div>
+            <br />
+            <label class="form-label"><b>Guests</b></label>
+            <input type="number" class="form-control" style="width:150px" min="1" name="guest" required />
+
+            <label class="form-label"><b>Room</b></label>
+            <input type="number" class="form-control" style="width:150px" min="1" name="room" required />
+            <hr />
+            <div class="name" style="font-size: 2em;"><b>Total Price: </b> <span id="total-price"></span> VND</div>
         </div>
     </div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
-@Scripts.Render("~/bundles/Stepper")
+    <br />
+    <hr />
+    <br />
+    <div class="d-flex justify-content-between">
+        <a class="btn btn-outline-primary" href="@Url.Action("Stays", "HomePage")" style="width:150px">Go Back</a>
+        <button type="submit" class="btn btn-primary" style="width:150px">Book Now</button>
+    </div>
+</form>
 <script>
-        function openLink(target) {
-        // Assuming the target is not needed in this case
-        window.location.href = '@Url.Action("Stays", "HomePage")';
-        }
+    document.addEventListener('DOMContentLoaded', function() {
+    var checkInInput = document.querySelector('input[name="checkIn"]');
+    var checkOutInput = document.querySelector('input[name="checkOut"]');
+    var roomInput = document.querySelector('input[name="room"]');
+    var price = @price; 
+
+    function calculateTotalPrice() {
+        var checkIn = new Date(checkInInput.value);
+        var checkOut = new Date(checkOutInput.value);
+        var room = roomInput.value;
+
+        var timeDifference = Math.abs(checkOut.getTime() - checkIn.getTime());
+        var numberOfDays = Math.ceil(timeDifference / (1000 * 3600 * 24));
+
+        var totalPrice = price * numberOfDays * room;
+        var formattedTotalPrice = totalPrice.toLocaleString('en-US');
+
+        document.querySelector('#total-price').textContent = formattedTotalPrice;
+    }
+
+    checkInInput.addEventListener('change', calculateTotalPrice);
+    checkOutInput.addEventListener('change', calculateTotalPrice);
+    roomInput.addEventListener('change', calculateTotalPrice);
+});
 </script>

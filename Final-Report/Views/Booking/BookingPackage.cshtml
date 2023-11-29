@@ -4,105 +4,38 @@
     Layout = "~/Views/Shared/SignLogLayout.cshtml";
 }
 
-@Styles.Render("~/Content/Item/Stepper.css")
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
-<div class="container" style="padding-bottom:50px">
-    <div class="accordion" id="accordionExample">
-        <div class="steps">
-            <progress id="progress" value="50" max="100"></progress>
-            <div class="step-item">
-                <button class="step-button text-center" type="button" onclick="openLink('#collapseOne')" data-bs-toggle="collapse"
-                        data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                    1
-                </button>
-                <div class="step-title">
-                    First Step
-                </div>
-            </div>
-            <div class="step-item">
-                <button class="step-button text-center collapsed" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                    2
-                </button>
-                <div class="step-title">
-                    Second Step
-                </div>
-            </div>
-            <div class="step-item">
-                <button class="step-button text-center collapsed" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                    3
-                </button>
-                <div class="step-title">
-                    Third Step
-                </div>
-            </div>
-        </div>
+@{ 
+    double price = Model.PRICE_PER_PERSON;
+}
 
-        <div class="card">
-            <div id="headingOne">
-
-            </div>
-
-            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                <div class="card-body">
-                    <div class="container rounded bg-white mt-5 mb-5">
-                        <div class="row">
-                            <div class="col-md-3 border-right">
-                                <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span class="font-weight-bold">Edogaru</span><span class="text-black-50">edogaru@mail.com.my</span><span> </span></div>
-                            </div>
-                            <div class="col-md-5 border-right">
-                                <div class="p-3 py-5">
-                                    <div class="d-flex justify-content-between align-items-center mb-3">
-                                        <h4 class="text-right">Profile Settings</h4>
-                                    </div>
-                                    <div class="row mt-2">
-                                        <div class="col-md-6"><label class="labels">First Name</label><input type="text" class="form-control" placeholder="First Name" value=""></div>
-                                        <div class="col-md-6"><label class="labels">Last Name</label><input type="text" class="form-control" value="" placeholder="Last Name"></div>
-                                    </div>
-                                    <div class="row mt-3">
-                                        <div class="col-md-12"><label class="labels">Mobile Number</label><input type="text" class="form-control" placeholder="enter phone number" value=""></div>
-                                        <div class="col-md-12"><label class="labels">Address</label><input type="text" class="form-control" placeholder="enter address" value=""></div>
-                                        <div class="col-md-12"><label class="labels">Email</label><input type="text" class="form-control" placeholder="enter email" value=""></div>
-                                    </div>
-                                    <div class="mt-5 text-center">
-                                        <a class="btn btn-primary">Confirm</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <div id="headingTwo">
-
-            </div>
-            <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                <div class="card-body">
-                    ...........
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <div id="headingThree">
-
-            </div>
-            <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
-                 data-bs-parent="#accordionExample">
-                <div class="card-body">
-                    your content goes here...
-                </div>
-            </div>
-        </div>
+<form style="border: solid; border-width: 3px; border-radius: 10px; padding: 20px; margin-bottom:150px" action="@Url.Action("CompleteBookPackage", "Booking")" method="post">
+    @Html.Action("PartialHotel", "Booking", new { id = Model.IDHOTEL })
+    @Html.Action("PartialFlight", "Booking", new { id = Model.IDFLIGHT })
+    <input type="number" class="form-control" style="width:150px" min="1" name="ID" value="@Model.ID" style="visibility:hidden" />
+    <p style="font-size: 2em"> This trip will last for <b>@Model.PROLONG</b> days.</p>
+    <label class="form-label"><b>Guests</b></label>
+    <input type="number" class="form-control" style="width:150px" min="1" name="guest" required />
+    <hr />
+    <div class="name" style="font-size: 2em;"><b>Total Price:   </b> <span id="total-price"></span> VND</div>
+    <hr />
+    <br />
+    <div class="d-flex justify-content-between">
+        <a class="btn btn-outline-primary" href="@Url.Action("Packages", "HomePage")" style="width:150px">Go Back</a>
+        <button type="submit" class="btn btn-primary" style="width:150px">Book Now</button>
     </div>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
-@Scripts.Render("~/bundles/Stepper")
+</form>
+
 <script>
-    function openLink(target) {
-    // Assuming the target is not needed in this case
-    window.location.href = '@Url.Action("Stays", "HomePage")';
-    }
+    document.addEventListener("DOMContentLoaded", function () {
+        var guestInput = document.querySelector('input[name="guest"]');
+        guestInput.addEventListener('input', function () {
+            var guestCount = parseInt(guestInput.value);
+            var pricePackage = @price;
+
+            var newTotalPrice = pricePackage * guestCount;
+            var formattedTotalPrice = newTotalPrice.toLocaleString('en-US');
+
+            document.getElementById('total-price').innerText = formattedTotalPrice;
+        });
+    });
 </script>

@@ -26,17 +26,13 @@ namespace Final_Report.Controllers
             int pageSize = 5;
             return View(lstHotel.ToPagedList(pageNumber, pageSize));
         }
-        public ActionResult BookingHotel()
+        public ActionResult Packages(int? page)
         {
-            return View();
+            var lstPackage = db.PACKAGE.OrderBy(s => s.ID);
+            int pageNumber = (page) ?? 1;
+            int pageSize = 6;
+            return View(lstPackage.ToPagedList(pageNumber, pageSize));
         }
-        //public ActionResult Packages(int? page)
-        //{
-        //    var lstPackage = db.PACKAGEs.OrderBy(s => s.ID);
-        //    int pageNumber = (page) ?? 1;
-        //    int pageSize = 6;
-        //    return View(lstPackage.ToPagedList(pageNumber, pageSize));
-        //}
         public ActionResult Flights(int? page)
         {
             var lstPACKAGE = db.FLIGHT.OrderBy(s => s.ID);

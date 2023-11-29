@@ -1,47 +1,29 @@
-﻿@using PagedList
-@using PagedList.Mvc
+﻿@using PagedList.Mvc;
 @{
     ViewBag.Title = "ItemPage";
     Layout = "~/Views/Shared/ItemLayout.cshtml";
 }
-<div class="container-fluid px-0">
-    <div class="container-fluid d-flex justify-content-center">
-        <h2>Available Packages</h2>
-    </div>
-</div>
-<div class="container-fluid mt-2 mb-5">
-    <div class="products">
-        <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                <div class="row g-3">
-                    @foreach (var item in Model)
-                    {
-                        <div class="col-md-4">
-                            <div class="card">
-                                <img src="@item.PICTURES" class="card-img-top">
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-between"> <span class="font-weight-bold">@item.PACKAGENAME</span> <span class="font-weight-bold">@item.PACKAGEPRICE_PER_PERSON VNĐ</span> </div>
-                                    <p class="card-text mb-1 mt-1">@item.INFORMATION</p>
-                                    <div class="d-flex align-items-center flex-row"><span class="guarantee">@item.PROLONG</span> </div>
-                                </div>
-                                <hr>
-                                <div class="card-body">
-                                    <div class="text-right buttons"><button class="btn btn-dark">BOOK</button> </div>
-                                </div>
-                            </div>
-                        </div>
-                    }
 
-
+<div class="row" style="margin-bottom:150px">
+    @foreach (var item in Model)
+    {
+        double price = item.PRICE_PER_PERSON;
+        <div class="col-4" style="margin-bottom: 25px;">
+            <a href="@Url.Action("BookingPackage", "Booking", new { idPackage = item.ID })" class="card p-3 bg-white text-decoration-none text-dark" style=" height: 450px">
+                <div class="about-product text-center mt-2">
+                    <img src="https://i.imgur.com/3VTaSeb.png" width="300" style="margin-bottom: 20px">
+                    <div>
+                        <h4>@item.DESTINATION</h4>
+                    </div>
                 </div>
-            </div>
+                <div class="stats mt-2">
+                    <div class="d-flex justify-content-between p-price">@item.INFORMATION</div>
+                </div>
+                <div class="d-flex justify-content-between total font-weight-bold mt-4"><span>Price:</span><span>@price.ToString("N0")</span></div>
+            </a>
         </div>
-    </div>
-</div>
-<div class="row align text-center" style="padding-bottom:50px">
-    @Html.PagedListPager(
-            (PagedList.IPagedList)Model,
-            page => Url.Action("Packages", new { page = page })
-            //,PagedListRenderOptions.TwitterBootstrapPager
-        )
+    }
+    <nav class="text-center">
+        @Html.PagedListPager((PagedList.IPagedList)Model, page => Url.Action("Packages", new { page = page }))
+    </nav>
 </div>

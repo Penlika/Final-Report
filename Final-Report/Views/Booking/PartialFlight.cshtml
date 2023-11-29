@@ -1,0 +1,44 @@
+﻿
+<div class="hotel py-2 px-2 pb-4 border rounded" style="margin-bottom: 20px">
+    <!-- Initial flight -->
+    <div class="row col-12">
+        <div class="col-lg-2 text-center"> <b>@Model.COMPANY</b> </div>
+        <div class="col-lg-9">
+            <div class="d-flex">
+                <div class="col-3 text-end" style="margin-right: 20px;">
+                    <p>@Model.DEPARTURE</p>
+                    <p>@Model.FROM</p>
+                </div>
+
+                <div class="col-3" style="padding: 20px; text-align: center; position: relative;">
+                    <span class="material-symbols-outlined" style="position: absolute; left: 0; top: 50%; transform: translateY(-50%);">
+                        flight_takeoff
+                    </span>
+                    <p style="margin-bottom: 10px;">1-way</p>
+                    <div style="margin: 10px 0; width: 130px; height: 25px; overflow: hidden; position: relative; margin: 0 auto;">
+                        <div style="width: 400px; height: 2px; background: black; position: relative; top: 5px;">
+                            <div style="float: left; width: 10px; height: 10px; background: white; border: solid; border-radius: 50%; position: relative; top: -4px; margin-right: 50px;"></div>
+                            <div style="float: left; width: 10px; height: 10px; background: white; border: solid; border-radius: 50%; position: relative; top: -4px; margin-right: 50px;"></div>
+                            <div style="float: left; width: 10px; height: 10px; background: black; border-radius: 50%; position: relative; top: -4px; margin-right: 50px;"></div>
+                        </div>
+                    </div>
+
+                    <div style="width: 400px; height: 2px; position: relative; left: 45px; top: -55px;">
+                        <div style="float: left; width: 50px; height: 10px; position: relative; top: 40px; margin-right: 50px; left: 20px">1 stop</div>
+                        <div style="float:left;width:5px;height:10px;position:relative;top:-4px;margin-right:50px;"></div>
+                        <div style="float: left; width: 5px; height: 10px; position: relative; top: -4px; margin-right: 50px;"></div>
+                    </div>
+
+                    <span class="material-symbols-outlined" style="position: absolute; right: 0; top: 50%; transform: translateY(-50%);">
+                        flight_land
+                    </span>
+                </div>
+
+                <div class="col-3" style="margin-left: 20px;">
+                    <p>@Model.ARRIVAL <a style="background-color:slategray;padding-left:10px;padding-right:10px">+2</a></p>
+                    <p>@Model.TO</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

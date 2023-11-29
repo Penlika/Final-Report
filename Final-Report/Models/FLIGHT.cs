@@ -13,7 +13,7 @@ namespace Final_Report.Models
         public FLIGHT()
         {
             BOOKINGFLIGHT = new HashSet<BOOKINGFLIGHT>();
-            BOOKINGPACKAGE = new HashSet<BOOKINGPACKAGE>();
+            PACKAGE = new HashSet<PACKAGE>();
         }
 
         public int ID { get; set; }
@@ -22,7 +22,6 @@ namespace Final_Report.Models
         [StringLength(30)]
         public string COMPANY { get; set; }
 
-        [Required]
         public string PICTURES { get; set; }
 
         public DateTime DEPARTURE { get; set; }
@@ -39,12 +38,10 @@ namespace Final_Report.Models
 
         public double PRICE_PER_PERSON { get; set; }
 
-        public DateTime? MODIFIEDDAY { get; set; }
-
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BOOKINGFLIGHT> BOOKINGFLIGHT { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BOOKINGPACKAGE> BOOKINGPACKAGE { get; set; }
+        public virtual ICollection<PACKAGE> PACKAGE { get; set; }
     }
 }

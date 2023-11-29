@@ -162,7 +162,6 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ACCOUNT.cs" />
     <Compile Include="Models\ADMIN.cs" />
-    <Compile Include="Models\APPROVE.cs" />
     <Compile Include="Models\BOOKINGFLIGHT.cs" />
     <Compile Include="Models\BOOKINGHOTEL.cs" />
     <Compile Include="Models\BOOKINGPACKAGE.cs" />
@@ -170,8 +169,10 @@
     <Compile Include="Models\CUSTOMER.cs" />
     <Compile Include="Models\FLIGHT.cs" />
     <Compile Include="Models\HOTEL.cs" />
-    <Compile Include="Models\Model1.cs" />
     <Compile Include="Models\MailInfor.cs" />
+    <Compile Include="Models\Model1.cs" />
+    <Compile Include="Models\PACKAGE.cs" />
+    <Compile Include="Models\PackageViewModel.cs" />
     <Compile Include="Models\UserLogin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utility.cs" />
@@ -260,17 +261,19 @@
     <Content Include="Views\Shared\NavBarItem.cshtml" />
     <Content Include="Views\HomePage\Stays.cshtml" />
     <Content Include="Views\User\Register.cshtml" />
-    <Content Include="Views\User\Profile.cshtml" />
     <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\HomePage\Flights.cshtml" />
     <Content Include="Views\HomePage\Packages.cshtml" />
     <Content Include="Views\Maps\Maps.cshtml" />
     <Content Include="Views\HomePage\test.cshtml" />
-    <Content Include="Views\Booking\Index.cshtml" />
-    <Content Include="Views\Booking\History.cshtml" />
-    <Content Include="Views\Booking\BookingPackage.cshtml" />
+    <Content Include="Views\User\Profile.cshtml" />
     <Content Include="Views\Booking\BookingFlight.cshtml" />
     <Content Include="Views\Booking\BookingHotel.cshtml" />
+    <Content Include="Views\Booking\BookingPackage.cshtml" />
+    <Content Include="Views\Booking\History.cshtml" />
+    <Content Include="Views\Booking\Index.cshtml" />
+    <Content Include="Views\Booking\PartialFlight.cshtml" />
+    <Content Include="Views\Booking\PartialHotel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -66,13 +66,14 @@ namespace Final_Report.Controllers
                     if (userRole.Equals("admin", StringComparison.OrdinalIgnoreCase))
                     {
                         // Store admin information in session
-                        Session["Admin"] = db.ADMIN.FirstOrDefault(admin => admin.EMAIL == u.EMAIL);
+                        Session["admin"] = db.ADMIN.FirstOrDefault(admin => admin.EMAIL == u.EMAIL);
 
                         // Redirect to admin views
                         return RedirectToAction("Index", "Home", new { Area = "Admin" });
                     }
                     else if (userRole.Equals("customer", StringComparison.OrdinalIgnoreCase))
                     {
+                        Session["customer"] = u;
                         // Redirect to customer views
                         return RedirectToAction("Index", "HomePage");
                     }
@@ -93,10 +94,42 @@ namespace Final_Report.Controllers
             Session["EMAIL"] = null;
             return Redirect("~/");
         }
+        [HttpGet]
         public ActionResult Profile()
         {
-            return View();
+            string userEmail = ((ACCOUNT)Session["customer"]).EMAIL;
+
+            // Retrieve customer data based on the email
+            CUSTOMER customer = db.CUSTOMER.FirstOrDefault(c => c.EMAIL == userEmail);
+            return View(customer);
         }
+        [HttpPost]
+        public ActionResult UpdateProfile(CUSTOMER updatedCustomer)
+        {
+            if (ModelState.IsValid)
+            {
+                // Retrieve the original customer from the database
+                CUSTOMER originalCustomer = db.CUSTOMER.FirstOrDefault(c => c.EMAIL == updatedCustomer.EMAIL);
+
+                if (originalCustomer != null)
+                {
+                    // Update the properties of the original customer with the updated values
+                    originalCustomer.NAME = updatedCustomer.NAME;
+                    originalCustomer.PHONENUMBER = updatedCustomer.PHONENUMBER;
+                    originalCustomer.ADDRESS = updatedCustomer.ADDRESS;
+
+                    // Save changes to the database
+                    db.SaveChanges();
+
+                    // Redirect to the profile page after successful update
+                    return RedirectToAction("Profile");
+                }
+            }
+
+            // If the model state is not valid or an issue occurred during update, return to the profile page with the current data
+            return View("Profile", updatedCustomer);
+        }
+
         public ActionResult BookingHistory()
         {
             return View();

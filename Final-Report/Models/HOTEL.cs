@@ -13,8 +13,8 @@ namespace Final_Report.Models
         public HOTEL()
         {
             BOOKINGHOTEL = new HashSet<BOOKINGHOTEL>();
-            BOOKINGPACKAGE = new HashSet<BOOKINGPACKAGE>();
             COMMENTANDRATING = new HashSet<COMMENTANDRATING>();
+            PACKAGE = new HashSet<PACKAGE>();
         }
 
         public int ID { get; set; }
@@ -34,17 +34,15 @@ namespace Final_Report.Models
 
         public double PRICE_PER_PERSON { get; set; }
 
-        public int? ROOM_AVAILABLE { get; set; }
-
-        public DateTime? MODIFIEDDAY { get; set; }
+        public int ROOM_AVAILABLE { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BOOKINGHOTEL> BOOKINGHOTEL { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BOOKINGPACKAGE> BOOKINGPACKAGE { get; set; }
+        public virtual ICollection<COMMENTANDRATING> COMMENTANDRATING { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<COMMENTANDRATING> COMMENTANDRATING { get; set; }
+        public virtual ICollection<PACKAGE> PACKAGE { get; set; }
     }
 }

@@ -13,7 +13,6 @@ namespace Final_Report.Models
         public ACCOUNT()
         {
             ADMIN = new HashSet<ADMIN>();
-            APPROVE = new HashSet<APPROVE>();
             BOOKINGFLIGHT = new HashSet<BOOKINGFLIGHT>();
             BOOKINGHOTEL = new HashSet<BOOKINGHOTEL>();
             BOOKINGPACKAGE = new HashSet<BOOKINGPACKAGE>();
@@ -33,6 +32,9 @@ namespace Final_Report.Models
         [Required]
         [StringLength(30)]
         public string PASSWORD { get; set; }
+        [NotMapped]
+        [Compare("PASSWORD", ErrorMessage = "ConfirmPassword must not be empty")]
+        public string CONFIRMPASSWORD { get; set; }
 
         [Required]
         [StringLength(50)]
@@ -40,9 +42,6 @@ namespace Final_Report.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ADMIN> ADMIN { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<APPROVE> APPROVE { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BOOKINGFLIGHT> BOOKINGFLIGHT { get; set; }

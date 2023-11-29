@@ -4,5 +4,73 @@
     Layout = "~/Views/Shared/SignLogLayout.cshtml";
 }
 
-<h2>BookingFlight</h2>
+@{ double price = Model.PRICE_PER_PERSON; }
 
+<form style="border: solid; border-width: 3px; border-radius: 10px; padding: 20px; margin-bottom:150px" action="@Url.Action("CompleteBookFlight", "Booking")" method="post">
+    <div class="text-center" style="font-size:2em"> <b>@Model.COMPANY</b> </div>
+    <input type="number" class="form-control" name="ID" value="@Model.ID" style="visibility:hidden" />
+    <div class="col-sm-12" style="position:relative; right: 40px">
+        <div class="d-flex">
+            <div class="col-4 text-end" style="margin-right: 20px;">
+                <p class="fw-bold">@Model.DEPARTURE</p>
+                <p class="fw-bold">@Model.FROM</p>
+            </div>
+
+            <div class="col-4" style="padding: 20px; text-align: center; position: relative;">
+                <span class="material-symbols-outlined" style="position: absolute; left: 30px; top: 50%; transform: translateY(-50%);">
+                    flight_takeoff
+                </span>
+                <p style="margin-bottom: 10px;">1-way</p>
+                <div style="margin: 10px 0; width: 130px; height: 25px; overflow: hidden; position: relative; margin: 0 auto;">
+                    <div style="width: 400px; height: 2px; background: black; position: relative; top: 5px;">
+                        <div style="float: left; width: 10px; height: 10px; background: white; border: solid; border-radius: 50%; position: relative; top: -4px; margin-right: 50px;"></div>
+                        <div style="float: left; width: 10px; height: 10px; background: white; border: solid; border-radius: 50%; position: relative; top: -4px; margin-right: 50px;"></div>
+                        <div style="float: left; width: 10px; height: 10px; background: black; border-radius: 50%; position: relative; top: -4px; margin-right: 50px;"></div>
+                    </div>
+                </div>
+
+                <span class="material-symbols-outlined" style="position: absolute; right: 30px; top: 50%; transform: translateY(-50%);">
+                    flight_land
+                </span>
+            </div>
+
+            <div class="col-4 text-start" style="margin-left: 20px;">
+                <p class="fw-bold">@Model.ARRIVAL <a style="background-color:slategray;padding-left:10px;padding-right:10px">+2</a></p>
+                <p class="fw-bold">@Model.TO</p>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <br />
+
+    <div class="row mb-3" style="position:relative; left:15px">
+        <label class="form-label"><b>Number of Passengers</b></label>
+        <input type="number" class="form-control" name="passenger" min="1" style="width:100px" required/>
+    </div>
+    <div class="row">
+        <div class="name" style="font-size: 2em;"><b>Total Price: </b> <span id="total-price"></span> VND</div>
+    </div>
+
+    <hr />
+    <br />
+    <div class="d-flex justify-content-between">
+        <a class="btn btn-outline-primary" href="@Url.Action("Flights", "HomePage")" style="width:150px">Go Back</a>
+        <button type="submit" class="btn btn-primary" style="width:150px">Book Now</button>
+    </div>
+</form>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var passengerInput = document.querySelector('input[name="passenger"]');
+        var price = @price;
+
+        function calculateTotalPrice() {
+            var passengers = passengerInput.value;
+            var totalPrice = price * passengers;
+            var formattedTotalPrice = totalPrice.toLocaleString('en-US');
+
+            document.querySelector('#total-price').textContent = formattedTotalPrice;
+        }
+
+        passengerInput.addEventListener('change', calculateTotalPrice);
+    });
+</script>

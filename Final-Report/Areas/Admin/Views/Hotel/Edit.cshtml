@@ -5,9 +5,11 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<script src="~/ckeditor/ckeditor.js"></script>
+<!-- Include CKEditor script -->
+<script src="https://cdn.ckeditor.com/4.16.1/standard/ckeditor.js"></script>
+
 <h2>EDIT HOTEL</h2>
-@using (Html.BeginForm("Edit", "Hotel", FormMethod.Post, new{@enctype ="multipart/form-data"}))
+@using (Html.BeginForm("Edit", "Hotel", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     <div class="form-horizontal">
@@ -25,7 +27,7 @@
                 <input type="text" size="70" name="sNAME" value="@Model.NAME" required />
             </div>
         </div>
-                <div class="form-group">
+        <div class="form-group">
             <label class="control-label col-md-2">Address:</label>
             <div class="col-md-10">
                 <input type="text" size="70" name="sADDRESS" value="@Model.ADDRESS" required />
@@ -34,8 +36,11 @@
         <div class="form-group">
             <label class="control-label col-md-2">Information:</label>
             <div class="col-md-10">
-                <textarea name="sINFORMATION" id="info">@Model.INFORMATION</textarea>
-                <script>CKEDITOR.replace('info');</script>
+                <textarea name="sINFORMATION" id="sINFORMATION">@Model.INFORMATION</textarea>
+                <script>
+                    // CKEditor initialization
+                    CKEDITOR.replace('sINFORMATION');
+                </script>
             </div>
         </div>
         <div class="form-group">
@@ -48,15 +53,13 @@
         <div class="form-group">
             <label class="control-label col-md-2">Modify date:</label>
             <div class="col-md-10">
-                <input type="datetime" name="dMODIFIEDDAY" required
-                       value="@Convert.ToDateTime(Model.MODIFIEDDAY)"readonly />
+                <input type="datetime" name="dMODIFIEDDAY" required value="@Convert.ToDateTime(Model.MODIFIEDDAY)" readonly />
             </div>
         </div>
         <div class="form-group">
             <label class="control-label col-md-2">Number of room:</label>
             <div class="col-md-10">
-                <input type="number" min="1" required name="sROOM"
-                       value="@Model.ROOM_AVAILABLE" />
+                <input type="number" min="1" required name="sROOM" value="@Model.ROOM_AVAILABLE" />
             </div>
         </div>
         <div class="form-group">
@@ -72,6 +75,7 @@
         </div>
     </div>
 }
+
 <div>
     @Html.ActionLink("Back", "Index")
 </div>

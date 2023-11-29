@@ -85,10 +85,10 @@ namespace Final_Report.Areas.Admin.Controllers
                 TempData["Message"] = "Hotel is not exist";
                 return RedirectToAction("Index");
             }
-            var package = db.BOOKINGPACKAGE.Where(tg => tg.IDHOTEL == id);
+            var package = db.PACKAGE.Where(tg => tg.IDHOTEL == id);
             if (package.Count() > 0)
             {
-                db.BOOKINGPACKAGE.RemoveRange(package);
+                db.PACKAGE.RemoveRange(package);
                 db.SaveChanges();
             }
             db.HOTEL.Remove(hotel);

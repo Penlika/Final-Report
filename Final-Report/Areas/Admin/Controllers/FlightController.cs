@@ -98,7 +98,6 @@ namespace Final_Report.Areas.Admin.Controllers
                 flight.COMPANY = f["sCOMPANY"];
                 flight.DEPARTURE = Convert.ToDateTime(f["sDEPART"]);
                 flight.ARRIVAL = Convert.ToDateTime(f["sARRIVE"]);
-                flight.MODIFIEDDAY = Convert.ToDateTime(f["dMODIFIEDDAY"]);
                 flight.PRICE_PER_PERSON = float.Parse(f["sPRICE"]);
                 flight.FROM = f["sFROM"];
                 flight.TO = f["sTO"];
@@ -115,10 +114,10 @@ namespace Final_Report.Areas.Admin.Controllers
                 TempData["Message"] = "Flight is not exist";
                 return RedirectToAction("Index");
             }
-            var package = db.BOOKINGPACKAGE.Where(tg => tg.IDFLIGHT == id);
+            var package = db.PACKAGE.Where(tg => tg.IDFLIGHT == id);
             if (package.Count() > 0)
             {
-                db.BOOKINGPACKAGE.RemoveRange(package);
+                db.PACKAGE.RemoveRange(package);
                 db.SaveChanges();
             }
             db.FLIGHT.Remove(flight);
