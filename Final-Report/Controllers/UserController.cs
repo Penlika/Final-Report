@@ -132,7 +132,21 @@ namespace Final_Report.Controllers
 
         public ActionResult BookingHistory()
         {
-            return View();
+            var userLogin = (ACCOUNT)Session["EMAIL"];
+            List<object> model = new List<object>();
+            if (userLogin == null)
+            {
+                return Redirect("~/User/Login");
+            }
+            else
+            {
+                var lstBHotel = db.BOOKINGHOTEL.Where(d => d.IDCUSTOMER == userLogin.ID).ToList();
+                var lstBFlight = db.BOOKINGFLIGHT.Where(d => d.IDCUSTOMER == userLogin.ID).ToList();
+
+                model.Add(lstBHotel);
+                model.Add(lstBFlight);
+            }
+            return View(model);
         }
     }
 }

@@ -12,7 +12,7 @@ namespace Final_Report.Controllers
 {
     public class HomePageController : Controller
     {
-        Model1 db=new Model1();
+        Model1 db = new Model1();
         // GET: HomePage
         // ----------------- View -----------------
         public ActionResult Index()
