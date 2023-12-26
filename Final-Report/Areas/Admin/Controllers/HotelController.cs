@@ -23,28 +23,6 @@ namespace Final_Report.Areas.Admin.Controllers
             int pageSize = 7;
             return View(lstHotel.ToList().OrderBy(n => n.ID).ToPagedList(pageNum, pageSize));
         }
-        [HttpGet]
-        public ActionResult Create()
-        {
-            return View();
-        }
-        [HttpPost]
-        [ValidateInput(false)]
-        public ActionResult Create(HOTEL model,FormCollection f,HttpPostedFileBase fFileUpload)
-        {
-            if (ModelState.IsValid)
-            {
-                if (fFileUpload != null)
-                {
-                    Image img=Image.FromStream(fFileUpload.InputStream,true,true);
-                    model.PICTURES = Utility.ConvertImageToBase64(img);
-                }
-                db.HOTEL.Add(model);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View();
-        }
         public ActionResult Detail(int id)
         {
             var hotel = db.HOTEL.SingleOrDefault(n => n.ID == id);
@@ -59,24 +37,70 @@ namespace Final_Report.Areas.Admin.Controllers
         public ActionResult Edit(int id)
         {
             var hotel = db.HOTEL.SingleOrDefault(n => n.ID == id);
+            var existingImages = db.HOTELIMG
+                                .Where(img => img.IDHOTEL == id)
+                                .Select(img => img.IMAGEURL)
+                                .Take(6)
+                                .ToList();
+            ViewBag.ExistingImages = existingImages;
             return View(hotel);
         }
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult Edit(HOTEL model, HttpPostedFileBase fFileUpload)
+        public ActionResult Edit(HOTEL model, HttpPostedFileBase fFileUpload, List<string> imageUrls)
         {
-            if (ModelState.IsValid)
+            try
             {
-                if (fFileUpload != null)
+                if (ModelState.IsValid)
                 {
-                    Image img=Image.FromStream(fFileUpload.InputStream,true,true);
-                    model.PICTURES = Utility.ConvertImageToBase64(img);
+                    if (fFileUpload != null)
+                    {
+                        Image img = Image.FromStream(fFileUpload.InputStream, true, true);
+                        model.PICTURE = Utility.ConvertImageToBase64(img);
+                    }
+                    else
+                    {
+                        HOTEL existingHotel = db.HOTEL.Find(model.ID);
+                        if (existingHotel != null)
+                        {
+                            model.PICTURE = existingHotel.PICTURE;
+                        }
+                    }
+
+                    // Update or add images to HOTELIMG table
+                    UpdateHotelImages(model.ID, imageUrls);
+
+                    db.HOTEL.AddOrUpdate(model);
+                    db.SaveChanges();
                 }
-                db.HOTEL.AddOrUpdate(model);
-                db.SaveChanges();
+                return RedirectToAction("Index");
             }
-            return RedirectToAction("Index");
+            catch (Exception ex)
+            {
+                // Log the exception (replace with your preferred logging mechanism)
+                Console.WriteLine($"Error during hotel update: {ex.Message}");
+                // Optionally, handle the exception or redirect to an error page
+                return RedirectToAction("Error");
+            }
         }
+
+        private void UpdateHotelImages(int hotelId, List<string> imageUrls)
+        {
+            // Remove existing images
+            var existingImages = db.HOTELIMG.Where(img => img.IDHOTEL == hotelId).ToList();
+            db.HOTELIMG.RemoveRange(existingImages);
+
+            // Add new images
+            if (imageUrls != null)
+            {
+                foreach (var imageUrl in imageUrls)
+                {
+                    db.HOTELIMG.Add(new HOTELIMG { IDHOTEL = hotelId, IMAGEURL = imageUrl });
+                }
+            }
+        }
+
+
         public ActionResult Delete(int id)
         {
             var hotel = db.HOTEL.FirstOrDefault(s => s.ID == id);

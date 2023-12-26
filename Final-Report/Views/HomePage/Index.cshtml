@@ -7,14 +7,17 @@
 <div class="row">
     <div class="container mb-3" style="position:relative">
         <div class="mb-3">
-            @Html.Action("NewLocaPartial", "HomePage")
+            @Html.Action("Top1", "HomePage")
         </div>
     </div>
 </div>
 <div class="row">
-    <div class="container mb-3" style="position:relative">
-        <div class="mb-3">
-            @Html.Action("TrendLocaPartial", "HomePage")
+    <div class="container row col-12 mb-3" style="position:relative">
+        <div class="col-6 mb-3">
+            @Html.Action("InforhotelPartial", "HomePage")
+        </div>
+        <div class="col-6 mb-3">
+            @Html.Action("Top2", "HomePage")
         </div>
     </div>
 </div>
@@ -22,7 +25,7 @@
 <div class="row">
     <div class="container row col-12 mb-3" style="position:relative">
         <div class="col-6 mb-3">
-            @Html.Action("TophotelPartial", "HomePage")
+            @Html.Action("Top3", "HomePage")
         </div>
         <div class="col-6 mb-3">
             @Html.Action("InforhotelPartial", "HomePage")

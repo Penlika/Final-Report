@@ -6,19 +6,62 @@
 }
 
 <script>
+    var isEditMode = false; // Track the edit mode status
+
     function toggleReadOnly() {
-        var inputs = document.querySelectorAll('.editable');
+        var inputs = document.querySelectorAll('.editable .form-control');
+        isEditMode = !isEditMode; // Toggle edit mode
+
         inputs.forEach(function (input) {
-            input.readOnly = !input.readOnly;
+            input.classList.toggle('readonly-input', !isEditMode);
+            input.readOnly = !isEditMode;
         });
 
         // Toggle the visibility of the Save Changes button
         var saveChangesBtn = document.getElementById('saveChangesBtn');
-        saveChangesBtn.style.display = saveChangesBtn.style.display === 'none' ? 'block' : 'none';
+        saveChangesBtn.style.display = isEditMode ? 'block' : 'none';
+
+        // Toggle the visibility of the file input based on edit mode
+        var fileInput = document.getElementById('fileInput');
+        var profilePictureInput = document.getElementById('profilePictureInput');
+
+        fileInput.style.display = isEditMode ? 'block' : 'none';
+        profilePictureInput.style.display = isEditMode ? 'block' : 'none';
+    }
+
+    function openFileInput() {
+        // Open the file input only if in edit mode
+        if (isEditMode) {
+            document.getElementById('profilePictureInput').click();
+        }
+    }
+
+    function displaySelectedImage(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                // Display the selected image on the page
+                document.querySelector('.photo img').src = e.target.result;
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
     }
 </script>
 
+
+
 <style>
+    .readonly-input {
+        background-color: #e0e0e0;
+    }
+
+    .editable-input {
+        border: none;
+        background-color: white;
+    }
+
     .profile-label {
         font-weight: bold;
         margin-top: 10px;
@@ -36,61 +79,142 @@
         display: none;
         margin-top: 20px;
     }
+
+    #fileInput {
+        display: none;
+    }
 </style>
 
-<div class="container">
-    <div class="row" style="padding-bottom: 50px">
-        <div class="col-md-5">
-            <div class="row">
-                <div class="col-12 bg-white p-0 px-3 py-3 mb-3">
-                    <div class="d-flex flex-column align-items-center">
-                        <img class="photo" src="@Model.PICTURES" alt="">
-                        <p class="fw-bold h4 mt-3">@Model.USERNAME</p>
-                        <p class="text-muted">@Model.EMAIL</p>
-                        <div class="d-flex btn-container">
-                            <div class="btn btn-primary follow me-2">Follow</div>
-                            <div class="btn btn-outline-primary message" onclick="toggleReadOnly()">Edit Profile</div>
+@using (Html.BeginForm("Edit", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="container">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="row" style="padding-bottom: 50px">
+            <div class="col-md-5">
+                <div class="row">
+                    <div class="col-12 bg-white p-0 px-3 py-3 mb-3">
+                        <div class="d-flex flex-column align-items-center">
+                            <label for="profilePicture" class="photo" style="cursor: pointer;" onclick="openFileInput()">
+                                <img src="@Model.PICTURES" alt="">
+                            </label>
+                            <div id="fileInput" style="display: none;">
+                                <label for="profilePicture">Change Profile Picture:</label>
+                                <input type="file" name="fFileUpload" id="profilePictureInput" style="display: none;" onchange="displaySelectedImage(this)" />
+                            </div>
+
+                            <p class="fw-bold h4 mt-3">@Model.USERNAME</p>
+                            <p class="text-muted">@Model.EMAIL</p>
+                            <div class="d-flex btn-container">
+                                <div class="btn btn-outline-primary message" onclick="toggleReadOnly()">Edit Profile</div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-12 bg-white p-0 px-2 pb-3 mb-3">
-                        <div class="d-flex justify-content-between border-bottom py-2 px-3">
-                            <p><span class="fab fa-twitter me-2"></span>Twitter</p>
-                            <a href="">bootdey</a>
-                        </div>
-                        <div class="d-flex justify-content-between border-bottom py-2 px-3">
-                            <p><span class="fab fa-instagram me-2"></span>Instagram</p>
-                            <a href="">bootdey</a>
-                        </div>
-                        <div class="d-flex justify-content-between py-2 px-3">
-                            <p><span class="fab fa-facebook-f me-2"></span>Facebook</p>
-                            <a href="">bootdey</a>
+                        <div class="col-12 bg-white p-0 px-2 pb-3 mb-3">
+                            <div class="d-flex justify-content-between border-bottom py-2 px-3">
+                                <p><span class="fab fa-twitter me-2"></span>Twitter</p>
+                                <a href="">bootdey</a>
+                            </div>
+                            <div class="d-flex justify-content-between border-bottom py-2 px-3">
+                                <p><span class="fab fa-instagram me-2"></span>Instagram</p>
+                                <a href="">bootdey</a>
+                            </div>
+                            <div class="d-flex justify-content-between py-2 px-3">
+                                <p><span class="fab fa-facebook-f me-2"></span>Facebook</p>
+                                <a href="">bootdey</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-7 ps-md-4">
-            <div class="row">
-                <div class="col-12 bg-white px-3 mb-3 pb-3">
-                    <div class="d-flex align-items-center justify-content-between border-bottom">
-                        <label class="profile-label">Full Name</label>
-                        <input class="editable profile-input" type="text" value="@Model.NAME" readonly />
+            <div class="col-md-7 ps-md-4">
+                <div class="row">
+                    <div class="col-12 bg-white px-3 mb-3 pb-3">
+                        <input type="hidden" name="ID" value="@Model.ID" />
+                        <input type="hidden" name="USERNAME" value="@Model.USERNAME" />
+
+                        <div class="d-flex align-items-center justify-content-between border-bottom">
+                            <label class="control-label col-md-2">Fullname</label>
+                            <div class="col-md-10 editable profile-input">
+                                @Html.EditorFor(model => model.NAME, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly-input" } })
+                                @Html.ValidationMessageFor(model => model.NAME, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="d-flex align-items-center justify-content-between border-bottom">
+                            <label class="control-label col-md-2">Date of birth</label>
+                            <div class="col-md-10 editable profile-input">
+                                @{
+                                    string dateString = Model.DATEOFBIRTH?.ToString("yyyy-MM-dd");
+                                }
+
+                                @Html.TextBoxFor(model => model.DATEOFBIRTH, new { @class = "form-control", @readonly = "readonly", @type = "date", @Value = dateString })
+                                @Html.ValidationMessageFor(model => model.DATEOFBIRTH, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <input type="hidden" name="EMAIL" value="@Model.EMAIL" />
+
+                        <div class="d-flex align-items-center justify-content-between border-bottom">
+                            <label class="control-label col-md-2">Phone number</label>
+                            <div class="col-md-10 editable profile-input">
+                                @Html.EditorFor(model => model.PHONENUMBER, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly-input" } })
+                                @Html.ValidationMessageFor(model => model.PHONENUMBER, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="d-flex align-items-center justify-content-between border-bottom">
+                            <label class="control-label col-md-2">Address</label>
+                            <div class="col-md-10 editable profile-input">
+                                @Html.EditorFor(model => model.ADDRESS, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly-input" } })
+                                @Html.ValidationMessageFor(model => model.ADDRESS, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <br />
+                        <label class="label" style="font-size:20px">Your credit card information</label>
+                        <div class="row card" style="border: 5px solid #007bff; border-radius: 10px; margin: 0; padding: 10px; ">
+                            <div class="col-12 bg-white px-3 mb-3 pb-3">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <label class="control-label col-md-2">Card Name</label>
+                                    <div class="col-md-10 editable profile-input">
+                                        @Html.TextBoxFor(model => model.CARDNAME, new { @class = "form-control", @readonly = "readonly-input" })
+                                        @Html.ValidationMessageFor(model => model.CARDNAME, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <label class="control-label col-md-2">Card Number</label>
+                                    <div class="col-md-10 editable profile-input">
+                                        @Html.EditorFor(model => model.CARDNUM, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly-input" } })
+                                        @Html.ValidationMessageFor(model => model.CARDNUM, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <label class="control-label col-md-2">Expiration Date</label>
+                                    <div class="col-md-10 editable profile-input">
+                                        @Html.TextBoxFor(model => model.EXPDATE, new { @class = "form-control", @readonly = "readonly", @type = "date", @Value = dateString })
+                                        @Html.ValidationMessageFor(model => model.EXPDATE, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <label class="control-label col-md-2">Security Number</label>
+                                    <div class="col-md-10 editable profile-input">
+                                        @Html.EditorFor(model => model.SECURNUM, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly-input" } })
+                                        @Html.ValidationMessageFor(model => model.SECURNUM, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input id="saveChangesBtn" type="submit" value="Save Changes" class="btn btn-default" />
+                            </div>
+                        </div>
                     </div>
-                    <div class="d-flex align-items-center justify-content-between border-bottom">
-                        <label class="profile-label">Email</label>
-                        <input class="editable profile-input" type="text" value="@Model.EMAIL" readonly />
-                    </div>
-                    <div class="d-flex align-items-center justify-content-between border-bottom">
-                        <label class="profile-label">Phone Number</label>
-                        <input class="editable profile-input" type="text" value="@Model.PHONENUMBER" readonly />
-                    </div>
-                    <div class="d-flex align-items-center justify-content-between">
-                        <label class="profile-label">Address</label>
-                        <input class="editable profile-input" style="box-decoration-b" type="text" value="@Model.ADDRESS" readonly />
-                    </div>
-                    <button id="saveChangesBtn" type="submit" class="btn btn-primary mt-3">Save Changes</button>
                 </div>
             </div>
         </div>
     </div>
-</div>
+}

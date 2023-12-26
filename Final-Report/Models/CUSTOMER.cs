@@ -14,6 +14,7 @@ namespace Final_Report.Models
         [StringLength(40)]
         public string NAME { get; set; }
 
+        [Column(TypeName = "date")]
         public DateTime? DATEOFBIRTH { get; set; }
 
         [Key]

@@ -32,8 +32,9 @@ namespace Final_Report.Models
         [Required]
         [StringLength(30)]
         public string PASSWORD { get; set; }
+
         [NotMapped]
-        [Compare("PASSWORD", ErrorMessage = "ConfirmPassword must not be empty")]
+        [Compare("PASSWORD", ErrorMessage = "Confirm password password cannot be blank")]
         public string CONFIRMPASSWORD { get; set; }
 
         [Required]

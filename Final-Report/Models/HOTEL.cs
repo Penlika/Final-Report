@@ -14,10 +14,13 @@ namespace Final_Report.Models
         {
             BOOKINGHOTEL = new HashSet<BOOKINGHOTEL>();
             COMMENTANDRATING = new HashSet<COMMENTANDRATING>();
+            HOTELIMG = new HashSet<HOTELIMG>();
             PACKAGE = new HashSet<PACKAGE>();
         }
 
         public int ID { get; set; }
+
+        public string PICTURE { get; set; }
 
         [Required]
         [StringLength(50)]
@@ -26,8 +29,6 @@ namespace Final_Report.Models
         [Required]
         [StringLength(100)]
         public string ADDRESS { get; set; }
-
-        public string PICTURES { get; set; }
 
         [StringLength(250)]
         public string INFORMATION { get; set; }
@@ -43,6 +44,9 @@ namespace Final_Report.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<COMMENTANDRATING> COMMENTANDRATING { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<HOTELIMG> HOTELIMG { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PACKAGE> PACKAGE { get; set; }

@@ -9,18 +9,19 @@ namespace Final_Report.Models
     [Table("COMMENTANDRATING")]
     public partial class COMMENTANDRATING
     {
+        public int ID { get; set; }
+
         public int? IDCUSTOMER { get; set; }
 
         public int? IDHOTEL { get; set; }
 
-        [Key]
-        [Column(Order = 0)]
+        [Required]
         [StringLength(400)]
         public string COMMENT { get; set; }
 
-        [Key]
-        [Column(Order = 1)]
-        public double RATING { get; set; }
+        public int STAR_RATING { get; set; }
+
+        public DateTime? DATECREATE { get; set; }
 
         public virtual ACCOUNT ACCOUNT { get; set; }
 

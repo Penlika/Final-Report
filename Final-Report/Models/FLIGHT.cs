@@ -13,6 +13,7 @@ namespace Final_Report.Models
         public FLIGHT()
         {
             BOOKINGFLIGHT = new HashSet<BOOKINGFLIGHT>();
+            FLIGHTIMG = new HashSet<FLIGHTIMG>();
             PACKAGE = new HashSet<PACKAGE>();
         }
 
@@ -21,8 +22,6 @@ namespace Final_Report.Models
         [Required]
         [StringLength(30)]
         public string COMPANY { get; set; }
-
-        public string PICTURES { get; set; }
 
         public DateTime DEPARTURE { get; set; }
 
@@ -40,6 +39,9 @@ namespace Final_Report.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BOOKINGFLIGHT> BOOKINGFLIGHT { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FLIGHTIMG> FLIGHTIMG { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PACKAGE> PACKAGE { get; set; }

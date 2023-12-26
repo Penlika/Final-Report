@@ -32,10 +32,10 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.PICTURES, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.PICTURE, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <input type="file" name="fFileUpload" accept="image/*" />
-                @Html.ValidationMessageFor(model => model.PICTURES, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.PICTURE, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -45,7 +45,7 @@
                 @Html.TextAreaFor(model => model.INFORMATION, new { @class = "form-control", id = "info" })
                 @Html.ValidationMessageFor(model => model.INFORMATION, "", new { @class = "text-danger" })
                 <script>
-                    CKEDITOR.replace('info', autoParagraph: false);
+                    CKEDITOR.replace('info');
                 </script>
             </div>
         </div>

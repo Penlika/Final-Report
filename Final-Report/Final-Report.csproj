@@ -149,19 +149,17 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\CommentAndRatingController.cs" />
     <Compile Include="Areas\Admin\Controllers\FlightController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\HotelController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
     <Compile Include="Areas\Navigation\NavigationModels.cs" />
     <Compile Include="Controllers\BookingController.cs" />
     <Compile Include="Controllers\HomePageController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202311290758168_jyzdgfhkufj.cs" />
-    <Compile Include="Migrations\202311290758168_jyzdgfhkufj.designer.cs">
-      <DependentUpon>202311290758168_jyzdgfhkufj.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ACCOUNT.cs" />
@@ -172,9 +170,12 @@
     <Compile Include="Models\COMMENTANDRATING.cs" />
     <Compile Include="Models\CUSTOMER.cs" />
     <Compile Include="Models\FLIGHT.cs" />
+    <Compile Include="Models\FLIGHTIMG.cs" />
     <Compile Include="Models\HOTEL.cs" />
+    <Compile Include="Models\HOTELIMG.cs" />
     <Compile Include="Models\Model1.cs" />
     <Compile Include="Models\PACKAGE.cs" />
+    <Compile Include="Models\HotelDetailsViewModel.cs" />
     <Compile Include="Models\MailInfor.cs" />
     <Compile Include="Models\PackageViewModel.cs" />
     <Compile Include="Models\UserLogin.cs" />
@@ -182,6 +183,7 @@
     <Compile Include="Utility.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\bgvid.mp4" />
     <Content Include="Content\Admin\dashboard.css" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
@@ -199,11 +201,15 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\Item\Hotel.css" />
     <Content Include="Content\Item\ItemPage.css" />
     <Content Include="Content\Item\Login.css" />
     <Content Include="Content\Item\Modal.css" />
+    <Content Include="Content\Item\NavBar.css" />
     <Content Include="Content\Item\Packages.css" />
+    <Content Include="Content\Item\Payment.css" />
     <Content Include="Content\Item\profile.css" />
+    <Content Include="Content\Item\Step2Step2.css" />
     <Content Include="Content\Item\Stepper.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
@@ -221,13 +227,18 @@
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\MenuPartial.cshtml" />
     <Content Include="Areas\Admin\Views\Flight\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Hotel\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Hotel\Detail.cshtml" />
     <Content Include="Areas\Admin\Views\Flight\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Flight\Detail.cshtml" />
     <Content Include="Areas\Admin\Views\Flight\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Hotel\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Hotel\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Hotel\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\CommentAndRating\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\CommentAndRating\Detail.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\Detail.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\Edit.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\Item\Stepper.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -265,19 +276,24 @@
     <Content Include="Views\HomePage\Flights.cshtml" />
     <Content Include="Views\HomePage\Packages.cshtml" />
     <Content Include="Views\Maps\Maps.cshtml" />
-    <Content Include="Views\HomePage\test.cshtml" />
+    <Content Include="Views\HomePage\Step2.cshtml" />
     <Content Include="Views\User\Profile.cshtml" />
     <Content Include="Views\Booking\BookingFlight.cshtml" />
-    <Content Include="Views\Booking\BookingHotel.cshtml" />
+    <Content Include="Views\Booking\__BookingHotel.cshtml" />
     <Content Include="Views\Booking\BookingPackage.cshtml" />
     <Content Include="Views\Booking\History.cshtml" />
     <Content Include="Views\Booking\Index.cshtml" />
     <Content Include="Views\Booking\PartialFlight.cshtml" />
     <Content Include="Views\Booking\PartialHotel.cshtml" />
     <Content Include="Views\Booking\BookingComplete.cshtml" />
-    <Content Include="Views\Shared\NewLocaPartial.cshtml" />
-    <Content Include="Views\Shared\TophotelPartial.cshtml" />
-    <Content Include="Views\Shared\TrendLocaPartial.cshtml" />
+    <Content Include="Views\Shared\Top1.cshtml" />
+    <Content Include="Views\Shared\Top3.cshtml" />
+    <Content Include="Views\Shared\Top2.cshtml" />
+    <Content Include="Views\Booking\Details.cshtml" />
+    <Content Include="Views\Shared\PartialComment.cshtml" />
+    <Content Include="Views\Booking\BookingHotel.cshtml" />
+    <Content Include="Views\Shared\ConfirmInfo.cshtml" />
+    <Content Include="Views\Shared\Payment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -309,11 +325,6 @@
     <Content Include="Scripts\bootstrap.bundle.js.map" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202311290758168_jyzdgfhkufj.resx">
-      <DependentUpon>202311290758168_jyzdgfhkufj.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

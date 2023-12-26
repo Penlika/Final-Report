@@ -1,0 +1,128 @@
+﻿
+@using PagedList.Mvc;
+@helper Truncate(string s, int length)
+{
+    if (s.Length < length)
+    {
+        @s
+    }
+    else
+    {
+        @s.Substring(0, length)<text>...</text>
+    }
+}
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Index</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            ID
+        </th>
+        <th>
+            USERNAME
+        </th>
+        <th>
+            NAME
+        </th>
+        <th>
+            DATEOFBIRTH
+        </th>
+        <th>
+            PICTURES
+        </th>
+        <th>
+            EMAIL
+        </th>
+        <th>
+            PHONENUMBER
+        </th>
+        <th>
+            ADDRESS
+        </th>
+        <th>
+            CARDNAME
+        </th>
+        <th>
+            CARDNUM
+        </th>
+        <th>
+            EXPDATE
+        </th>
+        <th>
+            SECURNUM
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (Final_Report.Models.CUSTOMER item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ACCOUNT.ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ACCOUNT.USERNAME)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NAME)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DATEOFBIRTH)
+            </td>
+            <td>
+                @if (!string.IsNullOrEmpty(item.PICTURES))
+                {
+                    <img src="@item.PICTURES" style="width:50px" />
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EMAIL)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PHONENUMBER)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ADDRESS)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CARDNAME)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CARDNUM)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EXPDATE)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SECURNUM)
+            </td>
+            <td>
+                <a href="@Url.Action("Edit", new {id=item.ID})" class="btn btn-primary">Edit</a>
+                <a href="@Url.Action("Detail", new {id=item.USERNAME})" class="btn btn-light">Detail</a>
+                <a href="@Url.Action("Delete", new {id=item.USERNAME})" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+    }
+
+</table>
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+    </script>
+
+}
+<nav aria-label="Page navigation example" class="text-center">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    @Html.PagedListPager(
+        (PagedList.IPagedList)Model, page => Url.Action("Index", new { page = page })
+    )
+</nav>

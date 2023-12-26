@@ -29,26 +29,10 @@ namespace Final_Report.Areas.Admin.Controllers
         }
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult Create(FLIGHT model, FormCollection f, HttpPostedFileBase fFileUpload)
+        public ActionResult Create(FLIGHT model, FormCollection f)
         {
             if (ModelState.IsValid)
             {
-                if (fFileUpload != null && fFileUpload.ContentLength > 0)
-                {
-                    // Validate file type (you may want to improve this check)
-                    if (fFileUpload.ContentType.StartsWith("image"))
-                    {
-                        using (Image img = Image.FromStream(fFileUpload.InputStream, true, true))
-                        {
-                            model.PICTURES = Utility.ConvertImageToBase64(img);
-                        }
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("fFileUpload", "Invalid file type. Please upload an image.");
-                        return View(model);
-                    }
-                }
 
                 db.FLIGHT.Add(model);
                 db.SaveChanges();
@@ -80,21 +64,11 @@ namespace Final_Report.Areas.Admin.Controllers
         }
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult Edit(FormCollection f, HttpPostedFileBase fFileUpload)
+        public ActionResult Edit(FormCollection f)
         {
             var flight = db.FLIGHT.SingleOrDefault(n => n.ID == int.Parse(f["iID"]));
             if (ModelState.IsValid)
             {
-                if (fFileUpload != null)
-                {
-                    var sFileName = Path.GetFileName(fFileUpload.FileName);
-                    var path = Path.Combine(Server.MapPath("~/Images"), sFileName);
-                    if (!System.IO.File.Exists(path))
-                    {
-                        fFileUpload.SaveAs(path);
-                    }
-                    flight.PICTURES = sFileName;
-                }
                 flight.COMPANY = f["sCOMPANY"];
                 flight.DEPARTURE = Convert.ToDateTime(f["sDEPART"]);
                 flight.ARRIVAL = Convert.ToDateTime(f["sARRIVE"]);

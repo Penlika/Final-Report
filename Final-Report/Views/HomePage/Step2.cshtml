@@ -1,0 +1,160 @@
+﻿
+@{ 
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/ItemLayout.cshtml";
+}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+<div class="container">
+    <div class="accordion" id="accordionExample">
+        <div class="steps">
+            <progress id="progress" value="0" max="100"></progress>
+            <div class="step-item">
+                <button class="step-button text-center" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    1
+                </button>
+                <div class="step-title">
+                    Your booking
+                </div>
+            </div>
+            <div class="step-item">
+                <button class="step-button text-center collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    2
+                </button>
+                <div class="step-title">
+                    Your Information
+                </div>
+            </div>
+            <div class="step-item">
+                <button class="step-button text-center collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    3
+                </button>
+                <div class="step-title">
+                    Payment
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div id="headingOne">
+            </div>
+
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                 data-bs-parent="#accordionExample">
+                <div class="card-body">
+                    @Html.Action("BookingHotel", "Booking")
+                    <div class="col-md-6">
+                        <button type="submit" class="btn btn-primary" style="width:150px">Continue</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div id="headingTwo">
+
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                <div class="card-body">
+                    @Html.Action("ConfirmInfo", "HomePage")
+                    <div class="col-md-6">
+                        <button type="submit" class="btn btn-primary" style="width:150px">Back</button>
+                    </div>
+                    <div class="col-md-6">
+                        <button type="submit" class="btn btn-primary" style="width:150px">Continue</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div id="headingThree">
+
+            </div>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
+                 data-bs-parent="#accordionExample">
+                <div class="card-body">
+                    @Html.Action("Payment", "HomePage")
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .steps {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+        position: relative;
+    }
+
+    .step-button {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: none;
+        background-color: var(--prm-gray);
+        transition: .4s;
+    }
+
+        .step-button[aria-expanded="true"] {
+            width: 60px;
+            height: 60px;
+            background-color: cyan;
+            color: #fff;
+        }
+
+    .done {
+        background-color: cyan;
+        color: #fff;
+    }
+
+    .step-item {
+        z-index: 10;
+        text-align: center;
+    }
+
+    #progress {
+        -webkit-appearance: none;
+        position: absolute;
+        width: 95%;
+        z-index: 5;
+        height: 10px;
+        margin-left: 18px;
+        margin-bottom: 18px;
+    }
+        /* to customize progress bar */
+        #progress::-webkit-progress-value {
+            background-color:aquamarine;
+            transition: .5s ease;
+        }
+
+        #progress::-webkit-progress-bar {
+            background-color: var(--prm-gray);
+        }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+<script>
+    const stepButtons = document.querySelectorAll('.step-button');
+    const progress = document.querySelector('#progress');
+
+    Array.from(stepButtons).forEach((button, index) => {
+        button.addEventListener('click', () => {
+            progress.setAttribute('value', index * 100 / (stepButtons.length - 1)); //there are 3 buttons. 2 spaces.
+
+            stepButtons.forEach((item, secindex) => {
+                if (index > secindex) {
+                    item.classList.add('done');
+                }
+                if (index < secindex) {
+                    item.classList.remove('done');
+                }
+            });
+
+            const cardBody = document.querySelector(`#collapse${index + 1} .card-body`);
+            const isCollapsed = cardBody.classList.contains('show');
+            cardBody.style.height = isCollapsed ? '0' : `${cardBody.scrollHeight}px`;
+        });
+    });
+</script>

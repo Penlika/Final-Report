@@ -1,15 +1,11 @@
 ﻿
-@{
-    ViewBag.Title = "BookingHotel";
-    Layout = "~/Views/Shared/SignLogLayout.cshtml";
-}
 
 @{ double price = Model.PRICE_PER_PERSON; }
 
 <form style="border: solid; border-width: 3px; border-radius: 10px; padding: 20px; margin-bottom:150px" action="@Url.Action("CompleteBookHotel", "Booking")" method="post">
     <div class="row">
         <div class="col-4">
-            <img src="@Model.PICTURES" alt="..." style="width: 300px;">
+            <img src="@Model.PICTURE" alt="..." style="width: 300px;">
         </div>
         <div class="col-8">
             <div class="name" style="font-size: 2em;">@Model.NAME - @Model.ADDRESS</div>

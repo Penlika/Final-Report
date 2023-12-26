@@ -16,11 +16,13 @@ namespace Final_Report.Models
         public virtual DbSet<BOOKINGFLIGHT> BOOKINGFLIGHT { get; set; }
         public virtual DbSet<BOOKINGHOTEL> BOOKINGHOTEL { get; set; }
         public virtual DbSet<BOOKINGPACKAGE> BOOKINGPACKAGE { get; set; }
+        public virtual DbSet<COMMENTANDRATING> COMMENTANDRATING { get; set; }
         public virtual DbSet<FLIGHT> FLIGHT { get; set; }
+        public virtual DbSet<FLIGHTIMG> FLIGHTIMG { get; set; }
         public virtual DbSet<HOTEL> HOTEL { get; set; }
+        public virtual DbSet<HOTELIMG> HOTELIMG { get; set; }
         public virtual DbSet<PACKAGE> PACKAGE { get; set; }
         public virtual DbSet<ADMIN> ADMIN { get; set; }
-        public virtual DbSet<COMMENTANDRATING> COMMENTANDRATING { get; set; }
         public virtual DbSet<CUSTOMER> CUSTOMER { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -51,6 +53,11 @@ namespace Final_Report.Models
                 .HasForeignKey(e => e.IDFLIGHT);
 
             modelBuilder.Entity<FLIGHT>()
+                .HasMany(e => e.FLIGHTIMG)
+                .WithOptional(e => e.FLIGHT)
+                .HasForeignKey(e => e.IDFLIGHT);
+
+            modelBuilder.Entity<FLIGHT>()
                 .HasMany(e => e.PACKAGE)
                 .WithOptional(e => e.FLIGHT)
                 .HasForeignKey(e => e.IDFLIGHT);
@@ -62,6 +69,11 @@ namespace Final_Report.Models
 
             modelBuilder.Entity<HOTEL>()
                 .HasMany(e => e.COMMENTANDRATING)
+                .WithOptional(e => e.HOTEL)
+                .HasForeignKey(e => e.IDHOTEL);
+
+            modelBuilder.Entity<HOTEL>()
+                .HasMany(e => e.HOTELIMG)
                 .WithOptional(e => e.HOTEL)
                 .HasForeignKey(e => e.IDHOTEL);
 

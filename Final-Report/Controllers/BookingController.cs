@@ -1,6 +1,7 @@
 ﻿using Final_Report.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Net;
@@ -17,6 +18,153 @@ namespace Final_Report.Controllers
         {
             return View();
         }
+        public ActionResult Details(int hotelId)
+        {
+            var user = (CUSTOMER)Session["customer"];
+
+            var hotel = db.HOTEL.FirstOrDefault(h => h.ID == hotelId);
+            if (hotel == null)
+            {
+                // Handle the case where the hotel is not found
+                return HttpNotFound();
+            }
+
+            var imageUrls = db.HOTELIMG
+                .Where(img => img.IDHOTEL == hotelId)
+                .Select(img => img.IMAGEURL)
+                .ToList();
+
+            var commentsAndRatings = db.COMMENTANDRATING
+                .Where(cr => cr.IDHOTEL == hotelId)
+                .OrderByDescending(cr => cr.DATECREATE)  // Order by date created
+                .Select(cr => new CommentAndRatingViewModel
+                {
+                    CommentId = cr.ID,
+                    Comment = cr.COMMENT,
+                    StarRating = cr.STAR_RATING,
+                    DateCreate = (DateTime)cr.DATECREATE,
+                    UserId = (int)cr.IDCUSTOMER // Assuming IDCUSTOMER is the foreign key in the COMMENTANDRATING table
+                })
+                .ToList();
+
+            // Explicitly load related CUSTOMER information
+            foreach (var commentRating in commentsAndRatings)
+            {
+                var customer = db.CUSTOMER.Where(c => c.ID == commentRating.UserId).FirstOrDefault();
+                commentRating.UserName = customer?.USERNAME;
+                commentRating.UserPictureUrl = customer?.PICTURES;
+            }
+
+            var averageRating = commentsAndRatings.Any() ? commentsAndRatings.Average(cr => cr.StarRating) : 0;
+
+            var userComment = user != null
+                ? commentsAndRatings.FirstOrDefault(cr => cr.UserId == user.ID)
+                : null;
+
+            var model = new HotelDetailsViewModel
+            {
+                Hotel = hotel,
+                ImageUrls = imageUrls,
+                CommentsAndRatings = commentsAndRatings,
+                AverageRating = averageRating,
+                UserHasCommented = userComment != null,
+                UserComment = userComment?.Comment,
+                UserRating = userComment?.StarRating ?? 0,
+            };
+
+            return View(model);
+        }
+
+
+
+
+
+
+
+
+
+
+        [HttpPost]
+        public ActionResult AddOrUpdateCommentAndRating(int hotelId, string comment, int rating)
+        {
+            var user = (CUSTOMER)Session["customer"];
+
+            if (user == null)
+            {
+                // Redirect to login page with a message
+                return RedirectToAction("Login", "User", new { message = "Please log in to comment." });
+            }
+
+            var hotel = db.HOTEL.FirstOrDefault(h => h.ID == hotelId);
+
+            var existingComment = db.COMMENTANDRATING
+                .FirstOrDefault(cr => cr.IDHOTEL == hotelId && cr.IDCUSTOMER == user.ID);
+
+            if (existingComment != null)
+            {
+                existingComment.COMMENT = comment;
+                existingComment.STAR_RATING = rating;
+                existingComment.DATECREATE = DateTime.Now;
+
+                // Mark entity as modified
+                db.Entry(existingComment).State = EntityState.Modified;
+            }
+            else
+            {
+                var newComment = new COMMENTANDRATING
+                {
+                    IDHOTEL = hotelId,
+                    IDCUSTOMER = user.ID,
+                    COMMENT = comment,
+                    STAR_RATING = rating,
+                    DATECREATE = DateTime.Now
+                };
+
+                // Add new comment
+                db.COMMENTANDRATING.Add(newComment);
+            }
+
+            // Save changes to the database
+            db.SaveChanges();
+
+            // Redirect to the hotel details page
+            return RedirectToAction("Details", new { hotelId });
+        }
+
+        [HttpPost]
+        public ActionResult DeleteCommentAndRating(int commentId, int hotelId)
+        {
+            var userEmail = (string)Session["EMAIL"];
+            var user = db.ACCOUNT.FirstOrDefault(a => a.EMAIL == userEmail);
+
+            if (user != null)
+            {
+                var comment = db.COMMENTANDRATING.FirstOrDefault(cr =>cr.IDHOTEL == hotelId && cr.IDCUSTOMER == user.ID);
+
+                db.COMMENTANDRATING.Remove(comment);
+                db.SaveChanges();
+            }
+
+            return RedirectToAction("Details", new { hotelId });
+
+        }
+
+
+
+
+
+
+        public ActionResult PartialComment()
+        {
+            return PartialView();
+        }
+        // Inside BookingController
+
+
+
+
+
+
 
         public ActionResult BookingComplete()
         {
@@ -24,16 +172,8 @@ namespace Final_Report.Controllers
         }
         public ActionResult BookingHotel(int IDHotel)
         {
-            var userLogin = (ACCOUNT)Session["EMAIL"];
-            if (userLogin == null)
-            {
-                return RedirectToAction("Login", "User");
-            }
-            else
-            {
-                var hotel = db.HOTEL.Where(h => h.ID == IDHotel).FirstOrDefault();
-                return View(hotel);
-            }
+            var hotel = db.HOTEL.Where(h => h.ID == IDHotel).FirstOrDefault();
+            return PartialView(hotel);
         }
 
         public double calTotalPriceHotel(double price, int room, DateTime checkIn, DateTime checkOut)
@@ -46,7 +186,7 @@ namespace Final_Report.Controllers
 
         public ActionResult CompleteBookHotel(FormCollection f)
         {
-            ACCOUNT user = (ACCOUNT)Session["EMAIL"];
+            CUSTOMER user = (CUSTOMER)Session["customer"];
             var IDHotel = Int32.Parse(f["ID"]);
             var hotel = db.HOTEL.Where(h => h.ID == IDHotel).FirstOrDefault();
             double totalPrice = calTotalPriceHotel(hotel.PRICE_PER_PERSON, Int32.Parse(f["room"]), DateTime.Parse(f["checkIn"]), DateTime.Parse(f["checkOut"]));
@@ -136,7 +276,7 @@ namespace Final_Report.Controllers
         //}
         public ActionResult BookingFlight(int IDFlight)
         {
-            var userLogin = (ACCOUNT)Session["EMAIL"];
+            var userLogin = (CUSTOMER)Session["customer"];
             if (userLogin == null)
             {
                 return RedirectToAction("Login", "User");
@@ -150,7 +290,7 @@ namespace Final_Report.Controllers
 
         public ActionResult CompleteBookFlight(FormCollection f)
         {
-            var user = (ACCOUNT)Session["EMAIL"];
+            var user = (CUSTOMER)Session["customer"];
             var IDFlight = Int32.Parse(f["ID"]);
             var flight = db.FLIGHT.Where(h => h.ID == IDFlight).FirstOrDefault();
             double totalPrice = flight.PRICE_PER_PERSON * Int32.Parse(f["passenger"]);
