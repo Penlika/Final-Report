@@ -171,8 +171,7 @@ namespace Final_Report.Controllers
                 ViewBag.Err = "This email have not register !";
             }
             else
-                return RedirectToAction("ResetPass");
-                //return RedirectToAction("VerifyMail", "User", new {email = inputEmail});
+                return RedirectToAction("VerifyMail", "User", new { email = inputEmail });
             return View();
         }
 
@@ -235,21 +234,9 @@ namespace Final_Report.Controllers
                 if (user != null)
                 {
                     user.PASSWORD = tempPass;
+                    user.CONFIRMPASSWORD = tempPass;
                     db.ACCOUNT.AddOrUpdate(user);
-                    try
-                    {
-                        db.SaveChanges();
-                    }
-                    catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
-                    {
-                        foreach (var validationErrors in dbEx.EntityValidationErrors)
-                        {
-                            foreach (var validationError in validationErrors.ValidationErrors)
-                            {
-                                System.Diagnostics.Trace.TraceInformation("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
-                            }
-                        }
-                    }
+                    db.SaveChanges();
                 }
             }
             return RedirectToAction("Login");
