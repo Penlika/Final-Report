@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewBag.Title = "ResetPass";
+    Layout = "~/Views/Shared/SignLogLayout.cshtml";
+}
+
+<h3 class="text-center font-weight-light my-4">RESET PASSWORD</h3>
+<div style="display: flex; justify-content: center; align-items: center; margin-bottom: 100px">
+    <form action="@Url.Action("ResetPass", "User")" method="post">
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Password</label>
+            <input type="password" class="form-control" id="exampleInputPassword1" name="password" oninput="validatePassword()" required>
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword2" class="form-label">Re-enter Password</label>
+            <input type="password" class="form-control" id="exampleInputPassword2" oninput="validatePassword()" required>
+        </div>
+        <p id="error" style="color: red;"></p>
+        <button type="submit" class="btn btn-primary" id="saveButton" disabled>Save</button>
+    </form>
+</div>
+@Html.ValidationSummary(true)
+<script>
+    function validatePassword() {
+        var password = document.getElementById("exampleInputPassword1").value;
+        var confirmPassword = document.getElementById("exampleInputPassword2").value;
+        var saveButton = document.getElementById("saveButton");
+
+        if (password != confirmPassword) {
+            document.getElementById("error").innerHTML = "Passwords do not match!";
+            saveButton.disabled = true;
+        } else {
+            document.getElementById("error").innerHTML = "";
+            saveButton.disabled = false;
+        }
+    }
+</script>

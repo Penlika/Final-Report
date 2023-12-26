@@ -286,6 +286,9 @@
     <Content Include="Views\Shared\TophotelPartial.cshtml" />
     <Content Include="Views\Shared\TrendLocaPartial.cshtml" />
     <Content Include="Views\User\BookingHistory.cshtml" />
+    <Content Include="Views\User\ResetPass.cshtml" />
+    <Content Include="Views\User\VerifyMail.cshtml" />
+    <Content Include="Views\User\ForgotPass.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
