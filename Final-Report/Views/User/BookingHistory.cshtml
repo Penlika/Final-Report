@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewBag.Title = "BookingHistory";
+    Layout = "~/Views/Shared/SignLogLayout.cshtml";
+}
+<h2 class="text-center fw-bold">Booking History</h2>
+<div class="container" style="margin-bottom: 100px">
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="list1-tab" data-bs-toggle="tab" data-bs-target="#list1" type="button" role="tab" aria-controls="list1" aria-selected="true"><b>Hotels</b></button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="list2-tab" data-bs-toggle="tab" data-bs-target="#list2" type="button" role="tab" aria-controls="list2" aria-selected="false"><b>Flights</b></button>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="list1" role="tabpanel" aria-labelledby="list1-tab">
+            <ul class="list-group">
+                @foreach (var item in Model[0])
+                {
+                    <li class="list-group-item"><b>Hotel: </b> @item.IDHOTEL    <b>Check-in date: </b> @item.CHECKINDATE    <b>Check-out date: </b> @item.CHECKOUTDATE    <b>Guest: </b> @item.NUMOFPERSON    <b>Room: </b> @item.ROOM    <b>Total price: </b> @item.TOTALPRICE</li>
+                }
+            </ul>
+        </div>
+        <div class="tab-pane fade" id="list2" role="tabpanel" aria-labelledby="list2-tab">
+            <ul class="list-group">
+                @foreach (var item in Model[1])
+                {
+                    <li class="list-group-item"><b>Flight: </b> @item.IDFLIGHT    <b>Booking date: </b> @item.BOOKINGDATE    <b>Passengers: </b> @item.NUMOFPERSON    <b>Total price: </b> @item.TOTALPRICE</li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-beta1/js/bootstrap.bundle.min.js"></script>

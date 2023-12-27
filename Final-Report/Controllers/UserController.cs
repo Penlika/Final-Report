@@ -12,6 +12,9 @@ using System.Data.Entity.Migrations;
 using System.Diagnostics;
 using System.Data.Entity.Validation;
 using System.Data.Entity;
+using Microsoft.Ajax.Utilities;
+using System.Net.Mail;
+using System.Net;
 
 namespace Final_Report.Controllers
 {
@@ -150,7 +153,109 @@ namespace Final_Report.Controllers
 
         public ActionResult BookingHistory()
         {
+            var userLogin = (CUSTOMER)Session["customer"];
+            List<object> model = new List<object>();
+            if (userLogin == null)
+            {
+                return Redirect("~/User/Login");
+            }
+            else
+            {
+                var lstBHotel = db.BOOKINGHOTEL.Where(d => d.IDCUSTOMER == userLogin.ID).ToList();
+                var lstBFlight = db.BOOKINGFLIGHT.Where(d => d.IDCUSTOMER == userLogin.ID).ToList();
+
+                model.Add(lstBHotel);
+                model.Add(lstBFlight);
+            }
+            return View(model);
+        }
+
+        [HttpGet]
+        public ActionResult ForgotPass()
+        {
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult ForgotPass(FormCollection f)
+        {
+            var inputEmail = f["email"];
+            TempData["UserMail"] = inputEmail;
+            ACCOUNT user = db.ACCOUNT.FirstOrDefault(u => u.EMAIL == inputEmail);
+            if (user == null)
+            {
+                ViewBag.Err = "This email have not register !";
+            }
+            else
+                return RedirectToAction("VerifyMail", "User", new { email = inputEmail });
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult VerifyMail(string email)
+        {
+            // Generate OTP
+            Random random = new Random();
+            string otp = new string(Enumerable.Range(0, 6).Select(x => "0123456789"[random.Next(0, 10)]).ToArray());
+            TempData["OTP"] = otp;
+
+            var mail = new SmtpClient("smtp.gmail.com", 25)
+            {
+                Credentials = new NetworkCredential("hoainam3183@gmail.com", "scuc bpjv iqdk kesi"),
+                EnableSsl = true
+            };
+
+            var m = new MailMessage();
+            m.From = new MailAddress("hoainam3183@gmail.com");
+            m.ReplyToList.Add("hoainam3183@gmail.com");
+            m.To.Add(new MailAddress(email));
+            m.Subject = "Verify code has been sent !";
+            m.Body = "Please enter the following code to verify that you are the one who changed the password:  " + otp;
+
+            mail.Send(m);
+            ViewBag.Mail = "An email sent to your email address, please check the mailbox !";
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult VerifyMail(FormCollection f)
+        {
+            string userOtp = f["otp"];
+            if (userOtp.CompareTo(TempData["OTP"]) == 0)
+            {
+                return RedirectToAction("ResetPass", "User");
+            }
+            else
+            {
+                ViewBag.Error = "Your OTP is incorrect!";
+                return View();
+            }
+        }
+
+        [HttpGet]
+        public ActionResult ResetPass()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ResetPass(FormCollection f)
+        {
+            string tempPass = f["password"];
+            if (!tempPass.IsNullOrWhiteSpace())
+            {
+                string email = (string)TempData["UserMail"];
+                ACCOUNT user = db.ACCOUNT.SingleOrDefault(u => u.EMAIL == email);
+
+                if (user != null)
+                {
+                    user.PASSWORD = tempPass;
+                    user.CONFIRMPASSWORD = tempPass;
+                    db.ACCOUNT.AddOrUpdate(user);
+                    db.SaveChanges();
+                }
+            }
+            return RedirectToAction("Login");
         }
     }
 }

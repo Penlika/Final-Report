@@ -103,6 +103,12 @@ namespace Final_Report.Areas.Admin.Controllers
                 TempData["Message"] = "Flight is not exist";
                 return RedirectToAction("Index");
             }
+            var booked = db.BOOKINGFLIGHT.Where(ct => ct.IDFLIGHT == id).ToList();
+            if (booked.Count() > 0)
+            {
+                TempData["Message"] = "the service is currently book and cannot be delete";
+                return RedirectToAction("Index");
+            }
             var package = db.PACKAGE.Where(tg => tg.IDFLIGHT == id);
             if (package.Count() > 0)
             {
