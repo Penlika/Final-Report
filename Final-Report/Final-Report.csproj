@@ -170,9 +170,8 @@
     <Compile Include="Models\COMMENTANDRATING.cs" />
     <Compile Include="Models\CUSTOMER.cs" />
     <Compile Include="Models\FLIGHT.cs" />
-    <Compile Include="Models\FLIGHTIMG.cs" />
     <Compile Include="Models\HOTEL.cs" />
-    <Compile Include="Models\HOTELIMG.cs" />
+    <Compile Include="Models\LOGOIMG.cs" />
     <Compile Include="Models\Model1.cs" />
     <Compile Include="Models\PACKAGE.cs" />
     <Compile Include="Models\HotelDetailsViewModel.cs" />
@@ -279,7 +278,7 @@
     <Content Include="Views\HomePage\Step2.cshtml" />
     <Content Include="Views\User\Profile.cshtml" />
     <Content Include="Views\Booking\BookingFlight.cshtml" />
-    <Content Include="Views\Booking\__BookingHotel.cshtml" />
+    <Content Include="Views\Booking\BookingHotel.cshtml" />
     <Content Include="Views\Booking\BookingPackage.cshtml" />
     <Content Include="Views\Booking\History.cshtml" />
     <Content Include="Views\Booking\Index.cshtml" />
@@ -291,9 +290,11 @@
     <Content Include="Views\Shared\Top2.cshtml" />
     <Content Include="Views\Booking\Details.cshtml" />
     <Content Include="Views\Shared\PartialComment.cshtml" />
-    <Content Include="Views\Booking\BookingHotel.cshtml" />
     <Content Include="Views\Shared\ConfirmInfo.cshtml" />
     <Content Include="Views\Shared\Payment.cshtml" />
+    <Content Include="Views\Booking\ConfirmInfo.cshtml" />
+    <Content Include="Views\Booking\Payment.cshtml" />
+    <Content Include="Views\Shared\BookingLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

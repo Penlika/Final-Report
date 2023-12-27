@@ -12,7 +12,6 @@ namespace Final_Report.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public ACCOUNT()
         {
-            ADMIN = new HashSet<ADMIN>();
             BOOKINGFLIGHT = new HashSet<BOOKINGFLIGHT>();
             BOOKINGHOTEL = new HashSet<BOOKINGHOTEL>();
             BOOKINGPACKAGE = new HashSet<BOOKINGPACKAGE>();
@@ -27,6 +26,7 @@ namespace Final_Report.Models
         public string USERNAME { get; set; }
 
         [Required]
+        [StringLength(50)]
         public string EMAIL { get; set; }
 
         [Required]
@@ -41,8 +41,7 @@ namespace Final_Report.Models
         [StringLength(50)]
         public string ROLE { get; set; } = "customer";
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ADMIN> ADMIN { get; set; }
+        public virtual ADMIN ADMIN { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BOOKINGFLIGHT> BOOKINGFLIGHT { get; set; }

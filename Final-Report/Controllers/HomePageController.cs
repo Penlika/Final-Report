@@ -90,8 +90,8 @@ namespace Final_Report.Controllers
         {
             return PartialView();
         }
-        
-        
+
+
         public ActionResult Step2(int IDHotel)
         {
             var userLogin = (CUSTOMER)Session["customer"];
@@ -101,64 +101,13 @@ namespace Final_Report.Controllers
             }
             else
             {
+                ViewData["IDHotel"] = IDHotel;  // Set ViewData for IDHotel
                 var hotel = db.HOTEL.Where(h => h.ID == IDHotel).FirstOrDefault();
                 return View(hotel);
             }
         }
-        public ActionResult ConfirmInfo()
-        {
-            string userEmail = (string)Session["EMAIL"];
 
-            // Retrieve customer data based on the email
-            CUSTOMER customer = db.CUSTOMER.FirstOrDefault(c => c.EMAIL == userEmail);
-            return PartialView(customer);
-        }
-        [HttpPost]
-        [ValidateInput(false)]
-        public ActionResult Edit(CUSTOMER model, HttpPostedFileBase fFileUpload, int IDHotel)
-        {
-            if (ModelState.IsValid)
-            {
-                if (fFileUpload != null)
-                {
-                    Image img = Image.FromStream(fFileUpload.InputStream, true, true);
-                    model.PICTURES = Utility.ConvertImageToBase64(img);
-                }
-                else
-                {
-                    CUSTOMER existingCus = db.CUSTOMER.Find(model.USERNAME);
-                    if (existingCus != null)
-                    {
-                        model.PICTURES = existingCus.PICTURES;
-                    }
-                }
-                db.CUSTOMER.AddOrUpdate(model);
-                db.SaveChanges();
-                return RedirectToAction("Step2", new { IDHotel = IDHotel });
-            }
-            return View(model);
-        }
-        public ActionResult Payment()
-        {
-            string userEmail = (string)Session["EMAIL"];
 
-            // Retrieve customer data based on the email
-            CUSTOMER customer = db.CUSTOMER.FirstOrDefault(c => c.EMAIL == userEmail);
-            return PartialView(customer);
-        }
-        public ActionResult BookingHotel(int IDHotel)
-        {
-            var userLogin = (ACCOUNT)Session["EMAIL"];
-            if (userLogin == null)
-            {
-                return RedirectToAction("Login", "User");
-            }
-            else
-            {
-                var hotel = db.HOTEL.Where(h => h.ID == IDHotel).FirstOrDefault();
-                return PartialView(hotel);
-            }
-        }
         public ActionResult fillForm()
         {
             return PartialView();

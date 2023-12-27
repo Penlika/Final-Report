@@ -9,11 +9,11 @@ namespace Final_Report.Models
     [Table("ADMIN")]
     public partial class ADMIN
     {
-        public int? ID { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int ID { get; set; }
 
         public string PICTURES { get; set; }
 
-        [Key]
         [StringLength(20)]
         public string USERNAME { get; set; }
 

@@ -1,11 +1,15 @@
 ﻿
+@{
+    ViewBag.Title = "BookingHotel";
+    Layout = "~/Views/Shared/BookingLayout.cshtml";
+}
 
 @{ double price = Model.PRICE_PER_PERSON; }
 
 <form style="border: solid; border-width: 3px; border-radius: 10px; padding: 20px; margin-bottom:150px" action="@Url.Action("CompleteBookHotel", "Booking")" method="post">
     <div class="row">
         <div class="col-4">
-            <img src="@Model.PICTURE" alt="..." style="width: 300px;">
+            <img src="@Model.PICTURE1" style="width: 300px;">
         </div>
         <div class="col-8">
             <div class="name" style="font-size: 2em;">@Model.NAME - @Model.ADDRESS</div>
@@ -96,4 +100,37 @@
     checkOutInput.addEventListener('change', calculateTotalPrice);
     roomInput.addEventListener('change', calculateTotalPrice);
 });
+</script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        // Calculate total price function
+        function calculateTotalPrice() {
+            var price = @price;
+            var checkIn = new Date($('input[name="checkIn"]').val());
+            var checkOut = new Date($('input[name="checkOut"]').val());
+            var room = $('input[name="room"]').val();
+            var timeDifference = Math.abs(checkOut.getTime() - checkIn.getTime());
+            var numberOfDays = Math.ceil(timeDifference / (1000 * 3600 * 24));
+            var totalPrice = price * numberOfDays * room;
+            var formattedTotalPrice = totalPrice.toLocaleString('en-US');
+            $('#total-price').text(formattedTotalPrice);
+            $('input[name="totalPrice"]').val(totalPrice);
+        }
+
+        // Intercept form submission
+        $('form').submit(function (e) {
+            e.preventDefault();
+            calculateTotalPrice();
+
+            // Continue with the form submission
+            this.submit();
+        });
+
+        // Attach change event listeners
+        $('input[name="checkIn"]').change(calculateTotalPrice);
+        $('input[name="checkOut"]').change(calculateTotalPrice);
+        $('input[name="room"]').change(calculateTotalPrice);
+    });
 </script>

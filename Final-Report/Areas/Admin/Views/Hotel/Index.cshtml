@@ -18,7 +18,7 @@
 
 <h2>Index</h2>
 
-<a class="btn btn-primary" href="@Html.ActionLink("Create New", "Create")">  </a>
+<a class="btn btn-primary" href="@Url.Action("Create")">Create New</a>
 <table class="table">
     <tr>
         <th>
@@ -59,9 +59,9 @@
                 @Html.Raw(Truncate(item.ADDRESS, 70))
             </td>
             <td>
-                @if (!string.IsNullOrEmpty(item.PICTURE))
+                @if (!string.IsNullOrEmpty(item.PICTURE1))
                 {
-                    <img src="@item.PICTURE" style="width:50px" />
+                    <img src="@item.PICTURE1" style="width:50px" />
                 }
             </td>
             <td>

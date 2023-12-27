@@ -6,7 +6,14 @@ using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Web;
 using System.Web.Mvc;
+using PagedList;
+using System.IO;
+using System.Drawing;
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
+using System.Data.Entity.Validation;
 
 namespace Final_Report.Controllers
 {
@@ -28,11 +35,6 @@ namespace Final_Report.Controllers
                 // Handle the case where the hotel is not found
                 return HttpNotFound();
             }
-
-            var imageUrls = db.HOTELIMG
-                .Where(img => img.IDHOTEL == hotelId)
-                .Select(img => img.IMAGEURL)
-                .ToList();
 
             var commentsAndRatings = db.COMMENTANDRATING
                 .Where(cr => cr.IDHOTEL == hotelId)
@@ -64,7 +66,6 @@ namespace Final_Report.Controllers
             var model = new HotelDetailsViewModel
             {
                 Hotel = hotel,
-                ImageUrls = imageUrls,
                 CommentsAndRatings = commentsAndRatings,
                 AverageRating = averageRating,
                 UserHasCommented = userComment != null,
@@ -162,6 +163,52 @@ namespace Final_Report.Controllers
 
 
 
+        public ActionResult ConfirmInfo()
+        {
+            string userEmail = (string)Session["EMAIL"];
+
+            // Retrieve customer data based on the email
+            CUSTOMER customer = db.CUSTOMER.FirstOrDefault(c => c.EMAIL == userEmail);
+            return View(customer);
+        }
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult Edit(CUSTOMER model, HttpPostedFileBase fFileUpload, int IDHotel)
+        {
+            if (ModelState.IsValid)
+            {
+                if (fFileUpload != null)
+                {
+                    Image img = Image.FromStream(fFileUpload.InputStream, true, true);
+                    model.PICTURES = Utility.ConvertImageToBase64(img);
+                }
+                else
+                {
+                    CUSTOMER existingCus = db.CUSTOMER.Find(model.USERNAME);
+                    if (existingCus != null)
+                    {
+                        model.PICTURES = existingCus.PICTURES;
+                    }
+                }
+                db.CUSTOMER.AddOrUpdate(model);
+                db.SaveChanges();
+                return RedirectToAction("Step2", new { IDHotel = IDHotel });
+            }
+            return View(model);
+        }
+        public ActionResult Payment()
+        {
+            // Retrieve booking information from TempData
+            var bookingInfo = TempData["BookingInfo"] as dynamic;
+
+            // Pass the booking information to the view
+            ViewBag.BookingInfo = bookingInfo;
+
+            string userEmail = (string)Session["EMAIL"];
+            // Retrieve customer data based on the email
+            CUSTOMER customer = db.CUSTOMER.FirstOrDefault(c => c.EMAIL == userEmail);
+            return View(customer);
+        }
 
 
 
@@ -172,8 +219,16 @@ namespace Final_Report.Controllers
         }
         public ActionResult BookingHotel(int IDHotel)
         {
-            var hotel = db.HOTEL.Where(h => h.ID == IDHotel).FirstOrDefault();
-            return PartialView(hotel);
+            var userLogin = (CUSTOMER)Session["customer"];
+            if (userLogin == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
+            else
+            {
+                var hotel = db.HOTEL.Where(h => h.ID == IDHotel).FirstOrDefault();
+                return View(hotel);
+            }
         }
 
         public double calTotalPriceHotel(double price, int room, DateTime checkIn, DateTime checkOut)
@@ -190,9 +245,9 @@ namespace Final_Report.Controllers
             var IDHotel = Int32.Parse(f["ID"]);
             var hotel = db.HOTEL.Where(h => h.ID == IDHotel).FirstOrDefault();
             double totalPrice = calTotalPriceHotel(hotel.PRICE_PER_PERSON, Int32.Parse(f["room"]), DateTime.Parse(f["checkIn"]), DateTime.Parse(f["checkOut"]));
-            var book = new BOOKINGHOTEL
+            Session["BookingInfo"] = new
             {
-                IDHOTEL = hotel.ID,
+                IDHotel = hotel.ID,
                 IDCUSTOMER = user.ID,
                 CHECKINDATE = DateTime.Parse(f["checkIn"]),
                 CHECKOUTDATE = DateTime.Parse(f["checkOut"]),
@@ -200,7 +255,6 @@ namespace Final_Report.Controllers
                 ROOM = Int32.Parse(f["room"]),
                 TOTALPRICE = totalPrice
             };
-            db.BOOKINGHOTEL.Add(book);
 
             var updateHotel = db.HOTEL.Where(h => h.ID == hotel.ID).FirstOrDefault();
             int temp = updateHotel.ROOM_AVAILABLE;
@@ -230,8 +284,64 @@ namespace Final_Report.Controllers
 
             mail.Send(m);
 
-            return View("BookingComplete");
+            TempData["HotelName"] = hotel.NAME;
+            TempData["CheckInDate"] = f["checkIn"];
+            TempData["CheckOutDate"] = f["checkOut"];
+            TempData["Room"] = f["room"];
+            TempData["TotalPrice"] = totalPrice;
+
+            return RedirectToAction("ConfirmInfo");
         }
+
+
+
+
+
+
+
+        public ActionResult MakePayment()
+        {
+            // Retrieve booking information from Session
+            var bookingInfo = Session["BookingInfo"] as dynamic;
+
+            // Check if bookingInfo is not null
+            if (bookingInfo != null)
+            {
+                // Insert the booking information into the SQL table
+                var booking = new BOOKINGHOTEL
+                {
+                    IDHOTEL = bookingInfo.IDHotel,
+                    IDCUSTOMER = bookingInfo.IDCUSTOMER,
+                    CHECKINDATE = bookingInfo.CHECKINDATE,
+                    CHECKOUTDATE = bookingInfo.CHECKOUTDATE,
+                    NUMOFPERSON = bookingInfo.NUMOFPERSON,
+                    ROOM = bookingInfo.ROOM,
+                    TOTALPRICE = bookingInfo.TOTALPRICE
+                };
+
+                db.BOOKINGHOTEL.Add(booking);
+                db.SaveChanges();
+
+                // Clear Session to prevent reusing the booking information
+                Session["BookingInfo"] = null;
+
+                // Return the final view
+                return View("BookingComplete");
+            }
+            else
+            {
+                // Handle the case where bookingInfo is null
+                // Redirect to an appropriate view or take necessary action
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+
+
+
+
+
+
         //public ActionResult BookingPackage()
         //{
         //    return RedirectToAction("Index", "HomePage");

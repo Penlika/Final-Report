@@ -1,0 +1,69 @@
+﻿
+@{
+    ViewBag.Title = "Payment";
+    Layout = "~/Views/Shared/BookingLayout.cshtml";
+}
+<link href="~/Content/Item/Payment.css" rel="stylesheet">
+@model Final_Report.Models.CUSTOMER
+<div class="container-fluid"style="padding-bottom:100px">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-11">
+            <div class="card card0 rounded-0">
+                <div class="row">
+                    <div class="col-md-5 d-md-block d-none p-0 box">
+                        <div class="card rounded-0 border-0 card1" id="bill">
+                            <h3 id="heading1">Payment Summary</h3>
+                            <br />
+                            <div class="row">
+                                <p id="heading1">Hotel: @TempData["HotelName"]</p>
+                                <p id="heading1">Check-in Date: @TempData["CheckInDate"]</p>
+                                <p id="heading1">Check-out Date: @TempData["CheckOutDate"]</p>
+                                <p id="heading1">Room: @TempData["Room"]</p>
+                                <p class="red-bg"style="align-items:center;font-size:20px">Total Price: @TempData["TotalPrice"]</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-7 col-sm-12 p-0 box">
+                        <div class="card rounded-0 border-0 card2" id="paypage">
+                            <div class="form-card">
+                                <h2 id="heading2" class="text-danger">Payment Method</h2>
+                                <div class="radio-group">
+                                    <div class='radio' data-value="credit"><img src="https://i.imgur.com/28akQFX.jpg" width="200px" height="60px"></div>
+                                    <div class='radio' data-value="paypal"><img src="https://i.imgur.com/5QFsx7K.jpg" width="200px" height="60px"></div>
+                                    <br>
+                                </div>
+                                <label class="pay">Name on Card</label>
+                                <input type="text" name="holdername" placeholder="Your card name" value="@Model.CARDNAME">
+                                <div class="row">
+                                    <div class="col-8 col-md-6">
+                                        <label class="pay">Card Number</label>
+                                        <input type="text" name="cardno" id="cr_no" placeholder="0000-0000-0000" value="@Model.CARDNUM">
+                                    </div>
+                                    <div class="col-4 col-md-6">
+                                        <label class="pay">CVV</label>
+                                        <input type="password" name="cvcpwd" placeholder="&#9679;&#9679;&#9679;" class="placeicon" minlength="3" maxlength="3" value="@Model.SECURNUM">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="pay">Expiration Date</label>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <input type="date" value="@Model.EXPDATE">
+                                    </div>
+                                </div>
+                                <a class="btn btn-outline-primary" href="@Url.Action("ConfirmInfo", "Booking")" style="width:150px">Go Back</a>
+                                <div class="row d-flex justify-content-end mt-1">
+                                    <form action="@Url.Action("MakePayment", "Booking")" method="post">
+                                        <button type="submit" class="btn btn-primary">Proceed with Payment</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -6,15 +6,13 @@ namespace Final_Report.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("HOTELIMG")]
-    public partial class HOTELIMG
+    [Table("LOGOIMG")]
+    public partial class LOGOIMG
     {
-        public int ID { get; set; }
+        [Key]
+        [StringLength(40)]
+        public string COMPANY { get; set; }
 
-        public int? IDHOTEL { get; set; }
-
-        public string IMAGEURL { get; set; }
-
-        public virtual HOTEL HOTEL { get; set; }
+        public string LOGO { get; set; }
     }
 }

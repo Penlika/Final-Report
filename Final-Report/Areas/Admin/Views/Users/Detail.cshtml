@@ -18,7 +18,7 @@
             @Html.DisplayFor(model => model.ID)
         </dd>
         <dt>
-            Name:
+            Username:
         </dt>
         <dd>
             @Html.DisplayFor(model => model.USERNAME)
@@ -30,55 +30,55 @@
             @Html.DisplayFor(model => model.NAME)
         </dd>
         <dt>
-            Name:
+            Date of birth:
         </dt>
         <dd>
             @Html.FormatValue(@Model.DATEOFBIRTH, "{0:dd/MM/yyyy}")
         </dd>
         <dt>
-            Name:
+            Profile picture:
         </dt>
         <dd>
-            <img src="@Model.PICTURES" alt=" @Model.NAME">
+            <img src="@Model.PICTURES" alt=" @Model.NAME" style="height:300px;width:auto">
         </dd>
         <dt>
-            Name:
+            Email:
         </dt>
         <dd>
             @Html.DisplayFor(model => model.EMAIL)
         </dd>
         <dt>
-            Name:
+            Phonenumber:
         </dt>
         <dd>
             @Html.DisplayFor(model => model.PHONENUMBER)
         </dd>
         <dt>
-            Name:
+            Address:
         </dt>
         <dd>
             @Html.DisplayFor(model => model.ADDRESS)
         </dd>
         <dt>
-            Name:
+            Credit card name:
         </dt>
         <dd>
             @Html.DisplayFor(model => model.CARDNAME)
         </dd>
         <dt>
-            Name:
+            Credit card number:
         </dt>
         <dd>
             @Html.DisplayFor(model => model.CARDNUM)
         </dd>
         <dt>
-            Name:
+            Expire date:
         </dt>
         <dd>
             @Html.DisplayFor(model => model.EXPDATE)
         </dd>
         <dt>
-            Name:
+            Security number:
         </dt>
         <dd>
             @Html.DisplayFor(model => model.SECURNUM)
@@ -86,6 +86,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.USERNAME }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

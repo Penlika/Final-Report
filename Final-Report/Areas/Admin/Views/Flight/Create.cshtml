@@ -18,23 +18,24 @@
     <div class="form-group">
         @Html.LabelFor(model => model.COMPANY, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.COMPANY, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.DropDownListFor(model => model.COMPANY, ViewBag.CompanyList as SelectList, "Select Company", new { @class = "form-control", onchange = "updateLogo()" })
             @Html.ValidationMessageFor(model => model.COMPANY, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.PICTURES, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.LOGO, "LOGO", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            <input type="file" name="fFileUpload" accept="image/*" />
-            @Html.ValidationMessageFor(model => model.PICTURES, "", new { @class = "text-danger" })
+            <img id="logoImage" src="" alt="Logo" style="max-width: 100px; max-height: 100px;" />
+            @Html.HiddenFor(model => model.LOGO, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.LOGO, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
         @Html.LabelFor(model => model.DEPARTURE, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.TextBoxFor(model => model.DEPARTURE, "{0:yyyy-MM-ddTHH:mm}", new { @class = "form-control" })
+            @Html.TextBoxFor(model => model.DEPARTURE, "{0:yyyy-MM-ddTHH:mm}", new { @class = "form-control", @type = "Date" })
             @Html.ValidationMessageFor(model => model.DEPARTURE, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -42,7 +43,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.ARRIVAL, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.TextBoxFor(model => model.ARRIVAL, "{0:yyyy-MM-ddTHH:mm}", new { @class = "form-control" })
+            @Html.TextBoxFor(model => model.ARRIVAL, "{0:yyyy-MM-ddTHH:mm}", new { @class = "form-control", @type = "Date" })
             @Html.ValidationMessageFor(model => model.ARRIVAL, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -82,3 +83,17 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+<script>
+    function updateLogo() {
+        var companyName = $("#COMPANY").val();
+        $.ajax({
+            url: '@Url.Action("GetLogo", "Flight")',
+            type: 'GET',
+            data: { company: companyName },
+            success: function (data) {
+                $("#logoImage").attr("src", data);
+                $("#LOGO").val(data);
+            }
+        });
+    }
+</script>

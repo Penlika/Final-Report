@@ -18,15 +18,18 @@ namespace Final_Report.Models
         public virtual DbSet<BOOKINGPACKAGE> BOOKINGPACKAGE { get; set; }
         public virtual DbSet<COMMENTANDRATING> COMMENTANDRATING { get; set; }
         public virtual DbSet<FLIGHT> FLIGHT { get; set; }
-        public virtual DbSet<FLIGHTIMG> FLIGHTIMG { get; set; }
         public virtual DbSet<HOTEL> HOTEL { get; set; }
-        public virtual DbSet<HOTELIMG> HOTELIMG { get; set; }
+        public virtual DbSet<LOGOIMG> LOGOIMG { get; set; }
         public virtual DbSet<PACKAGE> PACKAGE { get; set; }
         public virtual DbSet<ADMIN> ADMIN { get; set; }
         public virtual DbSet<CUSTOMER> CUSTOMER { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<ACCOUNT>()
+                .HasOptional(e => e.ADMIN)
+                .WithRequired(e => e.ACCOUNT);
+
             modelBuilder.Entity<ACCOUNT>()
                 .HasMany(e => e.BOOKINGFLIGHT)
                 .WithOptional(e => e.ACCOUNT)
@@ -47,13 +50,13 @@ namespace Final_Report.Models
                 .WithOptional(e => e.ACCOUNT)
                 .HasForeignKey(e => e.IDCUSTOMER);
 
-            modelBuilder.Entity<FLIGHT>()
-                .HasMany(e => e.BOOKINGFLIGHT)
-                .WithOptional(e => e.FLIGHT)
-                .HasForeignKey(e => e.IDFLIGHT);
+            modelBuilder.Entity<ACCOUNT>()
+                .HasMany(e => e.CUSTOMER)
+                .WithRequired(e => e.ACCOUNT)
+                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<FLIGHT>()
-                .HasMany(e => e.FLIGHTIMG)
+                .HasMany(e => e.BOOKINGFLIGHT)
                 .WithOptional(e => e.FLIGHT)
                 .HasForeignKey(e => e.IDFLIGHT);
 
@@ -69,11 +72,6 @@ namespace Final_Report.Models
 
             modelBuilder.Entity<HOTEL>()
                 .HasMany(e => e.COMMENTANDRATING)
-                .WithOptional(e => e.HOTEL)
-                .HasForeignKey(e => e.IDHOTEL);
-
-            modelBuilder.Entity<HOTEL>()
-                .HasMany(e => e.HOTELIMG)
                 .WithOptional(e => e.HOTEL)
                 .HasForeignKey(e => e.IDHOTEL);
 

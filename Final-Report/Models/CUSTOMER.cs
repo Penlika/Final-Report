@@ -9,7 +9,10 @@ namespace Final_Report.Models
     [Table("CUSTOMER")]
     public partial class CUSTOMER
     {
-        public int? ID { get; set; }
+        [Key]
+        [Column(Order = 0)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int ID { get; set; }
 
         [StringLength(40)]
         public string NAME { get; set; }
@@ -17,12 +20,13 @@ namespace Final_Report.Models
         [Column(TypeName = "date")]
         public DateTime? DATEOFBIRTH { get; set; }
 
-        [Key]
         [StringLength(20)]
         public string USERNAME { get; set; }
 
         public string PICTURES { get; set; }
 
+        [Key]
+        [Column(Order = 1)]
         [StringLength(50)]
         public string EMAIL { get; set; }
 

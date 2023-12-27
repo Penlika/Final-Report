@@ -60,7 +60,7 @@ namespace Final_Report.Areas.Admin.Controllers
         }
         public ActionResult Delete(int id)
         {
-            var cus = db.CUSTOMER.FirstOrDefault(s => s.ID == id);
+            var cus = db.CUSTOMER.SingleOrDefault(n => n.ID == id);
             if (cus == null)
             {
                 TempData["Message"] = "The customer did not exist";

@@ -9,6 +9,7 @@ using System.IO;
 using System.Drawing;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity.Migrations;
+using System.Data.Entity;
 
 namespace Final_Report.Areas.Admin.Controllers
 {
@@ -23,6 +24,50 @@ namespace Final_Report.Areas.Admin.Controllers
             int pageSize = 7;
             return View(lstHotel.ToList().OrderBy(n => n.ID).ToPagedList(pageNum, pageSize));
         }
+        [HttpGet]
+        public ActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult Create(HOTEL model, HttpPostedFileBase[] fFileUploads)
+        {
+            if (ModelState.IsValid)
+            {
+                HOTEL newHotel = new HOTEL();
+
+                if (fFileUploads != null && fFileUploads.Length > 0)
+                {
+                    for (int i = 0; i < fFileUploads.Length; i++)
+                    {
+                        var fileUpload = fFileUploads[i];
+
+                        if (fileUpload != null)
+                        {
+                            Image img = Image.FromStream(fileUpload.InputStream, true, true);
+                            switch (i)
+                            {
+                                case 0: newHotel.PICTURE1 = Utility.ConvertImageToBase64(img); break;
+                                case 1: newHotel.PICTURE2 = Utility.ConvertImageToBase64(img); break;
+                                case 2: newHotel.PICTURE3 = Utility.ConvertImageToBase64(img); break;
+                                case 3: newHotel.PICTURE4 = Utility.ConvertImageToBase64(img); break;
+                                case 4: newHotel.PICTURE5 = Utility.ConvertImageToBase64(img); break;
+                                case 5: newHotel.PICTURE6 = Utility.ConvertImageToBase64(img); break;
+                            }
+                        }
+                    }
+                }
+                newHotel.NAME = model.NAME;
+                newHotel.ADDRESS = model.ADDRESS;
+                db.HOTEL.Add(newHotel);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View();
+        }
+
+
         public ActionResult Detail(int id)
         {
             var hotel = db.HOTEL.SingleOrDefault(n => n.ID == id);
@@ -37,68 +82,71 @@ namespace Final_Report.Areas.Admin.Controllers
         public ActionResult Edit(int id)
         {
             var hotel = db.HOTEL.SingleOrDefault(n => n.ID == id);
-            var existingImages = db.HOTELIMG
-                                .Where(img => img.IDHOTEL == id)
-                                .Select(img => img.IMAGEURL)
-                                .Take(6)
-                                .ToList();
-            ViewBag.ExistingImages = existingImages;
             return View(hotel);
         }
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult Edit(HOTEL model, HttpPostedFileBase fFileUpload, List<string> imageUrls)
+        public ActionResult Edit(HOTEL model, HttpPostedFileBase[] fFileUploads)
         {
-            try
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
+                if (fFileUploads != null)
                 {
-                    if (fFileUpload != null)
+                    for (int i = 0; i < fFileUploads.Length; i++)
                     {
-                        Image img = Image.FromStream(fFileUpload.InputStream, true, true);
-                        model.PICTURE = Utility.ConvertImageToBase64(img);
-                    }
-                    else
-                    {
-                        HOTEL existingHotel = db.HOTEL.Find(model.ID);
-                        if (existingHotel != null)
+                        var fileUpload = fFileUploads[i];
+
+                        if (fileUpload != null)
                         {
-                            model.PICTURE = existingHotel.PICTURE;
+                            Image img = Image.FromStream(fileUpload.InputStream, true, true);
+                            switch (i)
+                            {
+                                case 0: model.PICTURE1 = Utility.ConvertImageToBase64(img); break;
+                                case 1: model.PICTURE2 = Utility.ConvertImageToBase64(img); break;
+                                case 2: model.PICTURE3 = Utility.ConvertImageToBase64(img); break;
+                                case 3: model.PICTURE4 = Utility.ConvertImageToBase64(img); break;
+                                case 4: model.PICTURE5 = Utility.ConvertImageToBase64(img); break;
+                                case 5: model.PICTURE6 = Utility.ConvertImageToBase64(img); break;
+                            }
                         }
                     }
-
-                    // Update or add images to HOTELIMG table
-                    UpdateHotelImages(model.ID, imageUrls);
-
-                    db.HOTEL.AddOrUpdate(model);
-                    db.SaveChanges();
                 }
-                return RedirectToAction("Index");
-            }
-            catch (Exception ex)
-            {
-                // Log the exception (replace with your preferred logging mechanism)
-                Console.WriteLine($"Error during hotel update: {ex.Message}");
-                // Optionally, handle the exception or redirect to an error page
-                return RedirectToAction("Error");
-            }
-        }
 
-        private void UpdateHotelImages(int hotelId, List<string> imageUrls)
-        {
-            // Remove existing images
-            var existingImages = db.HOTELIMG.Where(img => img.IDHOTEL == hotelId).ToList();
-            db.HOTELIMG.RemoveRange(existingImages);
-
-            // Add new images
-            if (imageUrls != null)
-            {
-                foreach (var imageUrl in imageUrls)
+                // Retrieve the existing hotel from the database
+                HOTEL existingHotel = db.HOTEL.FirstOrDefault(h => h.ID == model.ID);
+                if (existingHotel != null)
                 {
-                    db.HOTELIMG.Add(new HOTELIMG { IDHOTEL = hotelId, IMAGEURL = imageUrl });
+                    // Detach the existing entity
+                    db.Entry(existingHotel).State = EntityState.Detached;
+
+                    // Retain unchanged values
+                    model.PICTURE1 = model.PICTURE1 ?? existingHotel.PICTURE1;
+                    model.PICTURE2 = model.PICTURE2 ?? existingHotel.PICTURE2;
+                    model.PICTURE3 = model.PICTURE3 ?? existingHotel.PICTURE3;
+                    model.PICTURE4 = model.PICTURE4 ?? existingHotel.PICTURE4;
+                    model.PICTURE5 = model.PICTURE5 ?? existingHotel.PICTURE5;
+                    model.PICTURE6 = model.PICTURE6 ?? existingHotel.PICTURE6;
+
+                    // Retain other unchanged properties
+                    model.PRICE_PER_PERSON = model.PRICE_PER_PERSON != existingHotel.PRICE_PER_PERSON
+                        ? model.PRICE_PER_PERSON
+                        : existingHotel.PRICE_PER_PERSON;
+
+                    model.ROOM_AVAILABLE = model.ROOM_AVAILABLE != existingHotel.ROOM_AVAILABLE
+                        ? model.ROOM_AVAILABLE
+                        : existingHotel.ROOM_AVAILABLE;
                 }
+
+                // Attach the modified entity
+                db.Entry(model).State = EntityState.Modified;
+                db.SaveChanges();
             }
+
+            return RedirectToAction("Index");
         }
+
+
+
 
 
         public ActionResult Delete(int id)

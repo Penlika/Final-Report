@@ -5,8 +5,6 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 <script src="https://cdn.ckeditor.com/4.16.1/standard/ckeditor.js"></script>
-<h2>Edit</h2>
-
 @using (Html.BeginForm("Edit", "Hotel", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
@@ -41,25 +39,46 @@
     <div class="form-group">
         <label class="control-label col-md-2">Image:</label>
         <div class="col-md-10">
-            <input type="file" name="fFileUpload" />
-            <img src="@Model.PICTURE" width="120">
+            <input type="file" name="fFileUploads[0]" />
+            <img src="@Model.PICTURE1" width="120">
         </div>
     </div>
 
-
-    @for (int i = 1; i <= 6; i++)
-    {
-        <div class="form-group">
-            <label class="control-label col-md-2">Image @i:</label>
-            <div class="col-md-10">
-                <input type="file" name="fFileUploads[@i]" />
-                @if (ViewBag.ExistingImages != null && ViewBag.ExistingImages.Count >= i)
-                {
-                    <img src="@ViewBag.ExistingImages[i - 1]" width="120">
-                }
-            </div>
+    <div class="form-group">
+        <label class="control-label col-md-2">Image:</label>
+        <div class="col-md-10">
+            <input type="file" name="fFileUploads[1]" />
+            <img src="@Model.PICTURE2" width="120">
         </div>
-    }
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2">Image:</label>
+        <div class="col-md-10">
+            <input type="file" name="fFileUploads[2]" />
+            <img src="@Model.PICTURE3" width="120">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2">Image:</label>
+        <div class="col-md-10">
+            <input type="file" name="fFileUploads[3]" />
+            <img src="@Model.PICTURE4" width="120">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2">Image:</label>
+        <div class="col-md-10">
+            <input type="file" name="fFileUploads[4]" />
+            <img src="@Model.PICTURE5" width="120">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2">Image:</label>
+        <div class="col-md-10">
+            <input type="file" name="fFileUploads[5]" />
+            <img src="@Model.PICTURE6" width="120">
+        </div>
+    </div>
 
     <div class="form-group">
         <label class="control-label col-md-2">Information:</label>
