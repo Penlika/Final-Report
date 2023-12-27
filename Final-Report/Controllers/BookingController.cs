@@ -184,7 +184,7 @@ namespace Final_Report.Controllers
                 }
                 else
                 {
-                    CUSTOMER existingCus = db.CUSTOMER.Find(model.USERNAME);
+                    CUSTOMER existingCus = db.CUSTOMER.FirstOrDefault(c => c.EMAIL == model.EMAIL);
                     if (existingCus != null)
                     {
                         model.PICTURES = existingCus.PICTURES;

@@ -138,7 +138,7 @@ namespace Final_Report.Controllers
                 }
                 else
                 {
-                    CUSTOMER existingCus = db.CUSTOMER.Find(model.USERNAME);
+                    CUSTOMER existingCus = db.CUSTOMER.FirstOrDefault(c => c.EMAIL == model.EMAIL);
                     if (existingCus != null)
                     {
                         model.PICTURES = existingCus.PICTURES;
@@ -147,7 +147,7 @@ namespace Final_Report.Controllers
                 db.CUSTOMER.AddOrUpdate(model);
                 db.SaveChanges();
             }
-            return RedirectToAction("Profile");
+            return View("Profile",model);
         }
 
 

@@ -38,7 +38,7 @@
                                 <div class="row">
                                     <div class="col-8 col-md-6">
                                         <label class="pay">Card Number</label>
-                                        <input type="text" name="cardno" id="cr_no" placeholder="0000-0000-0000" value="@Model.CARDNUM">
+                                        <input type="text" name="cardno" id="cr_no" placeholder="0000-0000-0000" pattern="^[0-9]{9}$" title="Please enter 9 digits" value="@Model.CARDNUM">
                                     </div>
                                     <div class="col-4 col-md-6">
                                         <label class="pay">CVV</label>
@@ -55,7 +55,7 @@
                                 </div>
                                 <a class="btn btn-outline-primary" href="@Url.Action("ConfirmInfo", "Booking")" style="width:150px">Go Back</a>
                                 <div class="row d-flex justify-content-end mt-1">
-                                    <form action="@Url.Action("MakePayment", "Booking")" method="post">
+                                    <form action="@Url.Action("MakePayment", "Booking")" method="post" onsubmit="return validatePaymentForm()">
                                         <button type="submit" class="btn btn-primary">Proceed with Payment</button>
                                     </form>
                                 </div>
@@ -67,3 +67,19 @@
         </div>
     </div>
 </div>
+<script>
+    function validatePaymentForm() {
+        // Check if the required fields are not empty
+        var holdername = document.getElementsByName("holdername")[0].value;
+        var cardno = document.getElementById("cr_no").value;
+        var cvcpwd = document.getElementsByName("cvcpwd")[0].value;
+        var expDate = document.getElementsByName("EXPDATE")[0].value;
+
+        if (!holdername || !cardno || !cvcpwd || !expDate) {
+            alert("Please fill in all required fields.");
+            return false;
+        }
+
+        return true;
+    }
+</script>

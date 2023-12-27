@@ -276,7 +276,7 @@
     <Content Include="Views\HomePage\Packages.cshtml" />
     <Content Include="Views\Maps\Maps.cshtml" />
     <Content Include="Views\HomePage\Step2.cshtml" />
-    <Content Include="Views\User\Profile.cshtml" />
+    <Content Include="Views\User\_Profile.cshtml" />
     <Content Include="Views\Booking\BookingFlight.cshtml" />
     <Content Include="Views\Booking\BookingHotel.cshtml" />
     <Content Include="Views\Booking\BookingPackage.cshtml" />
@@ -299,6 +299,7 @@
     <Content Include="Views\User\ForgotPass.cshtml" />
     <Content Include="Views\User\ResetPass.cshtml" />
     <Content Include="Views\User\VerifyMail.cshtml" />
+    <Content Include="Views\User\Profile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

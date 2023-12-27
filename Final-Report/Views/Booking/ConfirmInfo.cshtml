@@ -153,7 +153,7 @@
                                     <div class="col-sm-6">
                                         <p class="m-b-10 f-w-600">Phone</p>
                                         <h6 class="text-muted f-w-400 editable">
-                                            @Html.EditorFor(model => model.PHONENUMBER, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly-input" } })
+                                            @Html.EditorFor(model => model.PHONENUMBER, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly-input",@type="number", @maxlength = 9 } })
                                         </h6>
                                     </div>
                                 </div>
@@ -189,7 +189,7 @@
                                         <a class="btn btn-outline-primary" href="@Url.Action("BookingHotel", "Booking")" style="width:150px">Go Back</a>
                                     </div>
                                     <div class="mt-1">
-                                        <a class="btn btn-primary" href="@Url.Action("Payment", "Booking")" style="width:150px">Next</a>
+                                        <a class="btn btn-primary" href="@Url.Action("Payment", "Booking")" onclick="validateForm()" style="width:150px">Next</a>
                                     </div>
                                 </div>
 
@@ -279,4 +279,21 @@
         });
     });
 </script>
+<script>
+    function validateForm() {
+        // Check if the required fields are not empty
+        var holdername = document.getElementsByName("holdername")[0].value;
+        var cardno = document.getElementById("cr_no").value;
+        var cvcpwd = document.getElementsByName("cvcpwd")[0].value;
+        var expDate = document.getElementsByName("EXPDATE")[0].value;
 
+        if (!holdername || !cardno || !cvcpwd || !expDate) {
+            alert("Please fill in all required fields.");
+            return false; // Prevent form submission
+        }
+
+        // Add additional validation logic if needed
+
+        return true; // Allow form submission
+    }
+</script>

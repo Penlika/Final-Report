@@ -164,7 +164,7 @@
                         <div class="d-flex align-items-center justify-content-between border-bottom">
                             <label class="control-label col-md-2">Phone number</label>
                             <div class="col-md-10 editable profile-input">
-                                @Html.EditorFor(model => model.PHONENUMBER, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly-input" } })
+                                @Html.EditorFor(model => model.PHONENUMBER, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly-input",@type="number", @maxlength = 9 } })
                                 @Html.ValidationMessageFor(model => model.PHONENUMBER, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -191,7 +191,7 @@
                                 <div class="d-flex align-items-center justify-content-between">
                                     <label class="control-label col-md-2">Card Number</label>
                                     <div class="col-md-10 editable profile-input">
-                                        @Html.EditorFor(model => model.CARDNUM, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly-input" } })
+                                        @Html.EditorFor(model => model.CARDNUM, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly-input",@maxlength = 9 } })
                                         @Html.ValidationMessageFor(model => model.CARDNUM, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -207,7 +207,7 @@
                                 <div class="d-flex align-items-center justify-content-between">
                                     <label class="control-label col-md-2">Security Number</label>
                                     <div class="col-md-10 editable profile-input">
-                                        @Html.EditorFor(model => model.SECURNUM, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly-input" } })
+                                        @Html.EditorFor(model => model.SECURNUM, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly-input", @maxlength = 3 } })
                                         @Html.ValidationMessageFor(model => model.SECURNUM, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
