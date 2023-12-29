@@ -173,7 +173,7 @@ namespace Final_Report.Controllers
         }
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult Edit(CUSTOMER model, HttpPostedFileBase fFileUpload, int IDHotel)
+        public ActionResult Edit(CUSTOMER model, HttpPostedFileBase fFileUpload)
         {
             if (ModelState.IsValid)
             {
@@ -192,9 +192,8 @@ namespace Final_Report.Controllers
                 }
                 db.CUSTOMER.AddOrUpdate(model);
                 db.SaveChanges();
-                return RedirectToAction("Step2", new { IDHotel = IDHotel });
             }
-            return View(model);
+            return View("ConfirmInfo");
         }
         public ActionResult Payment()
         {
@@ -262,28 +261,6 @@ namespace Final_Report.Controllers
             db.HOTEL.AddOrUpdate(updateHotel);
             db.SaveChanges();
 
-            var mail = new SmtpClient("smtp.gmail.com", 25)
-            {
-                Credentials = new NetworkCredential("hoainam3183@gmail.com", "scuc bpjv iqdk kesi"),
-                EnableSsl = true
-            };
-
-            var username = db.CUSTOMER.Where(u => u.ID == user.ID).FirstOrDefault();
-            var m = new MailMessage();
-            m.From = new MailAddress("hoainam3183@gmail.com");
-            m.ReplyToList.Add("hoainam3183@gmail.com");
-            m.To.Add(new MailAddress(user.EMAIL));
-            m.Subject = "Your booking has been completed !";
-            m.Body = "Dear Mr/Mrs " + username.NAME + ",\nThis is your detail information of your booking:\n"
-                + "Hotel: " + hotel.NAME + "\n"
-                + "Check-in Date: " + f["checkIn"] + "\n"
-                + "Check-out Date: " + f["checkOut"] + "\n"
-                + "Room: " + f["room"] + "\n"
-                + "Total Price: " + totalPrice + "\n"
-                + "Please be present at the hotel check-in time for check-in instructions !\nBest regards !";
-
-            mail.Send(m);
-
             TempData["HotelName"] = hotel.NAME;
             TempData["CheckInDate"] = f["checkIn"];
             TempData["CheckOutDate"] = f["checkOut"];
@@ -321,7 +298,9 @@ namespace Final_Report.Controllers
 
                 db.BOOKINGHOTEL.Add(booking);
                 db.SaveChanges();
-
+                var user = db.CUSTOMER.Find(bookingInfo.IDCUSTOMER);
+                var hotel = db.HOTEL.Find(bookingInfo.IDHotel);
+                SendBookingConfirmationEmail(user, hotel, bookingInfo.CHECKINDATE.ToString(), bookingInfo.CHECKOUTDATE.ToString(), bookingInfo.ROOM.ToString(), bookingInfo.TOTALPRICE);
                 // Clear Session to prevent reusing the booking information
                 Session["BookingInfo"] = null;
 
@@ -336,7 +315,30 @@ namespace Final_Report.Controllers
             }
         }
 
+        private void SendBookingConfirmationEmail(CUSTOMER user, HOTEL hotel, string checkIn, string checkOut, string room, double totalPrice)
+        {
+            var mail = new SmtpClient("smtp.gmail.com", 25)
+            {
+                Credentials = new NetworkCredential("hoainam3183@gmail.com", "scuc bpjv iqdk kesi"),
+                EnableSsl = true
+            };
 
+            var username = db.CUSTOMER.Where(u => u.ID == user.ID).FirstOrDefault();
+            var m = new MailMessage();
+            m.From = new MailAddress("hoainam3183@gmail.com");
+            m.ReplyToList.Add("hoainam3183@gmail.com");
+            m.To.Add(new MailAddress(user.EMAIL));
+            m.Subject = "Your booking has been completed!";
+            m.Body = "Dear Mr/Mrs " + username.NAME + ",\nThis is your detail information of your booking:\n"
+                    + "Hotel: " + hotel.NAME + "\n"
+                    + "Check-in Date: " + checkIn + "\n"
+                    + "Check-out Date: " + checkOut + "\n"
+                    + "Room: " + room + "\n"
+                    + "Total Price: " + totalPrice + "\n"
+                    + "Please be present at the hotel check-in time for check-in instructions !\nBest regards !";
+
+            mail.Send(m);
+        }
 
 
 

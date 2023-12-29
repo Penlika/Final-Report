@@ -88,7 +88,7 @@ namespace Final_Report.Controllers
                         {
                             // Store customer information in session
                             Session["customer"] = customer;
-                            Session["EMAIL"] = account.EMAIL; // Store the email for other uses
+                            Session["EMAIL"] = customer.EMAIL; // Store the email for other uses
 
                             // Redirect to customer views
                             return RedirectToAction("Index", "HomePage");
@@ -147,7 +147,7 @@ namespace Final_Report.Controllers
                 db.CUSTOMER.AddOrUpdate(model);
                 db.SaveChanges();
             }
-            return View("Profile",model);
+            return View("Profile");
         }
 
 
