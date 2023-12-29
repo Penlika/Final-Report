@@ -1,81 +1,58 @@
 ﻿
 @using PagedList.Mvc;
-@helper Truncate(string s, int length)
-{
-    if (s.Length < length)
-    {
-        @s
-    }
-    else
-    {
-        @s.Substring(0, length)<text>...</text>
-    }
-}
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
 <h2>Index</h2>
-<a class="btn btn-primary" href="@Url.Action("Create")">Create New</a>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
 <table class="table">
     <tr>
         <th>
             ID
         </th>
         <th>
-            Company
+            Profile picture
         </th>
         <th>
-            Logo
+            Username
         </th>
         <th>
-            Departure
+            Email
         </th>
         <th>
-            Arrival
+            Phone number
         </th>
-        <th>
-            From
-        </th>
-        <th>
-            To
-        </th>
-        <th>
-            Price/Person
-        </th>
-        <th style="width:250px"></th>
+        <th></th>
     </tr>
 
-    @foreach (Final_Report.Models.FLIGHT item in Model)
+    @foreach (Final_Report.Models.MANAGER item in Model)
     {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.ID)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.COMPANY)
+                @Html.DisplayFor(modelItem => item.USERNAME)
             </td>
             <td>
-                @if (!string.IsNullOrEmpty(item.LOGO))
+                @if (!string.IsNullOrEmpty(item.PICTURES))
                 {
-                    <img src="@item.LOGO" style="width:50px" />
+                    <img src="@item.PICTURES" style="width:50px" />
                 }
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DEPARTURE)
+                @Html.DisplayFor(modelItem => item.NAME)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ARRIVAL)
+                @Html.DisplayFor(modelItem => item.EMAIL)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.FROM)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TO)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PRICE_PER_PERSON)
+                @Html.DisplayFor(modelItem => item.PHONENUMBER)
             </td>
             <td>
                 <a href="@Url.Action("Edit", new {id=item.ID})" class="btn btn-primary">Edit</a>
@@ -86,16 +63,6 @@
     }
 
 </table>
-@if (ViewBag.Message != null)
-{
-    <script type="text/javascript">
-
-            window.onload = function () {
-                alert("@ViewBag.Message");
-            };
-    </script>
-
-}
 <nav aria-label="Page navigation example" class="text-center">
     Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
     @Html.PagedListPager(

@@ -1,0 +1,165 @@
+﻿@model Final_Report.Models.MANAGER
+
+@{
+    ViewBag.Title = "Profile";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<link href="~/Content/Item/profile.css" rel="stylesheet" />
+<script>
+    var isEditMode = false; // Track the edit mode status
+
+    function toggleReadOnly() {
+        var inputs = document.querySelectorAll('.editable .form-control');
+        isEditMode = !isEditMode; // Toggle edit mode
+
+        inputs.forEach(function (input) {
+            input.classList.toggle('readonly-input', !isEditMode);
+            input.readOnly = !isEditMode;
+        });
+
+        // Toggle the visibility of the Save Changes button
+        var saveChangesBtn = document.getElementById('saveChangesBtn');
+        saveChangesBtn.style.display = isEditMode ? 'block' : 'none';
+
+        // Toggle the visibility of the file input based on edit mode
+        var fileInput = document.getElementById('fileInput');
+        var profilePictureInput = document.getElementById('profilePictureInput');
+
+        fileInput.style.display = isEditMode ? 'block' : 'none';
+        profilePictureInput.style.display = isEditMode ? 'block' : 'none';
+    }
+
+    function openFileInput() {
+        // Open the file input only if in edit mode
+        if (isEditMode) {
+            document.getElementById('profilePictureInput').click();
+        }
+    }
+
+    function displaySelectedImage(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                // Display the selected image on the page
+                document.querySelector('.photo img').src = e.target.result;
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
+
+
+
+<style>
+    .readonly-input {
+        background-color: #e0e0e0;
+    }
+
+    .editable-input {
+        border: none;
+        background-color: white;
+    }
+
+    .profile-label {
+        font-weight: bold;
+        margin-top: 10px;
+    }
+
+    .profile-input {
+        width: 100%;
+    }
+
+    .btn-container {
+        margin-top: 20px;
+    }
+
+    #saveChangesBtn {
+        display: none;
+        margin-top: 20px;
+    }
+
+    #fileInput {
+        display: none;
+    }
+</style>
+
+@using (Html.BeginForm("EditProfile", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="container">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="row" style="padding-bottom: 50px">
+            <div class="col-md-5">
+                <div class="row">
+                    <div class="col-12 bg-white p-0 px-3 py-3 mb-3">
+                        <div class="d-flex flex-column align-items-center">
+                            <label for="profilePicture" class="photo" style="cursor: pointer;" onclick="openFileInput()">
+                                <img src="@Model.PICTURES" alt="">
+                            </label>
+                            <div id="fileInput" style="display: none;">
+                                <label for="profilePicture">Change Profile Picture:</label>
+                                <input type="file" name="fFileUpload" id="profilePictureInput" style="display: none;" onchange="displaySelectedImage(this)" />
+                            </div>
+
+                            <p class="fw-bold h4 mt-3">@Model.USERNAME</p>
+                            <p class="text-muted">@Model.EMAIL</p>
+                            <div class="d-flex btn-container">
+                                <div class="btn btn-outline-primary message" onclick="toggleReadOnly()">Edit Profile</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-7 ps-md-4">
+                <div class="row">
+                    <div class="col-12 bg-white px-3 mb-3 pb-3">
+                        <input type="hidden" name="ID" value="@Model.ID" />
+
+                        <div class="d-flex align-items-center justify-content-between border-bottom">
+                            <label class="control-label col-md-2">Fullname</label>
+                            <div class="col-md-10 editable profile-input">
+                                @Html.EditorFor(model => model.USERNAME, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly-input" } })
+                                @Html.ValidationMessageFor(model => model.USERNAME, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="d-flex align-items-center justify-content-between border-bottom">
+                            <label class="control-label col-md-2">Fullname</label>
+                            <div class="col-md-10 editable profile-input">
+                                @Html.EditorFor(model => model.NAME, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly-input" } })
+                                @Html.ValidationMessageFor(model => model.NAME, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <input type="hidden" name="EMAIL" value="@Model.EMAIL" />
+
+                        <div class="d-flex align-items-center justify-content-between border-bottom">
+                            <label class="control-label col-md-2">Phone number</label>
+                            <div class="col-md-10 editable profile-input">
+                                @Html.EditorFor(model => model.PHONENUMBER, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly-input", @type = "number", @maxlength = 9 } })
+                                @Html.ValidationMessageFor(model => model.PHONENUMBER, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="d-flex align-items-center justify-content-between border-bottom">
+                            <label class="control-label col-md-2">Address</label>
+                            <div class="col-md-10 editable profile-input">
+                                @Html.EditorFor(model => model.ADDRESS, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly-input" } })
+                                @Html.ValidationMessageFor(model => model.ADDRESS, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <br />
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input id="saveChangesBtn" type="submit" value="Save Changes" class="btn btn-default" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

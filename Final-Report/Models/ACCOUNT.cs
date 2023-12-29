@@ -32,7 +32,6 @@ namespace Final_Report.Models
         [Required]
         [StringLength(30)]
         public string PASSWORD { get; set; }
-
         [NotMapped]
         [Compare("PASSWORD", ErrorMessage = "Confirm password password cannot be blank")]
         public string CONFIRMPASSWORD { get; set; }
@@ -57,5 +56,7 @@ namespace Final_Report.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CUSTOMER> CUSTOMER { get; set; }
+
+        public virtual MANAGER MANAGER { get; set; }
     }
 }

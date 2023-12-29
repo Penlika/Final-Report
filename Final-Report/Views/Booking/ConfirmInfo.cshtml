@@ -7,6 +7,179 @@
 <link href="~/Content/Item/Step2Step2.css" rel="stylesheet">
 @model Final_Report.Models.CUSTOMER
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+<script>
+    var isEditMode = false; // Track the edit mode status
+
+    function toggleReadOnly() {
+        var inputs = document.querySelectorAll('.editable .form-control');
+        isEditMode = !isEditMode; // Toggle edit mode
+
+        inputs.forEach(function (input) {
+            input.classList.toggle('readonly-input', !isEditMode);
+            input.readOnly = !isEditMode;
+        });
+
+        // Toggle the visibility of the Save Changes button
+        var saveChangesBtn = document.getElementById('saveChangesBtn');
+        saveChangesBtn.style.display = isEditMode ? 'block' : 'none';
+
+        // Toggle the visibility of the file input based on edit mode
+        var fileInput = document.getElementById('fileInput');
+        var profilePictureInput = document.getElementById('profilePictureInput');
+
+        fileInput.style.display = isEditMode ? 'block' : 'none';
+        profilePictureInput.style.display = isEditMode ? 'block' : 'none';
+    }
+
+    function openFileInput() {
+        // Open the file input only if in edit mode
+        if (isEditMode) {
+            document.getElementById('profilePictureInput').click();
+        }
+    }
+
+    function displaySelectedImage(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                // Display the selected image on the page
+                document.querySelector('.photo img').src = e.target.result;
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    const stepButtons = document.querySelectorAll('.step-button');
+    const progress = document.querySelector('#progress');
+
+    Array.from(stepButtons).forEach((button, index) => {
+        button.addEventListener('click', () => {
+            progress.setAttribute('value', index * 100 / (stepButtons.length - 1)); //there are 3 buttons. 2 spaces.
+
+            stepButtons.forEach((item, secindex) => {
+                if (index > secindex) {
+                    item.classList.add('done');
+                }
+                if (index < secindex) {
+                    item.classList.remove('done');
+                }
+            });
+
+            const cardBody = document.querySelector(`#collapse${index + 1} .card-body`);
+            const isCollapsed = cardBody.classList.contains('show');
+            cardBody.style.height = isCollapsed ? '0' : `${cardBody.scrollHeight}px`;
+        });
+    });
+    function validateForm() {
+        // Check if the required fields are not empty
+        var holdername = document.getElementsByName("holdername")[0].value;
+        var cardno = document.getElementById("cr_no").value;
+        var cvcpwd = document.getElementsByName("cvcpwd")[0].value;
+        var expDate = document.getElementsByName("EXPDATE")[0].value;
+
+        if (!holdername || !cardno || !cvcpwd || !expDate) {
+            alert("Please fill in all required fields.");
+            return false; // Prevent form submission
+        }
+
+        // Add additional validation logic if needed
+
+        return true; // Allow form submission
+    }
+</script>
+
+<style>
+    .steps {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+        position: relative;
+    }
+
+    .step-button {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: none;
+        background-color: var(--prm-gray);
+        transition: .4s;
+    }
+
+        .step-button[aria-expanded="true"] {
+            width: 60px;
+            height: 60px;
+            background-color: cyan;
+            color: #fff;
+        }
+
+    .done {
+        background-color: cyan;
+        color: #fff;
+    }
+
+    .step-item {
+        z-index: 10;
+        text-align: center;
+    }
+
+    #progress {
+        -webkit-appearance: none;
+        position: absolute;
+        width: 95%;
+        z-index: 5;
+        height: 10px;
+        margin-left: 18px;
+        margin-bottom: 18px;
+    }
+        /* to customize progress bar */
+        #progress::-webkit-progress-value {
+            background-color: aquamarine;
+            transition: .5s ease;
+        }
+
+        #progress::-webkit-progress-bar {
+            background-color: var(--prm-gray);
+        }
+
+    .readonly-input {
+        background-color: #e0e0e0;
+    }
+
+    .editable-input {
+        border: none;
+        background-color: white;
+    }
+
+    .profile-label {
+        font-weight: bold;
+        margin-top: 10px;
+    }
+
+    .profile-input {
+        width: 100%;
+    }
+
+    .btn-container {
+        margin-top: 20px;
+    }
+
+    #saveChangesBtn {
+        display: none;
+        margin-top: 20px;
+    }
+
+    #fileInput {
+        display: none;
+    }
+</style>
+
+@using (Html.BeginForm("Edit", "Booking", FormMethod.Post, new { enctype = "multipart/form-data"}))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="container">
         <div class="accordion" id="accordionExample">
             <div class="steps">
@@ -39,283 +212,93 @@
                     </div>
                 </div>
             </div>
-            <script>
-                var isEditMode = false; // Track the edit mode status
-
-                function toggleReadOnly() {
-                    var inputs = document.querySelectorAll('.editable .form-control');
-                    isEditMode = !isEditMode; // Toggle edit mode
-
-                    inputs.forEach(function (input) {
-                        input.classList.toggle('readonly-input', !isEditMode);
-                        input.readOnly = !isEditMode;
-                    });
-
-                    // Toggle the visibility of the Save Changes button
-                    var saveChangesBtn = document.getElementById('saveChangesBtn');
-                    saveChangesBtn.style.display = isEditMode ? 'block' : 'none';
-
-                    // Toggle the visibility of the file input based on edit mode
-                    var fileInput = document.getElementById('fileInput');
-                    var profilePictureInput = document.getElementById('profilePictureInput');
-
-                    fileInput.style.display = isEditMode ? 'block' : 'none';
-                    profilePictureInput.style.display = isEditMode ? 'block' : 'none';
-                }
-
-                function openFileInput() {
-                    // Open the file input only if in edit mode
-                    if (isEditMode) {
-                        document.getElementById('profilePictureInput').click();
-                    }
-                }
-
-                function displaySelectedImage(input) {
-                    if (input.files && input.files[0]) {
-                        var reader = new FileReader();
-
-                        reader.onload = function (e) {
-                            // Display the selected image on the page
-                            document.querySelector('.photo img').src = e.target.result;
-                        };
-
-                        reader.readAsDataURL(input.files[0]);
-                    }
-                }
-            </script>
-
-            <style>
-                .readonly-input {
-                    background-color: #e0e0e0;
-                }
-
-                .editable-input {
-                    border: none;
-                    background-color: white;
-                }
-
-                .profile-label {
-                    font-weight: bold;
-                    margin-top: 10px;
-                }
-
-                .profile-input {
-                    width: 100%;
-                }
-
-                .btn-container {
-                    margin-top: 20px;
-                }
-
-                #saveChangesBtn {
-                    display: none;
-                    margin-top: 20px;
-                }
-
-                #fileInput {
-                    display: none;
-                }
-            </style>
-
-            @using (Html.BeginForm("Edit", "Booking", FormMethod.Post, new { enctype = "multipart/form-data" }))
-            {
-                @Html.AntiForgeryToken()
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="text-center">
-                                        <input type="hidden" name="ID" value="@Model.ID" />
-                                        <input type="hidden" name="ID" value="@Model.EMAIL" />
-                                        @Html.ValidationMessageFor(model => model.EMAIL, "", new { @class = "text-danger" })
-                                        <input type="hidden" name="ID" value="@Model.CARDNAME" />
-                                        @Html.ValidationMessageFor(model => model.CARDNAME, "", new { @class = "text-danger" })
-                                        <input type="hidden" name="ID" value="@Model.CARDNUM" />
-                                        @Html.ValidationMessageFor(model => model.CARDNUM, "", new { @class = "text-danger" })
-                                        <input type="hidden" name="ID" value="@Model.EXPDATE" />
-                                        @Html.ValidationMessageFor(model => model.EXPDATE, "", new { @class = "text-danger" })
-                                        <input type="hidden" name="ID" value="@Model.SECURNUM" />
-                                        @Html.ValidationMessageFor(model => model.SECURNUM, "", new { @class = "text-danger" })
-                                        <img src="@Model.PICTURES" style="width:100px; height:100px;border-radius:50% " alt="User-Profile-Image" onclick="openFileInput()">
-                                        <div id="fileInput" style="display: none;">
-                                            <label for="profilePicture">Change Profile Picture:</label>
-                                            <input type="file" name="fFileUpload" id="profilePictureInput" style="display: none;" onchange="displaySelectedImage(this)" />
-                                        </div>
-                                        <br />
-                                        <div class="d-flex flex-column align-items-center">
-                                            <p class="fw-bold h4 mt-3">@Model.USERNAME</p>
-                                            <p class="text-muted">@Model.EMAIL</p>
-                                        </div>
-                                        <i class="mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16" onclick="toggleReadOnly()"></i>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="text-center">
+                                    <input type="hidden" name="ID" value="@Model.ID" />
+                                    <input type="hidden" name="EMAIL" value="@Model.EMAIL" />
+                                    <input type="hidden" name="CARDNAME" value="@Model.CARDNAME" />
+                                    <input type="hidden" name="CARDNUM" value="@Model.CARDNUM" />
+                                    <input type="hidden" name="EXPDATE" value="@Model.EXPDATE" />
+                                    <input type="hidden" name="SECURNUM" value="@Model.SECURNUM" />
+                                    <img src="@Model.PICTURES" style="width:100px; height:100px;border-radius:50% " alt="User-Profile-Image" onclick="openFileInput()">
+                                    <div id="fileInput" style="display: none;">
+                                        <label for="profilePicture">Change Profile Picture:</label>
+                                        <input type="file" name="fFileUpload" id="profilePictureInput" style="display: none;" onchange="displaySelectedImage(this)" />
                                     </div>
-
-                                    <!-- Information -->
-                                    <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Information</h6>
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <p class="m-b-10 f-w-600">Name</p>
-                                            <div class="col-md-10 editable profile-input">
-                                                @Html.EditorFor(model => model.USERNAME, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly-input" } })
-                                                @Html.ValidationMessageFor(model => model.USERNAME, "", new { @class = "text-danger" })
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <p class="m-b-10 f-w-600">Name</p>
-                                            <div class="col-md-10 editable profile-input">
-                                                @Html.EditorFor(model => model.NAME, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly-input" } })
-                                                @Html.ValidationMessageFor(model => model.NAME, "", new { @class = "text-danger" })
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <p class="m-b-10 f-w-600">Phone</p>
-                                            <div class="col-md-10 editable profile-input">
-                                                @Html.EditorFor(model => model.PHONENUMBER, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly-input", @type = "number", @maxlength = 9 } })
-                                                @Html.ValidationMessageFor(model => model.PHONENUMBER, "", new { @class = "text-danger" })
-                                            </div>
-                                        </div>
+                                    <br />
+                                    <div class="d-flex flex-column align-items-center">
+                                        <p class="fw-bold h4 mt-3">@Model.USERNAME</p>
+                                        <p class="text-muted">@Model.EMAIL</p>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <p class="m-b-10 f-w-600">Date of birth</p>
-                                            <div class="col-md-10 editable profile-input">
-                                                @{
-                                                    string dateString = Model.DATEOFBIRTH?.ToString("yyyy-MM-dd");
-                                                }
-
-                                                @Html.TextBoxFor(model => model.DATEOFBIRTH, new { @class = "form-control", @readonly = "readonly", @type = "date", @Value = dateString })
-                                                @Html.ValidationMessageFor(model => model.DATEOFBIRTH, "", new { @class = "text-danger" })
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <p class="m-b-10 f-w-600">Address</p>
-                                            <div class="col-md-10 editable profile-input">
-                                                @Html.EditorFor(model => model.ADDRESS, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly-input" } })
-                                                @Html.ValidationMessageFor(model => model.ADDRESS, "", new { @class = "text-danger" })
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="text-center">
-                                        <button type="button" class="btn btn-primary" style="width:150px" onclick="toggleReadOnly()">Edit</button>
-                                    </div>
-
-                                    <!-- Save Changes Button -->
-                                    <div class="form-group">
-                                        <div class="col-md-offset-2 col-md-10">
-                                            <input id="saveChangesBtn" type="submit" value="Save Changes" class="btn btn-default" />
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-between">
-                                        <div class="mt-1">
-                                            <a class="btn btn-outline-primary" href="@Url.Action("BookingHotel", "Booking")" style="width:150px">Go Back</a>
-                                        </div>
-                                        <div class="mt-1">
-                                            <a class="btn btn-primary" href="@Url.Action("Payment", "Booking")" onclick="validateForm()" style="width:150px">Next</a>
-                                        </div>
-                                    </div>
-
+                                    <i class="mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16" onclick="toggleReadOnly()"></i>
                                 </div>
+
+                                <!-- Information -->
+                                <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Information</h6>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <p class="m-b-10 f-w-600">Username</p>
+                                        <h6 class="text-muted f-w-400 editable">
+                                            @Html.EditorFor(model => model.USERNAME, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly-input" } })
+                                        </h6>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <p class="m-b-10 f-w-600">Name</p>
+                                        <h6 class="text-muted f-w-400 editable">
+                                            @Html.EditorFor(model => model.NAME, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly-input" } })
+                                        </h6>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <p class="m-b-10 f-w-600">Phone</p>
+                                        <h6 class="text-muted f-w-400 editable">
+                                            @Html.EditorFor(model => model.PHONENUMBER, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly-input", @type = "number", @maxlength = 9 } })
+                                        </h6>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <p class="m-b-10 f-w-600">Date of birth</p>
+                                        <h6 class="text-muted f-w-400 editable">
+                                            @{
+                                                string dateString = Model.DATEOFBIRTH?.ToString("yyyy-MM-dd");
+                                            }
+                                            @Html.TextBoxFor(model => model.DATEOFBIRTH, new { @class = "form-control", @readonly = "readonly", @type = "date", @Value = dateString })
+                                        </h6>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <p class="m-b-10 f-w-600">Address</p>
+                                        <h6 class="text-muted f-w-400 editable">
+                                            @Html.EditorFor(model => model.ADDRESS, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly-input" } })
+                                        </h6>
+                                    </div>
+                                </div>
+                                <div class="text-center">
+                                    <button type="button" class="btn btn-primary" style="width:150px" onclick="toggleReadOnly()">Edit</button>
+                                </div>
+                                <div class="text-center">
+                                    <div class="btn-container">
+                                        <input id="saveChangesBtn" type="submit" value="Save Changes" class="btn btn-default" />
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <div class="mt-1">
+                                        <a class="btn btn-outline-primary" href="@Url.Action("BookingHotel", "Booking")" style="width:150px">Go Back</a>
+                                    </div>
+                                    <div class="mt-1">
+                                        <a class="btn btn-primary" href="@Url.Action("Payment", "Booking")" onclick="validateForm()" style="width:150px">Next</a>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>
                 </div>
-            }
+            </div>
         </div>
     </div>
-    <style>
-        .steps {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            position: relative;
-        }
+}
 
-        .step-button {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            border: none;
-            background-color: var(--prm-gray);
-            transition: .4s;
-        }
-
-            .step-button[aria-expanded="true"] {
-                width: 60px;
-                height: 60px;
-                background-color: cyan;
-                color: #fff;
-            }
-
-        .done {
-            background-color: cyan;
-            color: #fff;
-        }
-
-        .step-item {
-            z-index: 10;
-            text-align: center;
-        }
-
-        #progress {
-            -webkit-appearance: none;
-            position: absolute;
-            width: 95%;
-            z-index: 5;
-            height: 10px;
-            margin-left: 18px;
-            margin-bottom: 18px;
-        }
-            /* to customize progress bar */
-            #progress::-webkit-progress-value {
-                background-color: aquamarine;
-                transition: .5s ease;
-            }
-
-            #progress::-webkit-progress-bar {
-                background-color: var(--prm-gray);
-            }
-    </style>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
-    <script>
-        const stepButtons = document.querySelectorAll('.step-button');
-        const progress = document.querySelector('#progress');
-
-        Array.from(stepButtons).forEach((button, index) => {
-            button.addEventListener('click', () => {
-                progress.setAttribute('value', index * 100 / (stepButtons.length - 1)); //there are 3 buttons. 2 spaces.
-
-                stepButtons.forEach((item, secindex) => {
-                    if (index > secindex) {
-                        item.classList.add('done');
-                    }
-                    if (index < secindex) {
-                        item.classList.remove('done');
-                    }
-                });
-
-                const cardBody = document.querySelector(`#collapse${index + 1} .card-body`);
-                const isCollapsed = cardBody.classList.contains('show');
-                cardBody.style.height = isCollapsed ? '0' : `${cardBody.scrollHeight}px`;
-            });
-        });
-    </script>
-    <script>
-        function validateForm() {
-            // Check if the required fields are not empty
-            var holdername = document.getElementsByName("holdername")[0].value;
-            var cardno = document.getElementById("cr_no").value;
-            var cvcpwd = document.getElementsByName("cvcpwd")[0].value;
-            var expDate = document.getElementsByName("EXPDATE")[0].value;
-
-            if (!holdername || !cardno || !cvcpwd || !expDate) {
-                alert("Please fill in all required fields.");
-                return false; // Prevent form submission
-            }
-
-            // Add additional validation logic if needed
-
-            return true; // Allow form submission
-        }
-    </script>

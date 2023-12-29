@@ -16,8 +16,6 @@ namespace Final_Report.Areas.Admin.Controllers
         // GET: Admin/Home
         public ActionResult Index(string searchString, int? page)
         {
-            //var admin = db.ADMIN.FirstOrDefault();
-            //Session["Admin"] = admin;
             searchString = searchString ?? "";
             var lstBook = db.HOTEL.Where(s => s.NAME.Contains(searchString)).OrderBy(s => s.ID);
             int pageNumber = (page) ?? 1;
@@ -31,9 +29,18 @@ namespace Final_Report.Areas.Admin.Controllers
             var menu = JsonConvert.DeserializeObject<NavigationMenu>(content);
             return PartialView(menu);
         }
+        public ActionResult MenuPartialManager()
+        {
+            var path = Server.MapPath("~/Areas/Navigation/Navigation.json");
+            var content = System.IO.File.ReadAllText(path);
+            var menu = JsonConvert.DeserializeObject<NavigationMenu>(content);
+            return PartialView(menu);
+        }
         public ActionResult Logout()
         {
-            return RedirectToAction("Index", "HomePage");
+            Session["EMAIL"] = null;
+            return Redirect("~/");
         }
+
     }
 }

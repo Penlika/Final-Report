@@ -1,11 +1,78 @@
 {
-  "MenuItems": [
+  "MenuItemsAdmin": [
     {
       "DisplayName": "Dashboard",
       "Icon": "bi-columns",
       "Link": "/Admin/Home/Index",
       "IsNested": false,
       "Sequence": 1,
+      "NestedItems": []
+    },
+    {
+      "DisplayName": "Managing hotels",
+      "Icon": "bi-list",
+      "Link": "/Admin/Hotel/Index",
+      "IsNested": false,
+      "Sequence": 2,
+      "NestedItems": []
+    },
+    {
+      "DisplayName": "Managing flights",
+      "Icon": "bi-caret-right-fill",
+      "Link": "/Admin/Flight/Index",
+      "IsNested": false,
+      "Sequence": 3,
+      "NestedItems": []
+    },
+    {
+      "DisplayName": "Managing managers",
+      "Icon": "bi-caret-right-fill",
+      "Link": "/Admin/Admin/Index",
+      "IsNested": false,
+      "Sequence": 4,
+      "NestedItems": []
+    },
+    {
+      "DisplayName": "Managing users",
+      "Icon": "bi-caret-right-fill",
+      "Link": "/Admin/Users/Index",
+      "IsNested": false,
+      "Sequence": 5,
+      "NestedItems": []
+    },
+    {
+      "DisplayName": "Managing comments and ratings",
+      "Icon": "bi-caret-right-fill",
+      "Link": "/Admin/CommentAndRating/Index",
+      "IsNested": false,
+      "Sequence": 6,
+      "NestedItems": []
+    },
+    {
+      "DisplayName": "Logout",
+      "Icon": "bi-coin",
+      "Link": "/Admin/Home/Logout",
+      "IsNested": false,
+      "Sequence": 7,
+      "NestedItems": []
+    }
+
+  ],
+  "MenuItemsManager": [
+    {
+      "DisplayName": "Profile",
+      "Icon": "bi-caret-right-fill",
+      "Link": "/Admin/Admin/Profile",
+      "IsNested": false,
+      "Sequence": 1,
+      "NestedItems": []
+    },
+    {
+      "DisplayName": "Dashboard",
+      "Icon": "bi-columns",
+      "Link": "/Admin/Home/Index",
+      "IsNested": false,
+      "Sequence": 2,
       "NestedItems": []
     },
     {
@@ -29,7 +96,15 @@
       "Icon": "bi-caret-right-fill",
       "Link": "/Admin/Users/Index",
       "IsNested": false,
-      "Sequence": 4,
+      "Sequence": 5,
+      "NestedItems": []
+    },
+    {
+      "DisplayName": "Managing chats",
+      "Icon": "bi-caret-right-fill",
+      "Link": "/Admin/Chat/Index",
+      "IsNested": false,
+      "Sequence": 6,
       "NestedItems": []
     },
     {
@@ -37,7 +112,7 @@
       "Icon": "bi-caret-right-fill",
       "Link": "/Admin/CommentAndRating/Index",
       "IsNested": false,
-      "Sequence": 4,
+      "Sequence": 7,
       "NestedItems": []
     },
     {
@@ -45,7 +120,7 @@
       "Icon": "bi-coin",
       "Link": "/Admin/Home/Logout",
       "IsNested": false,
-      "Sequence": 7,
+      "Sequence": 8,
       "NestedItems": []
     }
 

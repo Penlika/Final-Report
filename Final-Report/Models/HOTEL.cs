@@ -36,15 +36,16 @@ namespace Final_Report.Models
         public string NAME { get; set; }
 
         [Required]
-        [StringLength(100)]
+        [StringLength(300)]
         public string ADDRESS { get; set; }
 
-        [StringLength(250)]
         public string INFORMATION { get; set; }
 
         public double PRICE_PER_PERSON { get; set; }
 
         public int ROOM_AVAILABLE { get; set; }
+
+        public int? RATING { get; set; }
 
         public DateTime? MODIFIEDDAY { get; set; }
 

@@ -42,10 +42,10 @@ namespace Final_Report.Areas.Admin.Controllers
                 }
                 else
                 {
-                    CUSTOMER existingHotel = db.CUSTOMER.Find(model.USERNAME);
-                    if (existingHotel != null)
+                    CUSTOMER existingCus = db.CUSTOMER.FirstOrDefault(c => c.EMAIL == model.EMAIL);
+                    if (existingCus != null)
                     {
-                        model.PICTURES = existingHotel.PICTURES;
+                        model.PICTURES = existingCus.PICTURES;
                     }
                 }
                 db.CUSTOMER.AddOrUpdate(model);

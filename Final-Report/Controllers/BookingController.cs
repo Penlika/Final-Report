@@ -193,8 +193,9 @@ namespace Final_Report.Controllers
                 db.CUSTOMER.AddOrUpdate(model);
                 db.SaveChanges();
             }
-            return View("ConfirmInfo");
+            return View("ConfirmInfo",model);
         }
+
         public ActionResult Payment()
         {
             // Retrieve booking information from TempData
@@ -209,7 +210,17 @@ namespace Final_Report.Controllers
             return View(customer);
         }
 
-
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult EditPayment(CUSTOMER model)
+        {
+            if (ModelState.IsValid)
+            {
+                db.CUSTOMER.AddOrUpdate(model);
+                db.SaveChanges();
+            }
+            return View("Payment", model);
+        }
 
 
         public ActionResult BookingComplete()

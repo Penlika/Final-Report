@@ -23,6 +23,7 @@ namespace Final_Report.Models
         public virtual DbSet<PACKAGE> PACKAGE { get; set; }
         public virtual DbSet<ADMIN> ADMIN { get; set; }
         public virtual DbSet<CUSTOMER> CUSTOMER { get; set; }
+        public virtual DbSet<MANAGER> MANAGER { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -55,6 +56,10 @@ namespace Final_Report.Models
                 .WithRequired(e => e.ACCOUNT)
                 .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<ACCOUNT>()
+                .HasOptional(e => e.MANAGER)
+                .WithRequired(e => e.ACCOUNT);
+
             modelBuilder.Entity<FLIGHT>()
                 .HasMany(e => e.BOOKINGFLIGHT)
                 .WithOptional(e => e.FLIGHT)
@@ -84,10 +89,6 @@ namespace Final_Report.Models
                 .HasMany(e => e.BOOKINGPACKAGE)
                 .WithOptional(e => e.PACKAGE)
                 .HasForeignKey(e => e.IDPACKAGE);
-
-            modelBuilder.Entity<CUSTOMER>()
-                .Property(e => e.PHONENUMBER)
-                .IsUnicode(false);
         }
     }
 }

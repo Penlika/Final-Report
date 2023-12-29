@@ -71,12 +71,22 @@ namespace Final_Report.Controllers
 
                     // Determine user role
                     string userRole = account.ROLE;
+                    Session["User"] = account;
 
                     if (userRole.Equals("admin", StringComparison.OrdinalIgnoreCase))
                     {
                         // Store admin information in session
-                        Session["admin"] = account;
+                        Session["admin"] = db.ADMIN.FirstOrDefault(admin=>admin.EMAIL==account.EMAIL);
                         // Redirect to admin views
+                        return RedirectToAction("Index", "Home", new { Area = "Admin" });
+                    }
+                    if (userRole.Equals("manager", StringComparison.OrdinalIgnoreCase))
+                    {
+                        MANAGER man = db.MANAGER.FirstOrDefault(c => c.EMAIL == account.EMAIL);
+
+                        Session["manager"] = man;
+                        Session["EMAIL"] = man.EMAIL; // Store the email for other uses
+
                         return RedirectToAction("Index", "Home", new { Area = "Admin" });
                     }
                     else if (userRole.Equals("customer", StringComparison.OrdinalIgnoreCase))
@@ -147,7 +157,7 @@ namespace Final_Report.Controllers
                 db.CUSTOMER.AddOrUpdate(model);
                 db.SaveChanges();
             }
-            return View("Profile");
+            return View("Profile",model);
         }
 
 
