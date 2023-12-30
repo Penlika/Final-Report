@@ -63,7 +63,8 @@
 
                 <div class="col">
                     <label class="form-label"><b>Room</b></label>
-                    <input type="number" class="form-control" style="width:150px" min="1" name="room" required />
+                    <input type="number" class="form-control" style="width:150px" min="1" name="room" id="room-input" required />
+                    <span id="room-error" style="display: none; color: red;"></span>
                 </div>
             </div>
 
@@ -75,6 +76,7 @@
     <hr />
     <br />
     <div class="d-flex justify-content-between">
+        <p class="text-danger">@ViewBag.Err</p>
         <a class="btn btn-outline-primary" href="@Url.Action("Stays", "HomePage")" style="width:150px">Go Back</a>
         <button type="submit" class="btn btn-primary" style="width:150px">Book Now</button>
     </div>
@@ -128,4 +130,22 @@
     checkOutInput.addEventListener('change', calculateTotalPrice);
     roomInput.addEventListener('change', calculateTotalPrice);
 });
+</script>
+
+<script>
+    window.onload = function() {
+        var roomInput = document.querySelector('#room-input');
+        var roomError = document.querySelector('#room-error');
+        var maxRooms = @Model.ROOM_AVAILABLE; // Get the number of available rooms from your model
+
+        roomInput.addEventListener('input', function() {
+            if (this.value > maxRooms) {
+                roomError.textContent = 'You cannot book more rooms than available';
+                roomError.style.display = 'block';
+                this.value = maxRooms;
+            } else {
+                roomError.style.display = 'none';
+            }
+        });
+    };
 </script>

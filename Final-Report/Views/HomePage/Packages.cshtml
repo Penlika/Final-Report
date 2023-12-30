@@ -4,26 +4,118 @@
     Layout = "~/Views/Shared/ItemLayout.cshtml";
 }
 
-<div class="row" style="margin-bottom:150px">
-    @foreach (var item in Model)
-    {
-        double price = item.PRICE_PER_PERSON;
-        <div class="col-4" style="margin-bottom: 25px;">
-            <a href="@Url.Action("BookingPackage", "Booking", new { idPackage = item.ID })" class="card p-3 bg-white text-decoration-none text-dark" style=" height: 450px">
-                <div class="about-product text-center mt-2">
-                    <img src="@item.PICTURES" width="300" style="margin-bottom: 20px">
-                    <div>
-                        <h4>@item.DESTINATION</h4>
+@*<div class="row" style="margin-bottom:150px">
+        @foreach (var item in Model)
+        {
+            double price = item.PRICE_PER_PERSON;
+            <div class="col-4" style="margin-bottom: 25px;">
+                <a href="@Url.Action("BookingPackage", "Booking", new { idPackage = item.ID })" class="card p-3 bg-white text-decoration-none text-dark" style=" height: 450px">
+                    <div class="about-product text-center mt-2">
+                        <img src="@item.PICTURES" width="300" style="margin-bottom: 20px">
+                        <div>
+                            <h4>@item.DESTINATION</h4>
+                        </div>
                     </div>
-                </div>
-                <div class="stats mt-2">
-                    <div class="d-flex justify-content-between p-price">@item.INFORMATION</div>
-                </div>
-                <div class="d-flex justify-content-between total font-weight-bold mt-4"><span>Price:</span><span>@price.ToString("N0")</span></div>
-            </a>
+                    <div class="stats mt-2">
+                        <div class="d-flex justify-content-between p-price">@item.INFORMATION</div>
+                    </div>
+                    <div class="d-flex justify-content-between total font-weight-bold mt-4"><span>Price:</span><span>@price.ToString("N0")</span></div>
+                </a>
+            </div>
+        }
+        <nav class="text-center">
+            @Html.PagedListPager((PagedList.IPagedList)Model, page => Url.Action("Packages", new { page = page }))
+        </nav>
+    </div>*@
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+<div class="container" style="margin-bottom: 100px">
+    <div class="row">
+        <div class="card">
+            <div class="card-header">
+                Featured
+            </div>
+            <div class="card-body" id="card1">
+                <h5 class="card-title">Special title treatment</h5>
+                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                    Choose a Hotel
+                </button>
+            </div>
         </div>
-    }
-    <nav class="text-center">
-        @Html.PagedListPager((PagedList.IPagedList)Model, page => Url.Action("Packages", new { page = page }))
-    </nav>
+    </div>
+    <div class="row">
+        <div class="card">
+            <div class="card-body">
+                Card 2
+            </div>
+        </div>
+    </div>
 </div>
+
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:darkblue">
+                <h1 class="modal-title fs-5 text-light" id="staticBackdropLabel">Modal title</h1>
+            </div>
+            <div class="modal-body">
+                @foreach (var item in Model[0])
+                {
+                    <div class="hotel py-2 px-2 pb-4 border rounded" style="margin-bottom: 20px">
+                        <div class="row">
+                            <div class="col-lg-4"> <img src="@item.PICTURES" class="hotel-img" style="width: 200px"> </div>
+                            <div class="col-lg-8">
+                                <div class="d-md-flex align-items-md-center">
+                                    <div class="name">@item.NAME <span class="city">@item.ADDRESS</span> </div>
+                                    <div class="ms-auto code text-uppercase" hidden>@item.ID</div>
+                                </div>
+                                <div class="rating">
+                                    <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="far fa-star"></span>
+                                </div>
+                                <div class="d-flex flex-column tags pt-1">
+                                    <div><span class="fas fa-comment-dollar"></span>    Price: @item.PRICE_PER_PERSON</div>
+                                    <div><span class="fas fa-receipt"></span>   Infor: @item.INFORMATION</div>
+                                    <div><span class="fas fa-concierge-bell"></span>    Available Room: @item.ROOM_AVAILABLE</div>
+                                </div>
+                                <div class="d-flex justify-content-end mt-1">
+                                    <a type="button" class="btn btn-primary" href="#">
+                                        Choose
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $(".btn.btn-primary").click(function () {
+            var hotelId = $(this).closest('.hotel').find('.code').text();
+
+            $.ajax({
+                url: '/Booking/ChooseHotel',
+                type: 'POST',
+                data: { id: hotelId },
+                success: function (partialView) {
+                    $("#card1").html(partialView);
+                    $("#staticBackdrop").modal('hide');
+                },
+                error: function () {
+                    // Handle error here
+                }
+            });
+        });
+    });
+</script>

@@ -28,10 +28,16 @@ namespace Final_Report.Controllers
         }
         public ActionResult Packages(int? page)
         {
-            var lstPackage = db.PACKAGE.OrderBy(s => s.ID);
-            int pageNumber = (page) ?? 1;
-            int pageSize = 6;
-            return View(lstPackage.ToPagedList(pageNumber, pageSize));
+            //var lstPackage = db.PACKAGE.OrderBy(s => s.ID);
+            //int pageNumber = (page) ?? 1;
+            //int pageSize = 6;
+            //return View(lstPackage.ToPagedList(pageNumber, pageSize));
+            List<object> HaF = new List<object>();
+            var lstHotel = db.HOTEL.ToList();
+            var lstFlight = db.FLIGHT.ToList();
+            HaF.Add(lstHotel);
+            HaF.Add(lstFlight);
+            return View(HaF);
         }
         public ActionResult Flights(int? page)
         {

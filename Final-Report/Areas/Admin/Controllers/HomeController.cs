@@ -16,8 +16,8 @@ namespace Final_Report.Areas.Admin.Controllers
         // GET: Admin/Home
         public ActionResult Index(string searchString, int? page)
         {
-            var admin = db.ADMIN.FirstOrDefault();
-            Session["Admin"] = admin;
+            //var admin = db.ADMIN.FirstOrDefault();
+            //Session["Admin"] = admin;
             searchString = searchString ?? "";
             var lstBook = db.HOTEL.Where(s => s.NAME.Contains(searchString)).OrderBy(s => s.ID);
             int pageNumber = (page) ?? 1;
