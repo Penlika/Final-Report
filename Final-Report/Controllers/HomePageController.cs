@@ -78,6 +78,10 @@ namespace Final_Report.Controllers
         {
             return PartialView();
         }
+        public ActionResult Top4()
+        {
+            return PartialView();
+        }
         public ActionResult InforhotelPartial()
         {
             return PartialView();

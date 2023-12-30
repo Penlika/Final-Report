@@ -9,10 +9,11 @@
 <form style="border: solid; border-width: 3px; border-radius: 10px; padding: 20px; margin-bottom:150px" action="@Url.Action("CompleteBookHotel", "Booking")" method="post">
     <div class="row">
         <div class="col-4">
-            <img src="@Model.PICTURE1" style="width: 300px;">
+            <img src="@Model.PICTURE1" style="width: 400px;height:auto">
         </div>
         <div class="col-8">
-            <div class="name" style="font-size: 2em;">@Model.NAME - @Model.ADDRESS</div>
+            <div class="name" style="font-size: 2em;">@Model.NAME</div>
+            <div class="address" style="font-size: 15px;">@Model.ADDRESS</div>
             <br />
             <div><span class="fas fa-comment-dollar"></span>    Price: <b>@price.ToString("N0")</b>/Room/Night</div>
             <div><span class="fas fa-concierge-bell"></span>    Available Room: @Model.ROOM_AVAILABLE</div>
@@ -38,9 +39,11 @@
             <input type="number" class="form-control" style="width:150px" min="1" name="guest" required />
 
             <label class="form-label"><b>Room</b></label>
-            <input type="number" class="form-control" style="width:150px" min="1" name="room" required />
+            <input type="number" class="form-control" style="width:150px" min="1" name="room" id="room-input" required />
+            <span id="room-error" style="display: none; color: red;"></span>
             <hr />
             <div class="name" style="font-size: 2em;">Total Price: <span class="name" style="font-size: 1em;" id="total-price"></span> VND</div>
+            <p class="text-danger">@ViewBag.Error</p>
         </div>
     </div>
     <br />
@@ -133,4 +136,21 @@
         $('input[name="checkOut"]').change(calculateTotalPrice);
         $('input[name="room"]').change(calculateTotalPrice);
     });
+</script>
+<script>
+    window.onload = function() {
+        var roomInput = document.querySelector('#room-input');
+        var roomError = document.querySelector('#room-error');
+        var maxRooms = @Model.ROOM_AVAILABLE; // Get the number of available rooms from your model
+
+        roomInput.addEventListener('input', function() {
+            if (this.value > maxRooms) {
+                roomError.textContent = 'You cannot book more rooms than available';
+                roomError.style.display = 'block';
+                this.value = maxRooms;
+            } else {
+                roomError.style.display = 'none';
+            }
+        });
+    };
 </script>

@@ -13,10 +13,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.10.2/umd/popper.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
-
 <body>
-    <div class="position-relative z-index-2">
-        <div class="container" style="position: absolute; top: 0; left: 0; right: 0; z-index: 2;">
+    <div class="position-relative z-index-1">
+        <div class="container" style="position: absolute; top: 0; left: 0; right: 0; z-index: 3;">
             @Html.Action("NavBar", "HomePage")
         </div>
         <div class="navbar-background">
@@ -25,14 +24,20 @@
             </video>
         </div>
     </div>
-    <div class="container" style="padding-top:1000px">
+    <div style="padding-top:730px">
         <div class="mb-3">
             @RenderBody()
         </div>
     </div>
+    <br />
     <div style="background-color: darkblue; margin-top: auto;">
         @Html.Action("FooterPartial", "HomePage")
     </div>
 </body>
 
 </html>
+<style>
+    body {
+        overflow-x: hidden
+    }
+</style>

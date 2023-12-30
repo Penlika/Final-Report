@@ -74,22 +74,19 @@
     });
     function validateForm() {
         // Check if the required fields are not empty
-        var username = document.getElementsByName("USERNAME")[0].value;
-        var name = document.getElementsByName("NAME")[0].value;
-        var phoneNumber = document.getElementsByName("PHONENUMBER")[0].value;
-        var dateOfBirth = document.getElementsByName("DATEOFBIRTH")[0].value;
-        var address = document.getElementsByName("ADDRESS")[0].value;
+        var holdername = document.getElementsByName("holdername")[0].value;
+        var cardno = document.getElementById("cr_no").value;
+        var cvcpwd = document.getElementsByName("cvcpwd")[0].value;
+        var expDate = document.getElementsByName("EXPDATE")[0].value;
 
-        if (!username || !name || !phoneNumber || !dateOfBirth || !address) {
+        if (!holdername || !cardno || !cvcpwd || !expDate) {
             alert("Please fill in all required fields.");
             return false; // Prevent form submission
         }
 
-        // Additional validation logic can be added here if needed
+        // Add additional validation logic if needed
 
-        // If validation is successful, trigger the click event of the "Next" button
-        document.getElementById('nextButton').click();
-        return false; // Prevent the default action of the link
+        return true; // Allow form submission
     }
 </script>
 
@@ -184,6 +181,37 @@
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="container">
+        <div class="accordion" id="accordionExample">
+            <div class="steps">
+                <progress id="progress" value="0" max="100"></progress>
+                <div class="step-item">
+                    <button class="step-button text-center" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        1
+                    </button>
+                    <div class="step-title">
+                        Your booking
+                    </div>
+                </div>
+                <div class="step-item">
+                    <button class="step-button text-center collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        2
+                    </button>
+                    <div class="step-title">
+                        Your Information
+                    </div>
+                </div>
+                <div class="step-item">
+                    <button class="step-button text-center collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        3
+                    </button>
+                    <div class="step-title">
+                        Payment
+                    </div>
+                </div>
+            </div>
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-md-6">
@@ -208,6 +236,8 @@
                                     </div>
                                     <i class="mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16" onclick="toggleReadOnly()"></i>
                                 </div>
+
+                                <!-- Information -->
                                 <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Information</h6>
                                 <div class="row">
                                     <div class="col-sm-6">
@@ -256,17 +286,19 @@
                                 </div>
                                 <div class="d-flex justify-content-between">
                                     <div class="mt-1">
-                                        <a class="btn btn-outline-primary" href="@Url.Action("Stays", "Booking")" style="width:150px">Go Back</a>
+                                        <a class="btn btn-outline-primary" href="@Url.Action("BookingHotel", "Booking")" style="width:150px">Go Back</a>
                                     </div>
                                     <div class="mt-1">
-                                        <a id="nextButton" class="btn btn-primary" href="@Url.Action("Payment", "Booking")" style="width:150px">Next</a>
+                                        <a class="btn btn-primary" href="@Url.Action("PaymentFlight", "Booking")" onclick="validateForm()" style="width:150px">Next</a>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 }
 

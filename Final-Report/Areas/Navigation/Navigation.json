@@ -100,14 +100,6 @@
       "NestedItems": []
     },
     {
-      "DisplayName": "Managing chats",
-      "Icon": "bi-caret-right-fill",
-      "Link": "/Admin/Chat/Index",
-      "IsNested": false,
-      "Sequence": 6,
-      "NestedItems": []
-    },
-    {
       "DisplayName": "Managing comments and ratings",
       "Icon": "bi-caret-right-fill",
       "Link": "/Admin/CommentAndRating/Index",

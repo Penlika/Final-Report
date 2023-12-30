@@ -306,6 +306,9 @@
     <Content Include="Views\User\ResetPass.cshtml" />
     <Content Include="Views\User\VerifyMail.cshtml" />
     <Content Include="Views\User\Profile.cshtml" />
+    <Content Include="Views\Booking\PaymentFlight.cshtml" />
+    <Content Include="Views\Booking\ConfirmInfoFlight.cshtml" />
+    <Content Include="Views\Shared\Top4.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

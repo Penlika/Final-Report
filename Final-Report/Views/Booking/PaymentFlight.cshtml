@@ -1,0 +1,108 @@
+﻿
+@{
+    ViewBag.Title = "Payment";
+    Layout = "~/Views/Shared/BookingLayout.cshtml";
+}
+<link href="~/Content/Item/Payment.css" rel="stylesheet">
+@model Final_Report.Models.CUSTOMER
+<div class="container-fluid" style="padding-bottom:100px">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-11">
+            <div class="card card0 rounded-0">
+                <div class="row">
+                    <div class="col-md-5 d-md-block d-none p-0 box">
+                        <div class="card rounded-0 border-0 card1" id="bill">
+                            <h3 id="heading1">Payment Summary</h3>
+                            <br />
+                            <div class="row">
+                                <p id="heading1">Airlines: @TempData["CompanyName"]</p>
+                                <p id="heading1">Booking Date: @TempData["BookingDate"]</p>
+                                <p id="heading1">Passenger Date: @TempData["NumberOfPersons"]</p>
+                                <p class="red-bg" style="align-items:center;font-size:20px">Total Price: @TempData["TotalPrice"]</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-7 col-sm-12 p-0 box">
+                        <div class="card rounded-0 border-0 card2" id="paypage">
+                            <div class="form-card">
+                                <h2 id="heading2" class="text-danger">Payment Method</h2>
+                                <div class="radio-group">
+                                    <div class='radio' data-value="credit"><img src="https://i.imgur.com/28akQFX.jpg" style="width:200px; height:60px"></div>
+                                    <div class='radio' data-value="paypal"><img src="https://i.imgur.com/5QFsx7K.jpg" style="width:200px; height:60px"></div>
+                                    <br>
+                                </div>
+                                @using (Html.BeginForm("EditPayment", "Booking", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                    <input type="hidden" name="ID" value="@Model.ID" />
+                                    <input type="hidden" name="EMAIL" value="@Model.EMAIL" />
+                                    <input type="hidden" name="USERNAME" value="@Model.USERNAME" />
+                                    <input type="hidden" name="NAME" value="@Model.NAME" />
+                                    <input type="hidden" name="DATEOFBIRTH" value="@Model.DATEOFBIRTH" />
+                                    <input type="hidden" name="ADDRESS" value="@Model.ADDRESS" />
+                                    <input type="hidden" name="PHONENUMBER" value="@Model.PHONENUMBER" />
+                                    <input type="hidden" name="PICTURES" value="@Model.PICTURES" />
+                                    <label class="pay">Name on Card</label>
+                                    <div class="col-md-10 editable profile-input">
+                                        @Html.TextBoxFor(model => model.CARDNAME, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.CARDNAME, "", new { @class = "text-danger" })
+                                    </div>
+
+                                    <label class="control-label col-md-2">Card Number</label>
+                                    <div class="col-md-10 editable profile-input">
+                                        @Html.EditorFor(model => model.CARDNUM, new { htmlAttributes = new { @class = "form-control", @type = "number" } })
+                                        @Html.ValidationMessageFor(model => model.CARDNUM, "", new { @class = "text-danger" })
+                                    </div>
+
+                                    <label class="control-label col-md-6">Expiration Date</label>
+                                    <div class="col-md-10 editable profile-input">
+                                        @{
+                                            string dateString = Model.DATEOFBIRTH?.ToString("yyyy-MM-dd");
+                                        }
+                                        @Html.TextBoxFor(model => model.EXPDATE, new { @class = "form-control", @type = "date", @Value = dateString })
+                                        @Html.ValidationMessageFor(model => model.EXPDATE, "", new { @class = "text-danger" })
+                                    </div>
+
+                                    <label class="control-label col-md-6">Security Number</label>
+                                    <div class="col-md-10 editable profile-input">
+                                        @Html.EditorFor(model => model.SECURNUM, new { htmlAttributes = new { @class = "form-control", @type = "number" } })
+                                        @Html.ValidationMessageFor(model => model.SECURNUM, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="text-center">
+                                        <div class="btn-container">
+                                            <input id="saveChangesBtn" type="submit" value="Save change" class="btn btn-default" />
+                                        </div>
+                                    </div>
+                                }
+                                <a class="btn btn-outline-primary" href="@Url.Action("ConfirmInfoFlight", "Booking")" style="width:150px">Go Back</a>
+                                <div class="row d-flex justify-content-end mt-1">
+                                    <form action="@Url.Action("MakePaymentFlight", "Booking")" method="post" onsubmit="return validatePaymentForm()">
+                                        <button type="submit" class="btn btn-primary">Proceed with Payment</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function validatePaymentForm() {
+        // Check if the required fields are not empty
+        var cardname = document.getElementsByName("CARDNAME")[0].value;
+        var cardnum = document.getElementsByName("CARDNUM")[0].value;
+        var expdate = document.getElementsByName("EXPDATE")[0].value;
+        var securnum = document.getElementsByName("SECURNUM")[0].value;
+
+        if (!cardname || !cardnum || !expdate || !securnum) {
+            alert("Please fill in all required fields.");
+            return false;
+        }
+
+        return true;
+    }
+</script>

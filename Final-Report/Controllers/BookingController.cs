@@ -171,6 +171,14 @@ namespace Final_Report.Controllers
             CUSTOMER customer = db.CUSTOMER.FirstOrDefault(c => c.EMAIL == userEmail);
             return View(customer);
         }
+        public ActionResult ConfirmInfoFlight()
+        {
+            string userEmail = (string)Session["EMAIL"];
+
+            // Retrieve customer data based on the email
+            CUSTOMER customer = db.CUSTOMER.FirstOrDefault(c => c.EMAIL == userEmail);
+            return View(customer);
+        }
         [HttpPost]
         [ValidateInput(false)]
         public ActionResult Edit(CUSTOMER model, HttpPostedFileBase fFileUpload)
@@ -209,6 +217,19 @@ namespace Final_Report.Controllers
             CUSTOMER customer = db.CUSTOMER.FirstOrDefault(c => c.EMAIL == userEmail);
             return View(customer);
         }
+        public ActionResult PaymentFlight()
+        {
+            // Retrieve booking information from TempData
+            var bookingInfo = TempData["BookingInfo"] as dynamic;
+
+            // Pass the booking information to the view
+            ViewBag.BookingInfo = bookingInfo;
+
+            string userEmail = (string)Session["EMAIL"];
+            // Retrieve customer data based on the email
+            CUSTOMER customer = db.CUSTOMER.FirstOrDefault(c => c.EMAIL == userEmail);
+            return View(customer);
+        }
 
         [HttpPost]
         [ValidateInput(false)]
@@ -227,6 +248,7 @@ namespace Final_Report.Controllers
         {
             return View();
         }
+
         public ActionResult BookingHotel(int IDHotel)
         {
             var userLogin = (CUSTOMER)Session["customer"];
@@ -249,44 +271,73 @@ namespace Final_Report.Controllers
             return totalPrice;
         }
 
+        [HttpPost]
         public ActionResult CompleteBookHotel(FormCollection f)
         {
             CUSTOMER user = (CUSTOMER)Session["customer"];
             var IDHotel = Int32.Parse(f["ID"]);
             var hotel = db.HOTEL.Where(h => h.ID == IDHotel).FirstOrDefault();
-            double totalPrice = calTotalPriceHotel(hotel.PRICE_PER_PERSON, Int32.Parse(f["room"]), DateTime.Parse(f["checkIn"]), DateTime.Parse(f["checkOut"]));
-            Session["BookingInfo"] = new
-            {
-                IDHotel = hotel.ID,
-                IDCUSTOMER = user.ID,
-                CHECKINDATE = DateTime.Parse(f["checkIn"]),
-                CHECKOUTDATE = DateTime.Parse(f["checkOut"]),
-                NUMOFPERSON = Int32.Parse(f["guest"]),
-                ROOM = Int32.Parse(f["room"]),
-                TOTALPRICE = totalPrice
-            };
-
             var updateHotel = db.HOTEL.Where(h => h.ID == hotel.ID).FirstOrDefault();
-            int temp = updateHotel.ROOM_AVAILABLE;
-            updateHotel.ROOM_AVAILABLE = temp - Int32.Parse(f["room"]);
-            db.HOTEL.AddOrUpdate(updateHotel);
-            db.SaveChanges();
+            
+                double totalPrice = calTotalPriceHotel(hotel.PRICE_PER_PERSON, Int32.Parse(f["room"]), DateTime.Parse(f["checkIn"]), DateTime.Parse(f["checkOut"]));
+                Session["BookingInfo"] = new
+                {
+                    IDHotel = hotel.ID,
+                    IDCUSTOMER = user.ID,
+                    CHECKINDATE = DateTime.Parse(f["checkIn"]),
+                    CHECKOUTDATE = DateTime.Parse(f["checkOut"]),
+                    NUMOFPERSON = Int32.Parse(f["guest"]),
+                    ROOM = Int32.Parse(f["room"]),
+                    TOTALPRICE = totalPrice
+                };
 
-            TempData["HotelName"] = hotel.NAME;
-            TempData["CheckInDate"] = f["checkIn"];
-            TempData["CheckOutDate"] = f["checkOut"];
-            TempData["Room"] = f["room"];
-            TempData["TotalPrice"] = totalPrice;
 
-            return RedirectToAction("ConfirmInfo");
+                int temp = updateHotel.ROOM_AVAILABLE;
+                updateHotel.ROOM_AVAILABLE = temp - Int32.Parse(f["room"]);
+                db.HOTEL.AddOrUpdate(updateHotel);
+                db.SaveChanges();
+
+                TempData["HotelName"] = hotel.NAME;
+                TempData["CheckInDate"] = f["checkIn"];
+                TempData["CheckOutDate"] = f["checkOut"];
+                TempData["Room"] = f["room"];
+                TempData["TotalPrice"] = totalPrice;
+
+                return RedirectToAction("ConfirmInfo");
+            
         }
 
 
+        [HttpPost]
+        public ActionResult CompleteBookFlight(FormCollection f)
+        {
+            var user = (CUSTOMER)Session["customer"];
+            var IDFlight = Int32.Parse(f["ID"]);
+            var flight = db.FLIGHT.Where(h => h.ID == IDFlight).FirstOrDefault();
+
+            double totalPrice = flight.PRICE_PER_PERSON * Int32.Parse(f["passenger"]);
+
+            // Store flight booking information in Session
+            Session["BookingInfo"] = new
+            {
+                IDFLIGHT = flight.ID,
+                IDCUSTOMER = user.ID,
+                BOOKINGDATE = DateTime.Now.Date,
+                NUMOFPERSON = Int32.Parse(f["passenger"]),
+                TOTALPRICE = totalPrice,
+                COMPANY = flight.COMPANY
+            };
+
+            TempData["CompanyName"] = flight.COMPANY;
+            TempData["BookingDate"] = DateTime.Now.Date;
+            TempData["NumberOfPersons"] = Int32.Parse(f["passenger"]);
+            TempData["TotalPrice"] = totalPrice;
+
+            return RedirectToAction("ConfirmInfoFlight");
+        }
 
 
-
-
-
+        [HttpPost]
         public ActionResult MakePayment()
         {
             // Retrieve booking information from Session
@@ -309,7 +360,7 @@ namespace Final_Report.Controllers
 
                 db.BOOKINGHOTEL.Add(booking);
                 db.SaveChanges();
-                var user = db.CUSTOMER.Find(bookingInfo.IDCUSTOMER);
+                var user = db.ACCOUNT.Find(bookingInfo.IDCUSTOMER);
                 var hotel = db.HOTEL.Find(bookingInfo.IDHotel);
                 SendBookingConfirmationEmail(user, hotel, bookingInfo.CHECKINDATE.ToString(), bookingInfo.CHECKOUTDATE.ToString(), bookingInfo.ROOM.ToString(), bookingInfo.TOTALPRICE);
                 // Clear Session to prevent reusing the booking information
@@ -326,7 +377,47 @@ namespace Final_Report.Controllers
             }
         }
 
-        private void SendBookingConfirmationEmail(CUSTOMER user, HOTEL hotel, string checkIn, string checkOut, string room, double totalPrice)
+        [HttpPost]
+        public ActionResult MakePaymentFlight()
+        {
+            // Retrieve booking information from Session
+            var bookingInfo = Session["BookingInfo"] as dynamic;
+
+            // Check if bookingInfo is not null
+            if (bookingInfo != null)
+            {
+                // Insert the booking information into the SQL table
+                var booking = new BOOKINGFLIGHT  // Assuming you have a BOOKINGFLIGHT entity
+                {
+                    IDFLIGHT = bookingInfo.IDFLIGHT,  // Assuming IDFLIGHT is the correct property
+                    IDCUSTOMER = bookingInfo.IDCUSTOMER,
+                    BOOKINGDATE = bookingInfo.BOOKINGDATE,
+                    NUMOFPERSON = bookingInfo.NUMOFPERSON,
+                    TOTALPRICE = bookingInfo.TOTALPRICE
+                };
+
+                db.BOOKINGFLIGHT.Add(booking);
+                db.SaveChanges();
+
+                var user = db.ACCOUNT.Find(bookingInfo.IDCUSTOMER);
+                var flight = db.FLIGHT.Find(bookingInfo.IDFLIGHT);
+
+                SendBookingConfirmationEmailFlight(user, flight, bookingInfo.NUMOFPERSON, bookingInfo.TOTALPRICE);
+                // Clear Session to prevent reusing the booking information
+                Session["BookingInfo"] = null;
+
+                // Return the final view
+                return View("BookingComplete");
+            }
+            else
+            {
+                // Handle the case where bookingInfo is null
+                // Redirect to an appropriate view or take necessary action
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        private void SendBookingConfirmationEmail(ACCOUNT user, HOTEL hotel, string checkIn, string checkOut, string room, double totalPrice)
         {
             var mail = new SmtpClient("smtp.gmail.com", 25)
             {
@@ -351,6 +442,32 @@ namespace Final_Report.Controllers
             mail.Send(m);
         }
 
+        private void SendBookingConfirmationEmailFlight(ACCOUNT user, FLIGHT flight, int numOfPersons, double totalPrice)
+        {
+            var mail = new SmtpClient("smtp.gmail.com", 25)
+            {
+                Credentials = new NetworkCredential("hoainam3183@gmail.com", "scuc bpjv iqdk kesi"),
+                EnableSsl = true
+            };
+
+            var username = db.CUSTOMER.Where(u => u.ID == user.ID).FirstOrDefault();
+            var m = new MailMessage();
+            m.From = new MailAddress("hoainam3183@gmail.com");
+            m.ReplyToList.Add("hoainam3183@gmail.com");
+            m.To.Add(new MailAddress(user.EMAIL));
+            m.Subject = "Your booking has been completed!";
+            m.Body = "Dear Mr/Mrs " + username.NAME + ",\nThis is your detail information of your booking: \n "
+                + "Airline: " + flight.COMPANY + "\n"
+                + "Departure: " + flight.DEPARTURE + "\n"
+                + "Arrival: " + flight.ARRIVAL + "\n"
+                + "From: " + flight.FROM + "\n"
+                + "To: " + flight.TO + "\n"
+                + "Passengers: " + numOfPersons + "\n"
+                + "Total Price: " + totalPrice + "\n"
+                + "Please be on time at the airport to check in for your flight!\nBest regards!";
+
+            mail.Send(m);
+        }
 
 
 
@@ -409,50 +526,6 @@ namespace Final_Report.Controllers
                 var flight = db.FLIGHT.Where(f => f.ID == IDFlight).FirstOrDefault();
                 return View(flight);
             }
-        }
-
-        public ActionResult CompleteBookFlight(FormCollection f)
-        {
-            var user = (CUSTOMER)Session["customer"];
-            var IDFlight = Int32.Parse(f["ID"]);
-            var flight = db.FLIGHT.Where(h => h.ID == IDFlight).FirstOrDefault();
-            double totalPrice = flight.PRICE_PER_PERSON * Int32.Parse(f["passenger"]);
-            var book = new BOOKINGFLIGHT
-            {
-                IDFLIGHT = flight.ID,
-                IDCUSTOMER = user.ID,
-                BOOKINGDATE = DateTime.Now.Date,
-                NUMOFPERSON = Int32.Parse(f["passenger"]),
-                TOTALPRICE = totalPrice
-            };
-            db.BOOKINGFLIGHT.Add(book);
-            db.SaveChanges();
-
-            var mail = new SmtpClient("smtp.gmail.com", 25)
-            {
-                Credentials = new NetworkCredential("hoainam3183@gmail.com", "scuc bpjv iqdk kesi"),
-                EnableSsl = true
-            };
-
-            var username = db.CUSTOMER.Where(u => u.ID == user.ID).FirstOrDefault();
-            var m = new MailMessage();
-            m.From = new MailAddress("hoainam3183@gmail.com");
-            m.ReplyToList.Add("hoainam3183@gmail.com");
-            m.To.Add(new MailAddress(user.EMAIL));
-            m.Subject = "Your booking has been completed !";
-            m.Body = "Dear Mr/Mrs " + username.NAME + ",\nThis is your detail information of your booking: \n "
-                + "Airline: " + flight.COMPANY + "\n"
-                + "Departure: " + flight.DEPARTURE + "\n"
-                + "Arrival: " + flight.ARRIVAL + "\n"
-                + "From: " + flight.FROM + "\n"
-                + "To: " + flight.TO + "\n"
-                + "Passensers: " + f["passenger"] + "\n"
-                + "Total Price: " + totalPrice + "\n"
-                + "Please be on time at the airport to check in for your flight !\nBest regards !";
-
-            mail.Send(m);
-
-            return View("BookingComplete");
         }
 
         public ActionResult BookingPackage(int idPackage)
