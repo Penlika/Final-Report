@@ -12,7 +12,6 @@ namespace Final_Report.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public ACCOUNT()
         {
-            ADMIN = new HashSet<ADMIN>();
             BOOKINGFLIGHT = new HashSet<BOOKINGFLIGHT>();
             BOOKINGHOTEL = new HashSet<BOOKINGHOTEL>();
             BOOKINGPACKAGE = new HashSet<BOOKINGPACKAGE>();
@@ -27,21 +26,21 @@ namespace Final_Report.Models
         public string USERNAME { get; set; }
 
         [Required]
+        [StringLength(50)]
         public string EMAIL { get; set; }
 
         [Required]
         [StringLength(30)]
         public string PASSWORD { get; set; }
         [NotMapped]
-        [Compare("PASSWORD", ErrorMessage = "ConfirmPassword must not be empty")]
+        [Compare("PASSWORD", ErrorMessage = "Confirm password password cannot be blank")]
         public string CONFIRMPASSWORD { get; set; }
 
         [Required]
         [StringLength(50)]
         public string ROLE { get; set; } = "customer";
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ADMIN> ADMIN { get; set; }
+        public virtual ADMIN ADMIN { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BOOKINGFLIGHT> BOOKINGFLIGHT { get; set; }
@@ -57,5 +56,7 @@ namespace Final_Report.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CUSTOMER> CUSTOMER { get; set; }
+
+        public virtual MANAGER MANAGER { get; set; }
     }
 }

@@ -1,0 +1,28 @@
+﻿@using Final_Report.Models
+@model Final_Report.Areas.Navigation.NavigationMenu
+@{
+    var user = (MANAGER)Session["manager"];
+}
+<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+    <a class="d-flex row" style="text-align: center; justify-content:center ; align-items:center;text-decoration:none">
+        <img src="@user.PICTURES" class="row" style=" width: 140px;height: 100px;border-radius: 50%;object-fit: cover; align-items: center; justify-content: center; margin: 0px; display: flex;" />
+        <div class="row" style="text-align: center;">
+            <span class="fs-6">@user.USERNAME</span>
+            <span class="fs-6">@user.EMAIL</span>
+        </div>
+    </a>
+
+    <div class="position-sticky pt-3 sidebar-sticky">
+        <ul class="nav flex-column">
+            @foreach (var item in Model.MenuItemsManager)
+            {
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="@item.Link">
+                        <i class="bi @item.Icon"></i>
+                        @item.DisplayName
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+</nav>

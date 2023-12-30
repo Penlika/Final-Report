@@ -1,13 +1,13 @@
 ﻿
 @{
     ViewBag.Title = "BookingFlight";
-    Layout = "~/Views/Shared/SignLogLayout.cshtml";
+    Layout = "~/Views/Shared/BookingLayout.cshtml";
 }
 
 @{ double price = Model.PRICE_PER_PERSON; }
 
 <form style="border: solid; border-width: 3px; border-radius: 10px; padding: 20px; margin-bottom:150px" action="@Url.Action("CompleteBookFlight", "Booking")" method="post">
-    <div class="text-center" style="font-size:2em"> <b>@Model.COMPANY</b> </div>
+    <div class="text-center" style="font-size:2em"> <img style="height:50px;width:auto" src="@Model.LOGO "></div>
     <input type="number" class="form-control" name="ID" value="@Model.ID" style="visibility:hidden" />
     <div class="col-sm-12" style="position:relative; right: 40px">
         <div class="d-flex">
@@ -35,8 +35,15 @@
             </div>
 
             <div class="col-4 text-start" style="margin-left: 20px;">
-                <p class="fw-bold">@Model.ARRIVAL <a style="background-color:slategray;padding-left:10px;padding-right:10px">+2</a></p>
-                <p class="fw-bold">@Model.TO</p>
+                @if (Model.DEPARTURE != null && Model.ARRIVAL != null)
+                {
+                    var daysBetween = (Model.ARRIVAL - Model.DEPARTURE).Days;
+                    <p>
+                        @Model.ARRIVAL
+                        <a style="background-color:slategray;padding-left:10px;padding-right:10px">+@daysBetween</a>
+                    </p>
+                    <p>@Model.TO</p>
+                }
             </div>
         </div>
     </div>

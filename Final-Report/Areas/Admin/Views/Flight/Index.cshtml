@@ -1,4 +1,4 @@
-﻿@*@model IEnumerable<Final_Report.Models.HOTEL>*@
+﻿
 @using PagedList.Mvc;
 @helper Truncate(string s, int length)
 {
@@ -17,20 +17,17 @@
 }
 
 <h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<a class="btn btn-primary" href="@Url.Action("Create")">Create New</a>
 <table class="table">
     <tr>
         <th>
             ID
         </th>
         <th>
-            Brand
+            Company
         </th>
         <th>
-            Company
+            Logo
         </th>
         <th>
             Departure
@@ -57,14 +54,13 @@
                 @Html.DisplayFor(modelItem => item.ID)
             </td>
             <td>
-                @if (!string.IsNullOrEmpty(item.PICTURES))
-                {
-                    <img src="@item.PICTURES" style="width:50px" />
-                }
+                @Html.DisplayFor(modelItem => item.COMPANY)
             </td>
             <td>
-                @Truncate(item.COMPANY, 50)
-                @Html.DisplayFor(modelItem => item.COMPANY)
+                @if (!string.IsNullOrEmpty(item.LOGO))
+                {
+                    <img src="@item.LOGO" style="width:50px" />
+                }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DEPARTURE)

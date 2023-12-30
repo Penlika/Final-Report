@@ -1,0 +1,55 @@
+﻿
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Index</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            USER ID
+        </th>
+        <th>
+            USERNAME
+        </th>
+        <th>
+            COMMENT
+        </th>
+        <th>
+            STAR_RATING
+        </th>
+        <th>
+            DATECREATE
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (Final_Report.Models.COMMENTANDRATING item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ACCOUNT.ID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ACCOUNT.USERNAME)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.COMMENT)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.STAR_RATING)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DATECREATE)
+        </td>
+        <td>
+            <a href="@Url.Action("Edit", new {id=item.ID})" class="btn btn-primary">Edit</a>
+            <a href="@Url.Action("Detail", new {id=item.ID})" class="btn btn-light">Detail</a>
+            <a href="@Url.Action("Delete", new {id=item.ID})" class="btn btn-danger">Delete</a>
+        </td>
+    </tr>
+}
+
+</table>

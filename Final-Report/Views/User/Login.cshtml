@@ -9,10 +9,10 @@
     <div class="wrapper">
         @Html.ValidationSummary(true)
         <div class="logo">
-            <img src="https://www.freepnglogos.com/uploads/twitter-logo-png/twitter-bird-symbols-png-logo-0.png" alt="">
+            <img src="https://seeklogo.com/images/B/beach-tour-logo-4505456896-seeklogo.com.png" alt="">
         </div>
         <div class="text-center mt-4 name">
-            Twitter
+            NT-Travel and Tourism
         </div>
         <form class="p-3 mt-3">
             <label for="exampleFormControlInput2" class="form-label">Email</label>
@@ -23,8 +23,8 @@
             @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
             <button class="btn mt-3">Login</button>
         </form>
-        <div class="text-center fs-6" style="margin-top:10px">
-            <a style="font-size:medium" href="@Url.Action("ForgotPass", "User")">Forget password ?</a> or <a style="font-size:medium" href="@Url.Action("Register","User")">Sign up</a>
+        <div class="text-center fs-6">
+            <a href="@Url.Action("ForgotPass", "User")">Forget password?</a> or <a href="@Url.Action("Register","User")">Sign up</a>
         </div>
     </div>
 }

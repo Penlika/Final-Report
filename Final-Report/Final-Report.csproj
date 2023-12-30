@@ -59,9 +59,6 @@
     <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
       <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="PayPal, Version=1.9.1.0, Culture=neutral, PublicKeyToken=5b4afc1ccaef40fb, processorArchitecture=MSIL">
-      <HintPath>..\packages\PayPal.1.9.1\lib\net451\PayPal.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -152,23 +149,18 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
+    <Compile Include="Areas\Admin\Controllers\CommentAndRatingController.cs" />
     <Compile Include="Areas\Admin\Controllers\FlightController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\HotelController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
     <Compile Include="Areas\Navigation\NavigationModels.cs" />
     <Compile Include="Controllers\BookingController.cs" />
     <Compile Include="Controllers\HomePageController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202311290758168_jyzdgfhkufj.cs" />
-    <Compile Include="Migrations\202311290758168_jyzdgfhkufj.designer.cs">
-      <DependentUpon>202311290758168_jyzdgfhkufj.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202312110959537_adg.cs" />
-    <Compile Include="Migrations\202312110959537_adg.designer.cs">
-      <DependentUpon>202312110959537_adg.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ACCOUNT.cs" />
@@ -180,8 +172,11 @@
     <Compile Include="Models\CUSTOMER.cs" />
     <Compile Include="Models\FLIGHT.cs" />
     <Compile Include="Models\HOTEL.cs" />
+    <Compile Include="Models\LOGOIMG.cs" />
+    <Compile Include="Models\MANAGER.cs" />
     <Compile Include="Models\Model1.cs" />
     <Compile Include="Models\PACKAGE.cs" />
+    <Compile Include="Models\HotelDetailsViewModel.cs" />
     <Compile Include="Models\MailInfor.cs" />
     <Compile Include="Models\PackageViewModel.cs" />
     <Compile Include="Models\UserLogin.cs" />
@@ -189,6 +184,7 @@
     <Compile Include="Utility.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\bgvid.mp4" />
     <Content Include="Content\Admin\dashboard.css" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
@@ -206,11 +202,15 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\Item\Hotel.css" />
     <Content Include="Content\Item\ItemPage.css" />
     <Content Include="Content\Item\Login.css" />
     <Content Include="Content\Item\Modal.css" />
+    <Content Include="Content\Item\NavBar.css" />
     <Content Include="Content\Item\Packages.css" />
+    <Content Include="Content\Item\Payment.css" />
     <Content Include="Content\Item\profile.css" />
+    <Content Include="Content\Item\Step2Step2.css" />
     <Content Include="Content\Item\Stepper.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
@@ -228,13 +228,24 @@
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\MenuPartial.cshtml" />
     <Content Include="Areas\Admin\Views\Flight\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Hotel\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Hotel\Detail.cshtml" />
     <Content Include="Areas\Admin\Views\Flight\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Flight\Detail.cshtml" />
     <Content Include="Areas\Admin\Views\Flight\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Hotel\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Hotel\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Hotel\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\CommentAndRating\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\CommentAndRating\Detail.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\Detail.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\Detail.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\Profile.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\MenuPartialManager.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\Item\Stepper.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -271,9 +282,7 @@
     <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\HomePage\Flights.cshtml" />
     <Content Include="Views\HomePage\Packages.cshtml" />
-    <Content Include="Views\Maps\Maps.cshtml" />
-    <Content Include="Views\HomePage\test.cshtml" />
-    <Content Include="Views\User\Profile.cshtml" />
+    <Content Include="Views\HomePage\Step2.cshtml" />
     <Content Include="Views\Booking\BookingFlight.cshtml" />
     <Content Include="Views\Booking\BookingHotel.cshtml" />
     <Content Include="Views\Booking\BookingPackage.cshtml" />
@@ -282,17 +291,26 @@
     <Content Include="Views\Booking\PartialFlight.cshtml" />
     <Content Include="Views\Booking\PartialHotel.cshtml" />
     <Content Include="Views\Booking\BookingComplete.cshtml" />
-    <Content Include="Views\Shared\NewLocaPartial.cshtml" />
-    <Content Include="Views\Shared\TophotelPartial.cshtml" />
-    <Content Include="Views\Shared\TrendLocaPartial.cshtml" />
+    <Content Include="Views\Shared\Top1.cshtml" />
+    <Content Include="Views\Shared\Top3.cshtml" />
+    <Content Include="Views\Shared\Top2.cshtml" />
+    <Content Include="Views\Booking\Details.cshtml" />
+    <Content Include="Views\Shared\PartialComment.cshtml" />
+    <Content Include="Views\Shared\ConfirmInfo.cshtml" />
+    <Content Include="Views\Shared\Payment.cshtml" />
+    <Content Include="Views\Booking\ConfirmInfo.cshtml" />
+    <Content Include="Views\Booking\Payment.cshtml" />
+    <Content Include="Views\Shared\BookingLayout.cshtml" />
     <Content Include="Views\User\BookingHistory.cshtml" />
+    <Content Include="Views\User\ForgotPass.cshtml" />
     <Content Include="Views\User\ResetPass.cshtml" />
     <Content Include="Views\User\VerifyMail.cshtml" />
-    <Content Include="Views\User\ForgotPass.cshtml" />
+    <Content Include="Views\User\Profile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Views\Garbage dump\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
@@ -320,14 +338,6 @@
     <Content Include="Scripts\bootstrap.bundle.js.map" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202311290758168_jyzdgfhkufj.resx">
-      <DependentUpon>202311290758168_jyzdgfhkufj.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202312110959537_adg.resx">
-      <DependentUpon>202312110959537_adg.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

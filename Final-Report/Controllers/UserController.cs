@@ -1,17 +1,20 @@
 ﻿using Final_Report.Models;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
+using System.Web;
+using PagedList;
+using System.Web.Mvc;
+using System.IO;
+using System.Drawing;
+using System.ComponentModel.DataAnnotations;
+using System.Data.Entity.Migrations;
+using System.Diagnostics;
+using System.Data.Entity.Validation;
+using System.Data.Entity;
+using Microsoft.Ajax.Utilities;
 using System.Net.Mail;
 using System.Net;
-using System.Reflection;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.UI.WebControls;
-using System.Data.Entity.Migrations;
-using System.Web.Helpers;
-using Microsoft.Ajax.Utilities;
 
 namespace Final_Report.Controllers
 {
@@ -59,28 +62,47 @@ namespace Final_Report.Controllers
         {
             if (ModelState.IsValid)
             {
-                var u = db.ACCOUNT.FirstOrDefault(k => k.EMAIL == user.Email && k.PASSWORD == user.Password);
+                var account = db.ACCOUNT.FirstOrDefault(k => k.EMAIL == user.Email && k.PASSWORD == user.Password);
 
-                if (u != null)
+                if (account != null)
                 {
-                    Session["EMAIL"] = u;
+                    // Store user ID in session
+                    Session["UserID"] = account.ID;
 
                     // Determine user role
-                    string userRole = u.ROLE;
+                    string userRole = account.ROLE;
+                    Session["User"] = account;
 
                     if (userRole.Equals("admin", StringComparison.OrdinalIgnoreCase))
                     {
                         // Store admin information in session
-                        Session["admin"] = db.ADMIN.FirstOrDefault(admin => admin.EMAIL == u.EMAIL);
-
+                        Session["admin"] = db.ADMIN.FirstOrDefault(admin=>admin.EMAIL==account.EMAIL);
                         // Redirect to admin views
+                        return RedirectToAction("Index", "Home", new { Area = "Admin" });
+                    }
+                    if (userRole.Equals("manager", StringComparison.OrdinalIgnoreCase))
+                    {
+                        MANAGER man = db.MANAGER.FirstOrDefault(c => c.EMAIL == account.EMAIL);
+
+                        Session["manager"] = man;
+                        Session["EMAIL"] = man.EMAIL; // Store the email for other uses
+
                         return RedirectToAction("Index", "Home", new { Area = "Admin" });
                     }
                     else if (userRole.Equals("customer", StringComparison.OrdinalIgnoreCase))
                     {
-                        Session["customer"] = u;
-                        // Redirect to customer views
-                        return RedirectToAction("Index", "HomePage");
+                        // Retrieve customer data based on the email
+                        CUSTOMER customer = db.CUSTOMER.FirstOrDefault(c => c.EMAIL == account.EMAIL);
+
+                        if (customer != null)
+                        {
+                            // Store customer information in session
+                            Session["customer"] = customer;
+                            Session["EMAIL"] = customer.EMAIL; // Store the email for other uses
+
+                            // Redirect to customer views
+                            return RedirectToAction("Index", "HomePage");
+                        }
                     }
                 }
                 else
@@ -94,6 +116,9 @@ namespace Final_Report.Controllers
 
 
 
+
+
+
         public ActionResult Logout()
         {
             Session["EMAIL"] = null;
@@ -102,42 +127,43 @@ namespace Final_Report.Controllers
         [HttpGet]
         public ActionResult Profile()
         {
-            string userEmail = ((ACCOUNT)Session["customer"]).EMAIL;
+            // Retrieve customer email from session
+            string userEmail = (string)Session["EMAIL"];
 
             // Retrieve customer data based on the email
             CUSTOMER customer = db.CUSTOMER.FirstOrDefault(c => c.EMAIL == userEmail);
             return View(customer);
         }
+
         [HttpPost]
-        public ActionResult UpdateProfile(CUSTOMER updatedCustomer)
+        [ValidateInput(false)]
+        public ActionResult Edit(CUSTOMER model, HttpPostedFileBase fFileUpload)
         {
             if (ModelState.IsValid)
             {
-                // Retrieve the original customer from the database
-                CUSTOMER originalCustomer = db.CUSTOMER.FirstOrDefault(c => c.EMAIL == updatedCustomer.EMAIL);
-
-                if (originalCustomer != null)
+                if (fFileUpload != null)
                 {
-                    // Update the properties of the original customer with the updated values
-                    originalCustomer.NAME = updatedCustomer.NAME;
-                    originalCustomer.PHONENUMBER = updatedCustomer.PHONENUMBER;
-                    originalCustomer.ADDRESS = updatedCustomer.ADDRESS;
-
-                    // Save changes to the database
-                    db.SaveChanges();
-
-                    // Redirect to the profile page after successful update
-                    return RedirectToAction("Profile");
+                    Image img = Image.FromStream(fFileUpload.InputStream, true, true);
+                    model.PICTURES = Utility.ConvertImageToBase64(img);
                 }
+                else
+                {
+                    CUSTOMER existingCus = db.CUSTOMER.FirstOrDefault(c => c.EMAIL == model.EMAIL);
+                    if (existingCus != null)
+                    {
+                        model.PICTURES = existingCus.PICTURES;
+                    }
+                }
+                db.CUSTOMER.AddOrUpdate(model);
+                db.SaveChanges();
             }
-
-            // If the model state is not valid or an issue occurred during update, return to the profile page with the current data
-            return View("Profile", updatedCustomer);
+            return View("Profile",model);
         }
+
 
         public ActionResult BookingHistory()
         {
-            var userLogin = (ACCOUNT)Session["EMAIL"];
+            var userLogin = (CUSTOMER)Session["customer"];
             List<object> model = new List<object>();
             if (userLogin == null)
             {
@@ -241,6 +267,5 @@ namespace Final_Report.Controllers
             }
             return RedirectToAction("Login");
         }
-
     }
 }

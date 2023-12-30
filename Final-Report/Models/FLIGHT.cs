@@ -18,11 +18,10 @@ namespace Final_Report.Models
 
         public int ID { get; set; }
 
-        [Required]
-        [StringLength(30)]
+        [StringLength(40)]
         public string COMPANY { get; set; }
 
-        public string PICTURES { get; set; }
+        public string LOGO { get; set; }
 
         public DateTime DEPARTURE { get; set; }
 

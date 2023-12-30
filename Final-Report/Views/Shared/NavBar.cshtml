@@ -1,43 +1,51 @@
-﻿@Styles.Render("~/Content/css")
-<div>
-    <div class="container row ">
-        <div class="col-12">
-            <div class="col-6" style="position:relative;top:20px">
-                <a href="~/HomePage/Index" class="text-decoration-none">
-                    <h3 style="color:azure;font-weight:700">NT-Travel and Tourism</h3>
-                </a>
-            </div>
-            <div>
-                @if (Session["EMAIL"] != null)
-                {
-                    <div style="float: right">
-                        <a class="dropdown-toggle btn" data-bs-toggle="dropdown" aria-expanded="false"
-                           style="background-color: azure; color: darkblue; font-weight: 500">Account</a>
-                        <ul class="dropdown-menu text-light">
-                            <li><a class="dropdown-item" href="@Url.Action("Profile","User")">Profile</a></li>
-                            <li><a class="dropdown-item" href="@Url.Action("BookingHistory","User")">Booking History</a></li>
-                            <li><a class="dropdown-item" href="@Url.Action("Logout","User")">Log out</a></li>
-                        </ul>
-                    </div>
-                }
-                else
-                {
-                    <div style="float:right">
-                        <a class="btn" style="background-color:azure;color:darkblue;font-weight:500" href=@Url.Action("Register", "User")>Register</a>
-                        <a class="btn" style="background-color:azure;color:darkblue;font-weight:500" href=@Url.Action("Login", "User")>Sign in</a>
-                    </div>
-                }
-            </div>
+﻿@model Final_Report.Models.CUSTOMER
+<div class="container position-relative z-index-2">
+    <!-- Your navbar code here -->
+    <div class="row" style="padding-top:50px">
+        <div class="col-6">
+            <a href="~/HomePage/Index" class="text-decoration-none">
+                <h3 style="color: azure; font-weight: 700;">NT-Travel and Tourism</h3>
+            </a>
+        </div>
+        <div>
+            @if (Session["EMAIL"] != null)
+            {
+                var customer = (Final_Report.Models.CUSTOMER)Session["customer"];
+                <div style="float: right">
+                    @if (customer != null && customer.PICTURES != null)
+                    {
+                        <img src="@customer.PICTURES" style=" width: 40px;height: 40px;border-radius: 50%;object-fit: cover;" />
+                    }
+                    else
+                    {
+                        <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" style=" width: 40px;height: 40px;border-radius: 50%;object-fit: cover;" />
+                    }
+                    <a class="dropdown-toggle btn" data-bs-toggle="dropdown" aria-expanded="false"
+                       style="background-color: azure; color: darkblue; font-weight: 500">@customer.USERNAME</a>
+                    <ul class="dropdown-menu text-light">
+                        <li><a class="dropdown-item" href="@Url.Action("Profile","User")">Profile</a></li>
+                        <li><a class="dropdown-item" href="@Url.Action("BookingHistory","User")">Booking history</a></li>
+                        <li><a class="dropdown-item" href="@Url.Action("Logout","User")">Log out</a></li>
+                    </ul>
+                </div>
+            }
+            else
+            {
+                <div style="float:right">
+                    <a class="btn" style="background-color:azure;color:darkblue;font-weight:500" href=@Url.Action("Register", "User")>Register</a>
+                    <a class="btn" style="background-color:azure;color:darkblue;font-weight:500" href=@Url.Action("Login", "User")>Sign in</a>
+                </div>
+            }
         </div>
     </div>
-    <div class="container row">
+    <div class="row">
         <ul class="nav nav-pills">
-            <li class="nav-item">
+            <li class="nav-item" style="padding-right:20px">
                 <a class="btn" style="font-weight: 300; border-radius: 20px; color: azure; background-color: darkblue" href="@Url.Action("Stays","HomePage")">
                     <i class="material-symbols-outlined" style="vertical-align:middle;font-size:30px">bed</i>   Stays
                 </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" style="padding-right:20px">
                 <a class="btn" style="font-weight: 300;border-radius:20px; color: azure; background-color: darkblue" href="@Url.Action("Flights","HomePage")">
                     <i class="material-symbols-outlined" style="vertical-align:middle;font-size:30px">flight</i>   Flights
                 </a>
@@ -49,31 +57,13 @@
             </li>
         </ul>
     </div>
-    <div class="container row" style="padding-top:70px">
-        <p style="font-size:45px;color:azure;font-weight:700">
-            Find your next stay
-        </p>
-        <p style="font-size:20px;color:azure;font-weight:300">
-            Search deals on travels, hotels, flights, and much more...
-        </p>
-    </div>
-    <div class="container row" style="position: relative; top: 59px">
-        <div class="btn-group" role="group" aria-label="Basic outlined example" style="height: 70px; background-color: white; border: solid; border-color: darkgoldenrod; border-width: 5px;border-radius:10px">
-            <a class="nav-link " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="margin-top:9px;font-size:20px;width:400px;background-color: white">
-                <i class="material-symbols-outlined" style="vertical-align:middle;font-size:30px">bed</i>
-                <input type="text" id="item-search" style="border:none;outline: none; vertical-align: middle; width: 400px ;margin-top:3px" placeholder="Where are you going?">
-            </a>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
-            <a class="btn" style="background-color: white; border: solid; border-color: darkgoldenrod; border-width: 5px; border-top: none; border-bottom: none; vertical-align: middle;margin-top:-1px">
-                <i class="material-symbols-outlined" style="vertical-align:middle">calendar_month</i>Check-in Date -- Check-out Date<br />
-                <input style="border:none" type="date" id="calendar" name="calendar" />|
-                <input style="border:none" type="date" id="calendar" name="calendar" />
-            </a>
-            <a class="btn" style="background-color:dodgerblue; vertical-align: middle;margin-right:-13px">Search</a>
-        </div>
-    </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+    });
+</script>
+

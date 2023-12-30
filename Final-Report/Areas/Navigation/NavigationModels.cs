@@ -8,7 +8,8 @@ namespace Final_Report.Areas.Navigation
 {
     public class NavigationMenu
     {
-        public List<NavigationMenuItem> MenuItems { get; set; }
+        public List<NavigationMenuItem> MenuItemsAdmin { get; set; }
+        public List<NavigationMenuItem> MenuItemsManager { get; set; }
     }
     public class NavigationMenuItem
     {

@@ -1,12 +1,17 @@
-﻿using System;
+﻿using Final_Report.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Web.Mvc;
-using System.Web.UI;
-using Final_Report.Models;
 using PagedList;
-using PagedList.Mvc;
+using System.Web.Mvc;
+using System.IO;
+using System.Drawing;
+using System.ComponentModel.DataAnnotations;
+using System.Data.Entity.Migrations;
+using System.Diagnostics;
+using System.Data.Entity.Validation;
+using System.Data.Entity;
 
 namespace Final_Report.Controllers
 {
@@ -51,7 +56,8 @@ namespace Final_Report.Controllers
         // ----------------- NavBar -----------------
         public ActionResult NavBar()
         { 
-            return PartialView(); 
+            CUSTOMER model = new CUSTOMER();
+            return PartialView(model); 
         }
         public ActionResult NavBarDetail()
         {
@@ -62,7 +68,7 @@ namespace Final_Report.Controllers
             return PartialView();
         }
         // ----------------- -----------------
-        public ActionResult TrendLocaPartial()
+        public ActionResult Top2()
         {
             return PartialView();
         }
@@ -70,11 +76,11 @@ namespace Final_Report.Controllers
         {
             return PartialView();
         }
-        public ActionResult NewLocaPartial()
+        public ActionResult Top1()
         {
             return PartialView();
         }
-        public ActionResult TophotelPartial()
+        public ActionResult Top3()
         {
             return PartialView();
         }
@@ -90,12 +96,24 @@ namespace Final_Report.Controllers
         {
             return PartialView();
         }
-        
-        
-        public ActionResult test()
+
+
+        public ActionResult Step2(int IDHotel)
         {
-            return View();
+            var userLogin = (CUSTOMER)Session["customer"];
+            if (userLogin == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
+            else
+            {
+                ViewData["IDHotel"] = IDHotel;  // Set ViewData for IDHotel
+                var hotel = db.HOTEL.Where(h => h.ID == IDHotel).FirstOrDefault();
+                return View(hotel);
+            }
         }
+
+
         public ActionResult fillForm()
         {
             return PartialView();

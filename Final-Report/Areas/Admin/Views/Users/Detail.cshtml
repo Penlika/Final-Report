@@ -1,0 +1,91 @@
+﻿@model Final_Report.Models.CUSTOMER
+
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Detail</h2>
+
+<div>
+    <h4>CUSTOMER</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            ID:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ID)
+        </dd>
+        <dt>
+            Username:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.USERNAME)
+        </dd>
+        <dt>
+            Name:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NAME)
+        </dd>
+        <dt>
+            Date of birth:
+        </dt>
+        <dd>
+            @Html.FormatValue(@Model.DATEOFBIRTH, "{0:dd/MM/yyyy}")
+        </dd>
+        <dt>
+            Profile picture:
+        </dt>
+        <dd>
+            <img src="@Model.PICTURES" alt=" @Model.NAME" style="height:300px;width:auto">
+        </dd>
+        <dt>
+            Email:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EMAIL)
+        </dd>
+        <dt>
+            Phonenumber:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PHONENUMBER)
+        </dd>
+        <dt>
+            Address:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ADDRESS)
+        </dd>
+        <dt>
+            Credit card name:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CARDNAME)
+        </dd>
+        <dt>
+            Credit card number:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CARDNUM)
+        </dd>
+        <dt>
+            Expire date:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EXPDATE)
+        </dd>
+        <dt>
+            Security number:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SECURNUM)
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

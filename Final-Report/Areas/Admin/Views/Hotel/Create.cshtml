@@ -11,75 +11,117 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h4>HOTEL</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.NAME, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.NAME, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.NAME, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ADDRESS, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ADDRESS, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ADDRESS, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.PICTURES, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <input type="file" name="fFileUpload" accept="image/*" />
-                @Html.ValidationMessageFor(model => model.PICTURES, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.INFORMATION, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextAreaFor(model => model.INFORMATION, new { @class = "form-control", id = "info" })
-                @Html.ValidationMessageFor(model => model.INFORMATION, "", new { @class = "text-danger" })
-                <script>
-                    CKEDITOR.replace('info', autoParagraph: false);
-                </script>
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.PRICE_PER_PERSON, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.PRICE_PER_PERSON, new { @class = "form-control", type = "number", step = "1" })
-                @Html.ValidationMessageFor(model => model.PRICE_PER_PERSON, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ROOM_AVAILABLE, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ROOM_AVAILABLE, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ROOM_AVAILABLE, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.MODIFIEDDAY, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.MODIFIEDDAY, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @Value = DateTime.Now.ToString("yyyy-MM-dd") } })
-                @Html.ValidationMessageFor(model => model.MODIFIEDDAY, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
+<div class="form-horizontal">
+    <h4>HOTEL</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.NAME, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.NAME, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.NAME, "", new { @class = "text-danger" })
         </div>
     </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ADDRESS, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.ADDRESS, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ADDRESS, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <!-- ... Other form elements ... -->
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.PICTURE1, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <input type="file" name="fFileUploads[0]" accept="image/*" />
+            @Html.ValidationMessageFor(model => model.PICTURE1, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.PICTURE2, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <input type="file" name="fFileUploads[1]" accept="image/*" />
+            @Html.ValidationMessageFor(model => model.PICTURE2, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.PICTURE3, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <input type="file" name="fFileUploads[2]" accept="image/*" />
+            @Html.ValidationMessageFor(model => model.PICTURE3, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.PICTURE4, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <input type="file" name="fFileUploads[3]" accept="image/*" />
+            @Html.ValidationMessageFor(model => model.PICTURE4, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.PICTURE5, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <input type="file" name="fFileUploads[4]" accept="image/*" />
+            @Html.ValidationMessageFor(model => model.PICTURE5, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.PICTURE6, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <input type="file" name="fFileUploads[5]" accept="image/*" />
+            @Html.ValidationMessageFor(model => model.PICTURE6, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.INFORMATION, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.INFORMATION, new { @class = "form-control", id = "info" })
+            @Html.ValidationMessageFor(model => model.INFORMATION, "", new { @class = "text-danger" })
+            <script>
+                CKEDITOR.replace('info');
+            </script>
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.PRICE_PER_PERSON, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.PRICE_PER_PERSON, new { @class = "form-control", type = "number", step = "1" })
+            @Html.ValidationMessageFor(model => model.PRICE_PER_PERSON, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ROOM_AVAILABLE, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.ROOM_AVAILABLE, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ROOM_AVAILABLE, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.MODIFIEDDAY, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.MODIFIEDDAY, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @Value = DateTime.Now.ToString("yyyy-MM-dd") } })
+            @Html.ValidationMessageFor(model => model.MODIFIEDDAY, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+</div>
 }
 
 <div>

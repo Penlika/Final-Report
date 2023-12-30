@@ -1,0 +1,155 @@
+﻿<link href="~/Content/Item/Step2Step2.css" rel="stylesheet">
+@model Final_Report.Models.CUSTOMER
+
+<script>
+    var isEditMode = false; // Track the edit mode status
+
+    function toggleReadOnly() {
+        var inputs = document.querySelectorAll('.editable .form-control');
+        isEditMode = !isEditMode; // Toggle edit mode
+
+        inputs.forEach(function (input) {
+            input.classList.toggle('readonly-input', !isEditMode);
+            input.readOnly = !isEditMode;
+        });
+
+        // Toggle the visibility of the Save Changes button
+        var saveChangesBtn = document.getElementById('saveChangesBtn');
+        saveChangesBtn.style.display = isEditMode ? 'block' : 'none';
+
+        // Toggle the visibility of the file input based on edit mode
+        var fileInput = document.getElementById('fileInput');
+        var profilePictureInput = document.getElementById('profilePictureInput');
+
+        fileInput.style.display = isEditMode ? 'block' : 'none';
+        profilePictureInput.style.display = isEditMode ? 'block' : 'none';
+    }
+
+    function openFileInput() {
+        // Open the file input only if in edit mode
+        if (isEditMode) {
+            document.getElementById('profilePictureInput').click();
+        }
+    }
+
+    function displaySelectedImage(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                // Display the selected image on the page
+                document.querySelector('.photo img').src = e.target.result;
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
+
+<style>
+    .readonly-input {
+        background-color: #e0e0e0;
+    }
+
+    .editable-input {
+        border: none;
+        background-color: white;
+    }
+
+    .profile-label {
+        font-weight: bold;
+        margin-top: 10px;
+    }
+
+    .profile-input {
+        width: 100%;
+    }
+
+    .btn-container {
+        margin-top: 20px;
+    }
+
+    #saveChangesBtn {
+        display: none;
+        margin-top: 20px;
+    }
+
+    #fileInput {
+        display: none;
+    }
+</style>
+
+@using (Html.BeginForm("Edit", "HomePage", FormMethod.Post, new { enctype = "multipart/form-data", id = "yourFormId" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.Hidden("IDHotel", ViewData["IDHotel"])
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="text-center">
+                            <input type="hidden" name="ID" value="@Model.ID" />
+                            <img src="@Model.PICTURES" style="width:100px; height:100px;border-radius:50% " alt="User-Profile-Image" onclick="openFileInput()">
+                            <div id="fileInput" style="display: none;">
+                                <label for="profilePicture">Change Profile Picture:</label>
+                                <input type="file" name="fFileUpload" id="profilePictureInput" style="display: none;" onchange="displaySelectedImage(this)" />
+                            </div>
+                            <br />
+                            <div class="d-flex flex-column align-items-center">
+                                <p class="fw-bold h4 mt-3">@Model.USERNAME</p>
+                                <p class="text-muted">@Model.EMAIL</p>
+                            </div>
+                            <i class="mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16" onclick="toggleReadOnly()"></i>
+                        </div>
+
+                        <!-- Information -->
+                        <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Information</h6>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <p class="m-b-10 f-w-600">Name</p>
+                                <h6 class="text-muted f-w-400 editable">
+                                    @Html.EditorFor(model => model.NAME, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly-input" } })
+                                </h6>
+                            </div>
+                            <div class="col-sm-6">
+                                <p class="m-b-10 f-w-600">Phone</p>
+                                <h6 class="text-muted f-w-400 editable">
+                                    @Html.EditorFor(model => model.PHONENUMBER, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly-input" } })
+                                </h6>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <p class="m-b-10 f-w-600">Date of birth</p>
+                                <h6 class="text-muted f-w-400 editable">
+                                    @{
+                                        string dateString = Model.DATEOFBIRTH?.ToString("yyyy-MM-dd");
+                                    }
+                                    @Html.TextBoxFor(model => model.DATEOFBIRTH, new { @class = "form-control", @readonly = "readonly", @type = "date", @Value = dateString })
+                                </h6>
+                            </div>
+                            <div class="col-sm-6">
+                                <p class="m-b-10 f-w-600">Address</p>
+                                <h6 class="text-muted f-w-400 editable">
+                                    @Html.EditorFor(model => model.ADDRESS, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly-input" } })
+                                </h6>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button type="button" class="btn btn-primary" onclick="toggleReadOnly()">Edit</button>
+                        </div>
+
+                        <!-- Save Changes Button -->
+                        <div class="text-center">
+                            <div class="btn-container">
+                                <input id="saveChangesBtn" type="submit" value="Save Changes" class="btn btn-default" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

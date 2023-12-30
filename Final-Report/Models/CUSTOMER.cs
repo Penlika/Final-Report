@@ -9,19 +9,24 @@ namespace Final_Report.Models
     [Table("CUSTOMER")]
     public partial class CUSTOMER
     {
-        public int? ID { get; set; }
+        [Key]
+        [Column(Order = 0)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int ID { get; set; }
 
         [StringLength(40)]
         public string NAME { get; set; }
 
+        [Column(TypeName = "date")]
         public DateTime? DATEOFBIRTH { get; set; }
 
-        [Key]
         [StringLength(20)]
         public string USERNAME { get; set; }
 
         public string PICTURES { get; set; }
 
+        [Key]
+        [Column(Order = 1)]
         [StringLength(50)]
         public string EMAIL { get; set; }
 
@@ -34,11 +39,13 @@ namespace Final_Report.Models
         [StringLength(50)]
         public string CARDNAME { get; set; }
 
-        public int? CARDNUM { get; set; }
+        [StringLength(16)]
+        public string CARDNUM { get; set; }
 
         public DateTime? EXPDATE { get; set; }
 
-        public int? SECURNUM { get; set; }
+        [StringLength(3)]
+        public string SECURNUM { get; set; }
 
         public virtual ACCOUNT ACCOUNT { get; set; }
     }

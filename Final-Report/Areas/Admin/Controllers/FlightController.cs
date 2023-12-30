@@ -23,40 +23,40 @@ namespace Final_Report.Areas.Admin.Controllers
             return View(lstHotel.ToList().OrderBy(n => n.ID).ToPagedList(pageNum, pageSize));
         }
         [HttpGet]
+        public ActionResult GetLogo(string company)
+        {
+            var logoUrl = db.LOGOIMG.FirstOrDefault(l => l.COMPANY == company)?.LOGO;
+            return Content(logoUrl ?? "");
+        }
+
+        [HttpGet]
         public ActionResult Create()
         {
+            ViewBag.CompanyList = new SelectList(db.LOGOIMG.ToList().OrderBy(n => n.COMPANY), "COMPANY", "COMPANY");
             return View();
         }
+
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult Create(FLIGHT model, FormCollection f, HttpPostedFileBase fFileUpload)
+        public ActionResult Create(FLIGHT model, FormCollection f)
         {
             if (ModelState.IsValid)
             {
-                if (fFileUpload != null && fFileUpload.ContentLength > 0)
-                {
-                    // Validate file type (you may want to improve this check)
-                    if (fFileUpload.ContentType.StartsWith("image"))
-                    {
-                        using (Image img = Image.FromStream(fFileUpload.InputStream, true, true))
-                        {
-                            model.PICTURES = Utility.ConvertImageToBase64(img);
-                        }
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("fFileUpload", "Invalid file type. Please upload an image.");
-                        return View(model);
-                    }
-                }
+                // Set the logo based on the selected company
+                var company = (f["COMPANY"]);
+                model.LOGO = db.LOGOIMG.FirstOrDefault(l => l.COMPANY == company)?.LOGO;
 
                 db.FLIGHT.Add(model);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
+            // Repopulate the dropdown list if validation fails
+            ViewBag.CompanyList = new SelectList(db.LOGOIMG.ToList().OrderBy(n => n.COMPANY), "COMPANY", "COMPANY", model.COMPANY);
             return View(model);
         }
+
+
         public ActionResult Detail(int id)
         {
             var flight = db.FLIGHT.SingleOrDefault(n => n.ID == id);
@@ -80,22 +80,11 @@ namespace Final_Report.Areas.Admin.Controllers
         }
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult Edit(FormCollection f, HttpPostedFileBase fFileUpload)
+        public ActionResult Edit(FormCollection f)
         {
             var flight = db.FLIGHT.SingleOrDefault(n => n.ID == int.Parse(f["iID"]));
             if (ModelState.IsValid)
             {
-                if (fFileUpload != null)
-                {
-                    var sFileName = Path.GetFileName(fFileUpload.FileName);
-                    var path = Path.Combine(Server.MapPath("~/Images"), sFileName);
-                    if (!System.IO.File.Exists(path))
-                    {
-                        fFileUpload.SaveAs(path);
-                    }
-                    flight.PICTURES = sFileName;
-                }
-                flight.COMPANY = f["sCOMPANY"];
                 flight.DEPARTURE = Convert.ToDateTime(f["sDEPART"]);
                 flight.ARRIVAL = Convert.ToDateTime(f["sARRIVE"]);
                 flight.PRICE_PER_PERSON = float.Parse(f["sPRICE"]);
@@ -112,6 +101,12 @@ namespace Final_Report.Areas.Admin.Controllers
             if (flight == null)
             {
                 TempData["Message"] = "Flight is not exist";
+                return RedirectToAction("Index");
+            }
+            var booked = db.BOOKINGFLIGHT.Where(ct => ct.IDFLIGHT == id).ToList();
+            if (booked.Count() > 0)
+            {
+                TempData["Message"] = "the service is currently book and cannot be delete";
                 return RedirectToAction("Index");
             }
             var package = db.PACKAGE.Where(tg => tg.IDFLIGHT == id);
