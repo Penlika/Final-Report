@@ -1,6 +1,13 @@
-﻿<link href="~/Content/Item/Step2Step2.css" rel="stylesheet">
-@model Final_Report.Models.CUSTOMER
+﻿
+@{
+    ViewBag.Title = "ConfimrInfo";
+    Layout = "~/Views/Shared/BookingLayout.cshtml";
+}
 
+<link href="~/Content/Item/Step2Step2.css" rel="stylesheet">
+@model Final_Report.Models.CUSTOMER
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
 <script>
     var isEditMode = false; // Track the edit mode status
 
@@ -44,9 +51,99 @@
             reader.readAsDataURL(input.files[0]);
         }
     }
+    const stepButtons = document.querySelectorAll('.step-button');
+    const progress = document.querySelector('#progress');
+
+    Array.from(stepButtons).forEach((button, index) => {
+        button.addEventListener('click', () => {
+            progress.setAttribute('value', index * 100 / (stepButtons.length - 1)); //there are 3 buttons. 2 spaces.
+
+            stepButtons.forEach((item, secindex) => {
+                if (index > secindex) {
+                    item.classList.add('done');
+                }
+                if (index < secindex) {
+                    item.classList.remove('done');
+                }
+            });
+
+            const cardBody = document.querySelector(`#collapse${index + 1} .card-body`);
+            const isCollapsed = cardBody.classList.contains('show');
+            cardBody.style.height = isCollapsed ? '0' : `${cardBody.scrollHeight}px`;
+        });
+    });
+    function validateForm() {
+        // Check if the required fields are not empty
+        var holdername = document.getElementsByName("holdername")[0].value;
+        var cardno = document.getElementById("cr_no").value;
+        var cvcpwd = document.getElementsByName("cvcpwd")[0].value;
+        var expDate = document.getElementsByName("EXPDATE")[0].value;
+
+        if (!holdername || !cardno || !cvcpwd || !expDate) {
+            alert("Please fill in all required fields.");
+            return false; // Prevent form submission
+        }
+
+        // Add additional validation logic if needed
+
+        return true; // Allow form submission
+    }
 </script>
 
 <style>
+    .steps {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+        position: relative;
+    }
+
+    .step-button {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: none;
+        background-color: var(--prm-gray);
+        transition: .4s;
+    }
+
+        .step-button[aria-expanded="true"] {
+            width: 60px;
+            height: 60px;
+            background-color: cyan;
+            color: #fff;
+        }
+
+    .done {
+        background-color: cyan;
+        color: #fff;
+    }
+
+    .step-item {
+        z-index: 10;
+        text-align: center;
+    }
+
+    #progress {
+        -webkit-appearance: none;
+        position: absolute;
+        width: 95%;
+        z-index: 5;
+        height: 10px;
+        margin-left: 18px;
+        margin-bottom: 18px;
+    }
+        /* to customize progress bar */
+        #progress::-webkit-progress-value {
+            background-color: aquamarine;
+            transition: .5s ease;
+        }
+
+        #progress::-webkit-progress-bar {
+            background-color: var(--prm-gray);
+        }
+
     .readonly-input {
         background-color: #e0e0e0;
     }
@@ -79,72 +176,123 @@
     }
 </style>
 
-@using (Html.BeginForm("Edit", "HomePage", FormMethod.Post, new { enctype = "multipart/form-data", id = "yourFormId" }))
+@using (Html.BeginForm("Edit", "Booking", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.Hidden("IDHotel", ViewData["IDHotel"])
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="text-center">
-                            <input type="hidden" name="ID" value="@Model.ID" />
-                            <img src="@Model.PICTURES" style="width:100px; height:100px;border-radius:50% " alt="User-Profile-Image" onclick="openFileInput()">
-                            <div id="fileInput" style="display: none;">
-                                <label for="profilePicture">Change Profile Picture:</label>
-                                <input type="file" name="fFileUpload" id="profilePictureInput" style="display: none;" onchange="displaySelectedImage(this)" />
-                            </div>
-                            <br />
-                            <div class="d-flex flex-column align-items-center">
-                                <p class="fw-bold h4 mt-3">@Model.USERNAME</p>
-                                <p class="text-muted">@Model.EMAIL</p>
-                            </div>
-                            <i class="mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16" onclick="toggleReadOnly()"></i>
-                        </div>
+        <div class="accordion" id="accordionExample">
+            <div class="steps">
+                <progress id="progress" value="0" max="100"></progress>
+                <div class="step-item">
+                    <button class="step-button text-center" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        1
+                    </button>
+                    <div class="step-title">
+                        Your booking
+                    </div>
+                </div>
+                <div class="step-item">
+                    <button class="step-button text-center collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        2
+                    </button>
+                    <div class="step-title">
+                        Your Information
+                    </div>
+                </div>
+                <div class="step-item">
+                    <button class="step-button text-center collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        3
+                    </button>
+                    <div class="step-title">
+                        Payment
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="text-center">
+                                    <input type="hidden" name="ID" value="@Model.ID" />
+                                    <input type="hidden" name="EMAIL" value="@Model.EMAIL" />
+                                    <input type="hidden" name="CARDNAME" value="@Model.CARDNAME" />
+                                    <input type="hidden" name="CARDNUM" value="@Model.CARDNUM" />
+                                    <input type="hidden" name="EXPDATE" value="@Model.EXPDATE" />
+                                    <input type="hidden" name="SECURNUM" value="@Model.SECURNUM" />
+                                    <img src="@Model.PICTURES" style="width:100px; height:100px;border-radius:50% " alt="User-Profile-Image" onclick="openFileInput()">
+                                    <div id="fileInput" style="display: none;">
+                                        <label for="profilePicture">Change Profile Picture:</label>
+                                        <input type="file" name="fFileUpload" id="profilePictureInput" style="display: none;" onchange="displaySelectedImage(this)" />
+                                    </div>
+                                    <br />
+                                    <div class="d-flex flex-column align-items-center">
+                                        <p class="fw-bold h4 mt-3">@Model.USERNAME</p>
+                                        <p class="text-muted">@Model.EMAIL</p>
+                                    </div>
+                                    <i class="mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16" onclick="toggleReadOnly()"></i>
+                                </div>
 
-                        <!-- Information -->
-                        <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Information</h6>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <p class="m-b-10 f-w-600">Name</p>
-                                <h6 class="text-muted f-w-400 editable">
-                                    @Html.EditorFor(model => model.NAME, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly-input" } })
-                                </h6>
-                            </div>
-                            <div class="col-sm-6">
-                                <p class="m-b-10 f-w-600">Phone</p>
-                                <h6 class="text-muted f-w-400 editable">
-                                    @Html.EditorFor(model => model.PHONENUMBER, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly-input" } })
-                                </h6>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <p class="m-b-10 f-w-600">Date of birth</p>
-                                <h6 class="text-muted f-w-400 editable">
-                                    @{
-                                        string dateString = Model.DATEOFBIRTH?.ToString("yyyy-MM-dd");
-                                    }
-                                    @Html.TextBoxFor(model => model.DATEOFBIRTH, new { @class = "form-control", @readonly = "readonly", @type = "date", @Value = dateString })
-                                </h6>
-                            </div>
-                            <div class="col-sm-6">
-                                <p class="m-b-10 f-w-600">Address</p>
-                                <h6 class="text-muted f-w-400 editable">
-                                    @Html.EditorFor(model => model.ADDRESS, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly-input" } })
-                                </h6>
-                            </div>
-                        </div>
-                        <div class="text-center">
-                            <button type="button" class="btn btn-primary" onclick="toggleReadOnly()">Edit</button>
-                        </div>
+                                <!-- Information -->
+                                <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Information</h6>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <p class="m-b-10 f-w-600">Username</p>
+                                        <h6 class="text-muted f-w-400 editable">
+                                            @Html.EditorFor(model => model.USERNAME, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly-input" } })
+                                        </h6>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <p class="m-b-10 f-w-600">Name</p>
+                                        <h6 class="text-muted f-w-400 editable">
+                                            @Html.EditorFor(model => model.NAME, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly-input" } })
+                                        </h6>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <p class="m-b-10 f-w-600">Phone</p>
+                                        <h6 class="text-muted f-w-400 editable">
+                                            @Html.EditorFor(model => model.PHONENUMBER, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly-input", @type = "number", @maxlength = 9 } })
+                                        </h6>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <p class="m-b-10 f-w-600">Date of birth</p>
+                                        <h6 class="text-muted f-w-400 editable">
+                                            @{
+                                                string dateString = Model.DATEOFBIRTH?.ToString("yyyy-MM-dd");
+                                            }
+                                            @Html.TextBoxFor(model => model.DATEOFBIRTH, new { @class = "form-control", @readonly = "readonly", @type = "date", @Value = dateString })
+                                        </h6>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <p class="m-b-10 f-w-600">Address</p>
+                                        <h6 class="text-muted f-w-400 editable">
+                                            @Html.EditorFor(model => model.ADDRESS, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly-input" } })
+                                        </h6>
+                                    </div>
+                                </div>
+                                <div class="text-center">
+                                    <button type="button" class="btn btn-primary" style="width:150px" onclick="toggleReadOnly()">Edit</button>
+                                </div>
+                                <div class="text-center">
+                                    <div class="btn-container">
+                                        <input id="saveChangesBtn" type="submit" value="Save Changes" class="btn btn-default" />
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <div class="mt-1">
+                                        <a class="btn btn-outline-primary" href="@Url.Action("BookingHotel", "Booking")" style="width:150px">Go Back</a>
+                                    </div>
+                                    <div class="mt-1">
+                                        <a class="btn btn-primary" href="@Url.Action("Payment", "Booking")" onclick="validateForm()" style="width:150px">Next</a>
+                                    </div>
+                                </div>
 
-                        <!-- Save Changes Button -->
-                        <div class="text-center">
-                            <div class="btn-container">
-                                <input id="saveChangesBtn" type="submit" value="Save Changes" class="btn btn-default" />
                             </div>
                         </div>
                     </div>
@@ -153,3 +301,4 @@
         </div>
     </div>
 }
+

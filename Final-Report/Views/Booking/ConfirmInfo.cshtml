@@ -269,15 +269,3 @@
             </div>
         </div>
 }
-<script>
-    document.getElementById('nextButton').addEventListener('click', function (e) {
-        var inputs = document.querySelectorAll('input');
-        for (var i = 0; i < inputs.length; i++) {
-            if (inputs[i].value == '') {
-                e.preventDefault();
-                alert('Please fill all the fields before proceeding.');
-                return;
-            }
-        }
-    });
-</script>
