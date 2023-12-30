@@ -63,25 +63,25 @@ namespace Final_Report.Areas.Admin.Controllers
             var cus = db.CUSTOMER.SingleOrDefault(n => n.ID == id);
             if (cus == null)
             {
-                TempData["Message"] = "The customer did not exist";
+                ViewBag.Message = "The customer did not exist";
                 return RedirectToAction("Index");
             }
             var hotel = db.BOOKINGHOTEL.Where(ct => ct.IDCUSTOMER == id).ToList();
             if (hotel.Count() > 0)
             {
-                TempData["Message"] = "The user has paid and is currently using our service";
+                ViewBag.Message = "The user has paid and is currently using our service";
                 return RedirectToAction("Index");
             }
             var flight = db.BOOKINGFLIGHT.Where(ct => ct.IDCUSTOMER == id).ToList();
             if (hotel.Count() > 0)
             {
-                TempData["Message"] = "The user has paid and is currently using our service";
+                ViewBag.Message = "The user has paid and is currently using our service";
                 return RedirectToAction("Index");
             }
             var package = db.BOOKINGPACKAGE.Where(ct => ct.IDCUSTOMER == id).ToList();
             if (package.Count() > 0)
             {
-                TempData["Message"] = "The user has paid and is currently using our service";
+                ViewBag.Message = "The user has paid and is currently using our service";
                 return RedirectToAction("Index");
             }
             db.CUSTOMER.Remove(cus);

@@ -100,13 +100,13 @@ namespace Final_Report.Areas.Admin.Controllers
             var flight = db.FLIGHT.FirstOrDefault(s => s.ID == id);
             if (flight == null)
             {
-                TempData["Message"] = "Flight is not exist";
+                ViewBag.Message = "Flight is not exist";
                 return RedirectToAction("Index");
             }
             var booked = db.BOOKINGFLIGHT.Where(ct => ct.IDFLIGHT == id).ToList();
             if (booked.Count() > 0)
             {
-                TempData["Message"] = "the service is currently book and cannot be delete";
+                ViewBag.Message = "the service is currently book and cannot be delete";
                 return RedirectToAction("Index");
             }
             var package = db.PACKAGE.Where(tg => tg.IDFLIGHT == id);

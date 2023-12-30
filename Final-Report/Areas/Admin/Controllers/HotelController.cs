@@ -154,13 +154,13 @@ namespace Final_Report.Areas.Admin.Controllers
             var hotel = db.HOTEL.FirstOrDefault(s => s.ID == id);
             if (hotel == null)
             {
-                TempData["Message"] = "Hotel is not exist";
+                ViewBag.Message = "Hotel is not exist";
                 return RedirectToAction("Index");
             }
             var booked = db.BOOKINGHOTEL.Where(ct => ct.IDHOTEL == id).ToList();
             if (booked.Count() > 0)
             {
-                TempData["Message"] = "the service is currently book and cannot be delete";
+                ViewBag.Message = "The service is currently book and cannot be delete";
                 return RedirectToAction("Index");
             }
             var package = db.PACKAGE.Where(tg => tg.IDHOTEL == id);
