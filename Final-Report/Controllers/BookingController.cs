@@ -528,18 +528,18 @@ namespace Final_Report.Controllers
             }
         }
 
-        public ActionResult BookingPackage(int idPackage)
-        {
-            ViewBag.IDHotel = id;
-            try
-            {
-                int idhotel = Convert.ToInt32(id);
-                var hotel = db.HOTEL.Where(h => h.ID == idhotel).FirstOrDefault();
-                return PartialView("PartialHotel", hotel);
-            }
-            catch { }
-            return View();
-        }
+        //public ActionResult BookingPackage(int idPackage)
+        //{
+        //    ViewBag.IDHotel = id;
+        //    try
+        //    {
+        //        int idhotel = Convert.ToInt32(id);
+        //        var hotel = db.HOTEL.Where(h => h.ID == idhotel).FirstOrDefault();
+        //        return PartialView("PartialHotel", hotel);
+        //    }
+        //    catch { }
+        //    return View();
+        //}
         public ActionResult PartialHotel(HOTEL hotel)
         {
             return PartialView(hotel);

@@ -27,7 +27,7 @@
                 </div>
                 <div class="col-2">
                     <i class="bi bi-arrow-right form-label" style="font-size: 3rem;"></i>
-                </div>
+                </div> 
                 <div class="col-5">
                     <label class="form-label"><b>Check-out</b></label>
                     <input type="date" class="form-control" name="checkOut" id="checkOut" required oninput="validateDateRange()" />
@@ -57,13 +57,8 @@
 </form>
 
 <script>
-    window.onload = function () {
-        var today = new Date();
-        var tomorrow = new Date(today);
-        tomorrow.setDate(tomorrow.getDate() + 1);
-        var minDate = tomorrow.toISOString().split('T')[0];
-        document.getElementsByName("checkIn")[0].setAttribute('min', minDate);
-    }
+    var today = new Date().toISOString().split('T')[0];
+    document.getElementsByName('checkIn')[0].setAttribute('min', today);
 </script>
 
 <script>
