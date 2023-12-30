@@ -162,6 +162,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202312300519418_adhv.cs" />
+    <Compile Include="Migrations\202312300519418_adhv.designer.cs">
+      <DependentUpon>202312300519418_adhv.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ACCOUNT.cs" />
     <Compile Include="Models\ADMIN.cs" />
@@ -306,6 +310,8 @@
     <Content Include="Views\User\ResetPass.cshtml" />
     <Content Include="Views\User\VerifyMail.cshtml" />
     <Content Include="Views\User\Profile.cshtml" />
+    <Content Include="Views\User\ChangePass2.cshtml" />
+    <Content Include="Views\User\VerifyMail2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -338,6 +344,11 @@
     <Content Include="Scripts\bootstrap.bundle.js.map" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202312300519418_adhv.resx">
+      <DependentUpon>202312300519418_adhv.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

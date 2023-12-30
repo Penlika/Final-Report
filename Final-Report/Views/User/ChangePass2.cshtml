@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewBag.Title = "ChangePass2";
+    Layout = "~/Views/Shared/SignLogLayout.cshtml";
+}
+
+<h3 class="text-center font-weight-light my-4">CHANGE PASSWORD</h3>
+<div style="display: flex; justify-content: center; align-items: center; margin-bottom: 100px">
+    <form action="@Url.Action("ChangePass2", "User")" method="post">
+        <div class="mb-3">
+            <label for="e1" class="form-label">Password</label>
+            <input type="password" class="form-control" id="e1" name="pass" oninput="validatePassword()" required>
+        </div>
+        <div class="mb-3">
+            <label for="e2" class="form-label">Re-enter Password</label>
+            <input type="password" class="form-control" id="e2" oninput="validatePassword()" required>
+        </div>
+        <p id="err" style="color: red;"></p>
+        <button type="submit" class="btn btn-primary" id="save" disabled>Save</button>
+    </form>
+</div>
+@Html.ValidationSummary(true)
+<script>
+    function validatePassword() {
+        var password = document.getElementById("e1").value;
+        var confirmPassword = document.getElementById("e2").value;
+        var saveButton = document.getElementById("save");
+
+        if (password != confirmPassword) {
+            document.getElementById("err").innerHTML = "Passwords do not match!";
+            saveButton.disabled = true;
+        } else {
+            document.getElementById("err").innerHTML = "";
+            saveButton.disabled = false;
+        }
+    }
+</script>

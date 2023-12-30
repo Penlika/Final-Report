@@ -1,29 +1,10 @@
-﻿<!--<div class="hotel py-2 px-2 pb-4 border rounded" style="margin-bottom: 20px">
-    <div class="row">
-        <div class="col-lg-3"> <img src="@Model.PICTURES" alt="..." class="hotel-img" style="width:200px"> </div>
-        <div class="col-lg-9">
-            <div class="d-md-flex align-items-md-center">
-                <div class="name" style="font-size: 2em;"><b>@Model.NAME</b> <span class="city">@Model.ADDRESS</span> </div>
-            </div>
-            <div class="rating">
-                <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="far fa-star"></span>-->
- <!-- Book now Enquiry -->
-<!--</div>
-            <div class="d-flex flex-column tags pt-1">
-                <div><span class="fas fa-receipt"></span>  @Model.INFORMATION</div>
-                <div><span class="fas fa-concierge-bell"></span>    Available Room: @Model.ROOM_AVAILABLE</div>
-            </div>
-        </div>
-    </div>
-</div>-->
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+﻿<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
 @{ double price = Model.PRICE_PER_PERSON; }
 
 <form action="@Url.Action("CompleteBookPackage", "Booking")" method="post">
     <div class="row">
         <div class="col-4">
-            <img src="@Model.PICTURES" alt="..." style="width: 300px; height: 300px; border-radius: 0 !important;">
+            <img src="@Model.PICTURE1" alt="..." style="width: 300px; height: 300px; border-radius: 0 !important;">
         </div>
         <div class="col-8">
             <div class="name" style="font-size: 2em;">@Model.NAME - @Model.ADDRESS</div>
