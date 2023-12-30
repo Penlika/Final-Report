@@ -1,7 +1,7 @@
 ﻿
 @{
     ViewBag.Title = "BookingHotel";
-    Layout = "~/Views/Shared/BookingLayout.cshtml";
+    Layout = "~/Views/Shared/SignLogLayout.cshtml";
 }
 
 @{ double price = Model.PRICE_PER_PERSON; }
@@ -50,6 +50,7 @@
     <hr />
     <br />
     <div class="d-flex justify-content-between">
+        <p class="text-danger">@ViewBag.Err</p>
         <a class="btn btn-outline-primary" href="@Url.Action("Stays", "HomePage")" style="width:150px">Go Back</a>
         <button type="submit" class="btn btn-primary" style="width:150px">Book Now</button>
     </div>
